@@ -1,0 +1,17 @@
+@font-face {
+  font-family: clinica_online_fonts;
+  src: url("../assets/fonts/clinica-online-titan-one-regular.ttf");
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+  font-family: clinica_online_fonts;
+}
+body {
+  font-size: 1.6rem;
+  background-color: whitesmoke;
+}
