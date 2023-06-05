@@ -1,1 +1,82 @@
-<p>login works!</p>
+<section class="login">
+  <div
+    class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+  >
+    <form
+      [formGroup]="formLogin"
+      (ngSubmit)="loginWithMailAndPassword()"
+      class="bg-light shadow p-1 m-1 rounded col-xxl-3 col-lg-4 col-md-6 col-sm-8"
+    >
+      <h2 class="mt-1 text-center">Bienvenido</h2>
+      <div class="row p-2 m-2 justify-content-center align-items-center">
+        <img
+          class="col-xxl-3 col-lg-3 col-6 align-center m-1"
+          src="../../../assets/images/login/icon-login.png"
+          alt="login"
+        />
+        <input
+          type="text"
+          class="m-3 form-control"
+          name="email"
+          placeholder="Email Address"
+          formControlName="email"
+          autofocus=""
+        />
+        <div
+          [hidden]="
+            formLogin.controls['email'].pristine ||
+            !formLogin.controls['email'].errors
+          "
+        >
+          <span
+            *ngIf="formLogin.controls['email'].errors?.['required']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Email es requerido</span
+          >
+          <span
+            *ngIf="formLogin.controls['email'].errors?.['email']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Email debe ser valido</span
+          >
+        </div>
+        <input
+          type="password"
+          class="m-3 form-control"
+          name="password"
+          placeholder="Password"
+          formControlName="password"
+          autofocus=""
+        />
+
+        <div
+          [hidden]="
+            formLogin.controls['password'].pristine ||
+            !formLogin.controls['password'].errors
+          "
+        >
+          <span
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Password es requerido</span
+          >
+        </div>
+
+        <button
+          class="m-1 btn btn-lg btn-outline-success btn-block"
+          type="submit"
+        >
+          Login
+        </button>
+
+        <label>
+          Aun no tienes cuenta?
+          <span
+            class="btn align-item-center badge bg-success text-ligth msj-block"
+            routerLink="/register"
+          >
+            Registrate</span
+          ></label
+        >
+      </div>
+    </form>
+  </div>
+</section>

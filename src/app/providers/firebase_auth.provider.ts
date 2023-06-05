@@ -4,15 +4,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   browserSessionPersistence,
+  sendEmailVerification,
 } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthProvider {
-  constructor(private readonly fireAuth: Auth) {
-    this.fireAuth.setPersistence(browserSessionPersistence);
-  }
+  constructor(private readonly fireAuth: Auth) {}
 
   public loginWithEmailAndPassword(user: any) {
     return signInWithEmailAndPassword(
@@ -22,12 +21,16 @@ export class FirebaseAuthProvider {
     );
   }
 
-  public registerUserWithEmailAndPassword(user: any) {
+  public async registerUserWithEmailAndPassword(user: any) {
     return createUserWithEmailAndPassword(
       this.fireAuth,
       user.email!,
       user.password!
     );
+  }
+
+  public async sendEmailVerification(user: any) {
+    await sendEmailVerification(user);
   }
 
   public get ApiKey() {
