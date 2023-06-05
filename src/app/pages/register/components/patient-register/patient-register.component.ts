@@ -1,24 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserService } from 'src/app/services/user.service';
 export type RegisterOption = 'especialist' | 'patient';
+
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-patient-register',
+  templateUrl: './patient-register.component.html',
+  styleUrls: ['./patient-register.component.scss'],
 })
-export class RegisterComponent {
-  protected showForm: boolean;
+export class PatientRegisterComponent {
+  @Output() public eventShowForm: EventEmitter<boolean>;
+  @Input() public showForm: boolean;
   protected formPatientRegister: FormGroup;
-  protected formEspecialistRegister: FormGroup;
-  protected registerChosenOption: RegisterOption;
   constructor(
     private readonly userService: UserService,
     private readonly alertService: AlertService,
     private readonly formBuilder: FormBuilder
   ) {
-    this.showForm = true;
     this.formPatientRegister = this.formBuilder.group({
       name: [
         '',
@@ -65,12 +64,6 @@ export class RegisterComponent {
         ],
       ],
     });
-    this.formEspecialistRegister = this.formBuilder.group({
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
   }
 
   protected register() {
@@ -84,13 +77,10 @@ export class RegisterComponent {
       this.alertService.showAlert({ icon: 'error', message: error.message });
     }
   }
-  protected chooseRegistrationOption(option: RegisterOption) {
-    this.showForm = !this.showForm;
-    this.registerChosenOption = option;
-    console.log(this.registerChosenOption);
-  }
+
   protected return($event: Event) {
     $event.preventDefault();
     this.showForm = !this.showForm;
+    this.eventShowForm.emit(this.showForm);
   }
 }

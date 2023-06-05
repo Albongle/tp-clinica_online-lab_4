@@ -38,6 +38,7 @@ export class UserService {
     const result =
       await this.firebaseAuthProvider.registerUserWithEmailAndPassword(user);
     user.userId = result.user.uid;
+    await this.firebaseAuthProvider.sendEmailVerification();
     await this.saveUserWithIdInStore(user.userId, user);
     return user;
   }

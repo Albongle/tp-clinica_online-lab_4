@@ -3,8 +3,8 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  browserSessionPersistence,
   sendEmailVerification,
+  User,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -29,8 +29,8 @@ export class FirebaseAuthProvider {
     );
   }
 
-  public async sendEmailVerification(user: any) {
-    await sendEmailVerification(user);
+  public async sendEmailVerification() {
+    await sendEmailVerification(this.fireAuth.currentUser!);
   }
 
   public get ApiKey() {
