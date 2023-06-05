@@ -64,3 +64,9 @@
   [showForm]="showForm"
   (eventShowForm)="handlerUpdateView($event)"
 ></app-patient-register>
+
+<app-especialist-register
+  *ngIf="registerChosenOption === 'especialist'"
+  [showForm]="showForm"
+  (eventShowForm)="handlerUpdateView($event)"
+></app-especialist-register>
