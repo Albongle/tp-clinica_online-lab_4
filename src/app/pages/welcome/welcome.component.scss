@@ -1,20 +1,21 @@
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
+.text-shadow {
+  background-color: whitesmoke;
+  opacity: 75%;
+  padding: 0.3rem;
+  border-radius: 1rem;
+  text-shadow: 0.1rem 0.1rem 0.5rem tomato;
+  font-weight: bold;
+}
+@keyframes in-circle-swoop {
+  from {
+    clip-path: var(--circle-top-right-out);
+  }
+  to {
+    clip-path: var(--circle-bottom-right-in);
+  }
 }
 
-.overlay h2,
-.overlay p {
-  margin: 0;
-  padding: 0;
-  color: white;
+[transition-style="in:custom:circle-swoop"] {
+  --transition__duration: 5s;
+  animation-name: in-circle-swoop;
 }

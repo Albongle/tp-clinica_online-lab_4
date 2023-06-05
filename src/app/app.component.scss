@@ -1,15 +1,13 @@
-@font-face {
-  font-family: clinica_online_fonts;
-  src: url("../assets/fonts/clinica-online-titan-one-regular.ttf");
-}
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200&display=swap");
+@import url("https://unpkg.com/transition-style");
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 html {
   font-size: 62.5%;
-  font-family: clinica_online_fonts;
 }
 body {
   font-size: 1.6rem;
