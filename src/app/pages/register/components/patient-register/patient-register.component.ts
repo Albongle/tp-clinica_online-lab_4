@@ -18,6 +18,7 @@ export class PatientRegisterComponent {
     private readonly alertService: AlertService,
     private readonly formBuilder: FormBuilder
   ) {
+    this.eventShowForm = new EventEmitter();
     this.formPatientRegister = this.formBuilder.group({
       name: [
         '',
