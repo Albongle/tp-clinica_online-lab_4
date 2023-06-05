@@ -1,4 +1,9 @@
-<section class="h-100 w-100" transition-style="in:custom:circle-swoop">
+<app-loading [loading]="loading"></app-loading>
+<section
+  class="h-100 w-100"
+  transition-style="in:custom:circle-swoop"
+  [hidden]="loading"
+>
   <div
     class="row w-100 mt-3 p-2 mb-0 me-0 ms-0 justify-content-evenly align-items-end"
   >
