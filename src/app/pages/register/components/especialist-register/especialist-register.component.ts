@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
+import { SpecialitiesService } from 'src/app/services/specialities.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,17 +16,28 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './especialist-register.component.html',
   styleUrls: ['./especialist-register.component.scss'],
 })
-export class EspecialistRegisterComponent {
+export class EspecialistRegisterComponent implements OnDestroy {
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
-  protected formEspecialistRegister: FormGroup;
+  private susbcribeSpecialities: Subscription;
+  protected formSpecialistRegister: FormGroup;
+  protected specialities: string[];
+  protected showOtherSpeciality: boolean;
+
   constructor(
     private readonly userService: UserService,
     private readonly alertService: AlertService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly specialitiesService: SpecialitiesService
   ) {
+    this.susbcribeSpecialities = this.specialitiesService
+      .getAllSpecialities()
+      .subscribe(
+        (specialities) =>
+          (this.specialities = specialities.map((s: any) => s.description))
+      );
     this.eventShowForm = new EventEmitter();
-    this.formEspecialistRegister = this.formBuilder.group({
+    this.formSpecialistRegister = this.formBuilder.group({
       name: [
         '',
         [
@@ -65,6 +84,10 @@ export class EspecialistRegisterComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.susbcribeSpecialities.unsubscribe();
+  }
+
   protected register() {
     try {
       this.userService.registerWithFirebase({
@@ -77,9 +100,32 @@ export class EspecialistRegisterComponent {
     }
   }
 
-  protected return($event: Event) {
-    $event.preventDefault();
+  protected return() {
     this.showForm = !this.showForm;
     this.eventShowForm.emit(this.showForm);
+  }
+  protected selectSpeciality(value: string) {
+    if (value === 'Otro') {
+      this.showOtherSpeciality = true;
+    } else {
+      this.showOtherSpeciality = false;
+    }
+  }
+
+  private validateSpeciality() {
+    if (
+      this.specialities.some(
+        (speciality) =>
+          this.showOtherSpeciality &&
+          speciality ===
+            this.formSpecialistRegister.controls['speciality'].value
+      ) ||
+      this.formSpecialistRegister.controls['speciality'].value.toLowerCase() ===
+        'otro'
+    ) {
+      throw new Error(
+        'La nueva especialidad debe ser valida o no encontrase dentro del listado'
+      );
+    }
   }
 }

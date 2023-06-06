@@ -2,24 +2,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserService } from 'src/app/services/user.service';
-export type RegisterOption = 'especialist' | 'patient';
 
 @Component({
-  selector: 'app-patient-register',
-  templateUrl: './patient-register.component.html',
-  styleUrls: ['./patient-register.component.scss'],
+  selector: 'app-admin-register',
+  templateUrl: './admin-register.component.html',
+  styleUrls: ['./admin-register.component.scss'],
 })
-export class PatientRegisterComponent {
+export class AdminRegisterComponent {
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
-  protected formPatientRegister: FormGroup;
+  protected formAdminRegister: FormGroup;
+
   constructor(
     private readonly userService: UserService,
     private readonly alertService: AlertService,
     private readonly formBuilder: FormBuilder
   ) {
     this.eventShowForm = new EventEmitter();
-    this.formPatientRegister = this.formBuilder.group({
+    this.formAdminRegister = this.formBuilder.group({
       name: [
         '',
         [
@@ -45,17 +45,8 @@ export class PatientRegisterComponent {
           Validators.max(99999999),
         ],
       ],
-      socialWork: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(20),
-        ],
-      ],
       email: ['', [Validators.required, Validators.email]],
       profilePhoto: ['', Validators.required],
-      profilePhotoTwo: ['', Validators.required],
       password: [
         '',
         [
