@@ -154,16 +154,57 @@
             >
           </div>
         </div>
-        <div *ngIf="registerOption === 'especialist'" class="col-12">
-          <label for="speciality" class="form-label">Especialidad</label>
-          <div class="input-group">
-            <input
-              type="text"
-              formControlName="speciality"
-              class="form-control"
-              id="speciality"
-              placeholder="Especialidad"
-            />
+        <div *ngIf="registerOption === 'specialist'" class="row">
+          <div class="row mt-1 g-3 justify-content-center">
+            <div class="col-12">
+              <p class="fw-bold">Elija una especialidad:</p>
+              <div
+                *ngFor="let speciality of specialities"
+                class="form-check form-switch"
+              >
+                <label
+                  class="form-check-label"
+                  for="{{ speciality.description }}"
+                  >{{ speciality.description }}</label
+                >
+                <input
+                  class="form-check-input"
+                  id="{{ speciality.description }}"
+                  type="radio"
+                  name="speciality"
+                  formControlName="speciality"
+                  value="{{ speciality.description }}"
+                />
+              </div>
+              <div class="form-check form-switch">
+                <label class="form-check-label" for="otro">Otro</label>
+                <input
+                  class="form-check-input"
+                  id="otro"
+                  type="radio"
+                  name="speciality"
+                  formControlName="speciality"
+                  value="otro"
+                />
+              </div>
+              <div
+                *ngIf="formRegister.controls['speciality'].value === 'otro'"
+                class="col-12"
+              >
+                <label for="speciality" class="form-label"
+                  >Nueva especialidad</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    formControlName="speciality"
+                    class="form-control"
+                    id="speciality"
+                    placeholder="Espcialidad"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div
             [hidden]="
@@ -287,7 +328,7 @@
       </div>
       <div class="row g-3 justify-content-center">
         <p *ngIf="registerOption === 'patient'" class="text-center p-2">
-          Debe adjuntar 2 imagnes de perfil:
+          Debe adjuntar 2 imagenes de perfil:
         </p>
         <div [ngClass]="registerOption === 'patient' ? 'col-sm-6' : 'col-12'">
           <label for="profilePhoto" class="form-label">{{

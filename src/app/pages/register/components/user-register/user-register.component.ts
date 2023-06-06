@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
 } from '@angular/core';
 import {
@@ -14,24 +15,34 @@ import {
 import { AlertService } from 'src/app/services/alert.service';
 import { UserService } from 'src/app/services/user.service';
 import { RegisterOption } from '../../register.component';
+import { User } from 'src/app/models/users/user.model';
+import { SpecialitiesService } from 'src/app/services/specialities.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss'],
 })
-export class UserRegisterComponent implements OnChanges {
+export class UserRegisterComponent implements OnChanges, OnDestroy {
   @Input() registerOption: RegisterOption;
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
   protected image: string;
   protected title: string;
   protected formRegister: FormGroup;
+  protected user: User;
+  private susbcribeSpecialities: Subscription;
+  protected specialities: any;
   constructor(
     private readonly userService: UserService,
     private readonly alertService: AlertService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly specialitiesService: SpecialitiesService
   ) {
+    this.susbcribeSpecialities = this.specialitiesService
+      .getAllSpecialities()
+      .subscribe((specialities) => (this.specialities = specialities));
     this.eventShowForm = new EventEmitter();
     this.formRegister = this.formBuilder.group({
       name: [
@@ -71,6 +82,10 @@ export class UserRegisterComponent implements OnChanges {
       ],
     });
   }
+  ngOnDestroy(): void {
+    this.susbcribeSpecialities.unsubscribe();
+  }
+
   ngOnChanges(): void {
     this.setParametersFromProfile();
     this.updateControlsFromProfile();
@@ -107,7 +122,7 @@ export class UserRegisterComponent implements OnChanges {
         this.image = `${baseUrl}admin.png`;
         break;
 
-      case 'especialist':
+      case 'specialist':
         this.title = 'Especialistas';
         this.image = `${baseUrl}doctor.png`;
         break;
@@ -126,7 +141,7 @@ export class UserRegisterComponent implements OnChanges {
 
         break;
 
-      case 'especialist':
+      case 'specialist':
         this.formRegister.removeControl('socialWork');
         this.formRegister.removeControl('profilePhotoTwo');
         this.formRegister.addControl(

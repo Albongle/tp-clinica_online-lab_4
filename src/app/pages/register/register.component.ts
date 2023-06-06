@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-export type RegisterOption = 'especialist' | 'patient' | 'admin';
+export type RegisterOption = 'specialist' | 'patient' | 'admin';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
