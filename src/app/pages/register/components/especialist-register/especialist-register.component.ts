@@ -54,7 +54,6 @@ export class EspecialistRegisterComponent {
       ],
       email: ['', [Validators.required, Validators.email]],
       profilePhoto: ['', Validators.required],
-      profilePhotoTwo: ['', Validators.required],
       password: [
         '',
         [

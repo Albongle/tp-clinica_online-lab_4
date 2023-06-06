@@ -1,0 +1,344 @@
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+  [hidden]="showForm"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-4 col-md-6 col-sm-8">
+    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+      <button
+        title="Volver"
+        class="col-md-3 col-2 btn btn-warning"
+        (click)="return()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <div class="row w-100 justify-content-center align-items-center">
+      <h2 class="text-center">
+        {{ title }}
+      </h2>
+      <img class="col-3 mt-1" [src]="image" alt="registro_usuario" />
+    </div>
+    <form [formGroup]="formRegister" class="p-2" (ngSubmit)="register()">
+      <div class="row g-3 justify-content-center">
+        <div class="col-sm-6">
+          <label for="name" class="form-label">Nombre</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            id="name"
+            placeholder="Nombre"
+          />
+
+          <div
+            [hidden]="
+              formRegister.controls['name'].pristine ||
+              !formRegister.controls['name'].invalid
+            "
+          >
+            <span
+              *ngIf="formRegister.controls['name'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Nombre es requerido</span
+            >
+            <span
+              *ngIf="formRegister.controls['name'].errors?.['minlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Debe poseer al menos 3 caracteres</span
+            >
+            <span
+              *ngIf="formRegister.controls['name'].errors?.['maxlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Supero los caracteres</span
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="lastName" class="form-label">Apellido</label>
+          <input
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            id="lastName"
+            placeholder="Apellido"
+          />
+          <div
+            [hidden]="
+              formRegister.controls['lastName'].pristine ||
+              !formRegister.controls['lastName'].invalid
+            "
+          >
+            <span
+              *ngIf="formRegister.controls['lastName'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Apellido es requerido</span
+            >
+            <span
+              *ngIf="formRegister.controls['lastName'].errors?.['minlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Debe poseer al menos 3 caracteres</span
+            >
+            <span
+              *ngIf="formRegister.controls['lastName'].errors?.['maxlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Supero los caracteres</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 justify-content-center">
+        <div class="col-sm-6">
+          <label for="dni" class="form-label">Dni</label>
+          <input
+            type="number"
+            formControlName="dni"
+            class="form-control"
+            id="dni"
+            placeholder="Dni"
+          />
+
+          <div
+            [hidden]="
+              formRegister.controls['dni'].pristine ||
+              !formRegister.controls['dni'].invalid
+            "
+          >
+            <span
+              *ngIf="formRegister.controls['dni'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Dni es requerido</span
+            >
+            <span
+              *ngIf="formRegister.controls['dni'].errors?.['min']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Dni invalido</span
+            >
+            <span
+              *ngIf="formRegister.controls['dni'].errors?.['max']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Dni invalido</span
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="age" class="form-label">Edad</label>
+          <input
+            type="number"
+            formControlName="age"
+            class="form-control"
+            id="age"
+            placeholder="Edad"
+          />
+          <div
+            [hidden]="
+              formRegister.controls['age'].pristine ||
+              !formRegister.controls['age'].invalid
+            "
+          >
+            <span
+              *ngIf="formRegister.controls['age'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Edad es requerido</span
+            >
+            <span
+              *ngIf="formRegister.controls['age'].errors?.['min']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Edad invalida</span
+            >
+            <span
+              *ngIf="formRegister.controls['age'].errors?.['max']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Edad invalida</span
+            >
+          </div>
+        </div>
+        <div *ngIf="registerOption === 'especialist'" class="col-12">
+          <label for="speciality" class="form-label">Especialidad</label>
+          <div class="input-group">
+            <input
+              type="text"
+              formControlName="speciality"
+              class="form-control"
+              id="speciality"
+              placeholder="Especialidad"
+            />
+          </div>
+          <div
+            [hidden]="
+              formRegister.controls['speciality'].pristine ||
+              !formRegister.controls['speciality'].invalid
+            "
+          >
+            <span
+              *ngIf="formRegister.controls['speciality'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Especialidad es requerido</span
+            >
+            <span
+              *ngIf="formRegister.controls['speciality'].errors?.['minlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Debe poseer al menos 3 caracteres</span
+            >
+            <span
+              *ngIf="formRegister.controls['speciality'].errors?.['maxlength']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Supero los caracteres</span
+            >
+          </div>
+        </div>
+      </div>
+      <div *ngIf="registerOption === 'patient'" class="col-12">
+        <label for="socialWork" class="form-label">Obra Social</label>
+        <div class="input-group">
+          <input
+            type="text"
+            formControlName="socialWork"
+            class="form-control"
+            id="socialWork"
+            placeholder="Obra Social"
+          />
+        </div>
+        <div
+          [hidden]="
+            formRegister.controls['socialWork'].pristine ||
+            !formRegister.controls['socialWork'].invalid
+          "
+        >
+          <span
+            *ngIf="formRegister.controls['socialWork'].errors?.['required']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Obra social es requerido</span
+          >
+          <span
+            *ngIf="formRegister.controls['socialWork'].errors?.['minlength']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Debe poseer al menos 3 caracteres</span
+          >
+          <span
+            *ngIf="formRegister.controls['socialWork'].errors?.['maxlength']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Supero los caracteres</span
+          >
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="email" class="form-label">Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="you@example.com"
+        />
+        <div
+          [hidden]="
+            formRegister.controls['email'].pristine ||
+            !formRegister.controls['email'].invalid
+          "
+        >
+          <span
+            *ngIf="formRegister.controls['email'].errors?.['required']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Email es requerido</span
+          >
+          <span
+            *ngIf="formRegister.controls['email'].errors?.['email']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Email debe ser valido</span
+          >
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            placeholder="Constraseña"
+          />
+        </div>
+        <div
+          [hidden]="
+            formRegister.controls['password'].pristine ||
+            !formRegister.controls['password'].invalid
+          "
+        >
+          <span
+            *ngIf="formRegister.controls['password'].errors?.['required']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Password es requerido</span
+          >
+          <span
+            *ngIf="formRegister.controls['password'].errors?.['minlength']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Debe poseer al menos 6 caracteres</span
+          >
+          <span
+            *ngIf="formRegister.controls['password'].errors?.['maxlength']"
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Maximo 15</span
+          >
+        </div>
+      </div>
+      <div class="row g-3 justify-content-center">
+        <p *ngIf="registerOption === 'patient'" class="text-center p-2">
+          Debe adjuntar 2 imagnes de perfil:
+        </p>
+        <div [ngClass]="registerOption === 'patient' ? 'col-sm-6' : 'col-12'">
+          <label for="profilePhoto" class="form-label">{{
+            registerOption === "patient" ? "Foto 1 " : "Foto de Perfil"
+          }}</label>
+          <input
+            type="file"
+            formControlName="profilePhoto"
+            class="form-control"
+            id="profilePhoto"
+            placeholder="profilePhoto"
+          />
+
+          <span
+            [hidden]="
+              !formRegister.controls['profilePhoto'].touched ||
+              !formRegister.controls['profilePhoto'].errors
+            "
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Imagen es requerido</span
+          >
+        </div>
+
+        <div *ngIf="registerOption === 'patient'" class="col-sm-6">
+          <label for="profilePhotoTwo" class="form-label">Foto 2</label>
+          <input
+            type="file"
+            formControlName="profilePhotoTwo"
+            class="form-control"
+            id="profilePhotoTwo"
+            placeholder="profilePhotoTwo"
+          />
+
+          <span
+            [hidden]="
+              !formRegister.controls['profilePhotoTwo'].touched ||
+              !formRegister.controls['profilePhotoTwo'].errors
+            "
+            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+            >Imagen 2 es requerido</span
+          >
+        </div>
+      </div>
+
+      <input
+        class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+        type="submit"
+        value="Registrate"
+      />
+    </form>
+  </div>
+</section>
+
+{{ formRegister.value | json }}
