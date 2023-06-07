@@ -60,7 +60,10 @@
     </button>
   </article>
 
-  <article class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-10 m-1 p-3">
+  <article
+    *ngIf="userService.userLogged?.userRole === 'admin'"
+    class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-10 m-1 p-3"
+  >
     <div class="card text-bg-light">
       <img
         src="../../../assets/images/register/admin.png"

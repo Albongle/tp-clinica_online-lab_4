@@ -32,9 +32,7 @@ export class EspecialistRegisterComponent implements OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly specialitiesService: SpecialitiesService
   ) {
-    this.profilesPhotos = {
-      1: { fileName: '', file: '' },
-    };
+    this.profilesPhotos = {};
     this.susbcribeSpecialities = this.specialitiesService
       .getAllSpecialities()
       .subscribe(
@@ -97,9 +95,9 @@ export class EspecialistRegisterComponent implements OnDestroy {
     try {
       if (this.formSpecialistRegister.valid) {
         this.validateSpeciality();
+        await this.uploadFiles();
         const user = this.createUser();
         await this.userService.registerWithFirebase(user);
-        await this.uploadFiles();
         await this.alertService.showAlert({
           icon: 'success',
           message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
@@ -149,25 +147,23 @@ export class EspecialistRegisterComponent implements OnDestroy {
   protected selectFile($event: Event, index: number) {
     const target = $event.target as HTMLInputElement;
     const file = target.files?.[0];
-    const profilePhoto = { file: file, fileName: index };
-    this.profilesPhotos[index] = profilePhoto;
+    this.profilesPhotos[index] = file;
   }
 
   private async uploadFiles() {
-    for (let index = 1; index < 2; index++) {
-      this.profilesPhotos[
-        index
-      ].fileName = `${this.formSpecialistRegister.value.email}_${this.profilesPhotos[index].fileName}`;
-      await this.userService.uploadPhoto(
-        this.profilesPhotos[index].fileName,
-        this.profilesPhotos[index].file
-      );
+    for (const key in this.profilesPhotos) {
+      const file = this.profilesPhotos[key] as File;
+      const extension = file?.name.split('.').pop();
+      const fileName = `${this.formSpecialistRegister.value.email}_${key}.${extension}`;
+      this.formSpecialistRegister.value.profilePhoto = fileName;
+      await this.userService.uploadPhoto(fileName, this.profilesPhotos[key]);
     }
   }
 
   private createUser() {
     return new Specialist({
       ...this.formSpecialistRegister.value,
+      verifiedByAdmin: false,
     });
   }
 }

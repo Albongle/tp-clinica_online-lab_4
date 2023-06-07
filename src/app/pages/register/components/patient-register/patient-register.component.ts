@@ -20,10 +20,7 @@ export class PatientRegisterComponent {
     private readonly alertService: AlertService,
     private readonly formBuilder: FormBuilder
   ) {
-    this.profilesPhotos = {
-      1: { fileName: '', file: '' },
-      2: { fileName: '', file: '' },
-    };
+    this.profilesPhotos = {};
     this.eventShowForm = new EventEmitter();
     this.formPatientRegister = this.formBuilder.group({
       name: [
@@ -76,9 +73,9 @@ export class PatientRegisterComponent {
   protected async register() {
     try {
       if (this.formPatientRegister.valid) {
+        await this.uploadFiles();
         const user = this.createUser();
         await this.userService.registerWithFirebase(user);
-        await this.uploadFiles();
         await this.alertService.showAlert({
           icon: 'success',
           message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
@@ -107,19 +104,20 @@ export class PatientRegisterComponent {
   protected selectFile($event: Event, index: number) {
     const target = $event.target as HTMLInputElement;
     const file = target.files?.[0];
-    const profilePhoto = { file: file, fileName: index };
-    this.profilesPhotos[index] = profilePhoto;
+    this.profilesPhotos[index] = file;
   }
 
   private async uploadFiles() {
-    for (let index = 1; index < 3; index++) {
-      this.profilesPhotos[
-        index
-      ].fileName = `${this.formPatientRegister.value.email}_${this.profilesPhotos[index].fileName}`;
-      await this.userService.uploadPhoto(
-        this.profilesPhotos[index].fileName,
-        this.profilesPhotos[index].file
-      );
+    for (const key in this.profilesPhotos) {
+      const file = this.profilesPhotos[key] as File;
+      const extension = file?.name.split('.').pop();
+      const fileName = `${this.formPatientRegister.value.email}_${key}.${extension}`;
+      if (key === '1') {
+        this.formPatientRegister.value.profilePhoto = fileName;
+      } else {
+        this.formPatientRegister.value.profilePhotoTwo = fileName;
+      }
+      await this.userService.uploadPhoto(fileName, this.profilesPhotos[key]);
     }
   }
 

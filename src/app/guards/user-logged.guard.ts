@@ -6,7 +6,6 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 
 @Injectable({
@@ -22,10 +21,10 @@ export class UserLoggedGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
     await this.userService.setUserLogger();
-    if (this.userService.userLogged) {
-      await this.router.navigateByUrl('games');
-      return false;
+    if (!this.userService.userLogged) {
+      return true;
     }
-    return true;
+    await this.router.navigateByUrl('games');
+    return false;
   }
 }

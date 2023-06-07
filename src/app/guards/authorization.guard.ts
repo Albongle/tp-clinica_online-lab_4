@@ -6,7 +6,6 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AlertService } from '../services/alert.service';
 
@@ -24,7 +23,7 @@ export class AuthorizationGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
     await this.userService.setUserLogger();
-    if (this.userService.userLogged) {
+    if (this.userService.userLogged && this.userService.userLogged.verified) {
       return true;
     }
     await this.router.navigateByUrl('');

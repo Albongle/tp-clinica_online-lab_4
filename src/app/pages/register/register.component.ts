@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 export type RegisterOption = 'specialist' | 'patient' | 'admin';
 @Component({
   selector: 'app-register',
@@ -9,7 +10,7 @@ export class RegisterComponent implements OnInit {
   protected loading: boolean;
   protected showForm: boolean;
   protected registerChosenOption: RegisterOption;
-  constructor() {
+  constructor(protected readonly userService: UserService) {
     this.showForm = true;
     this.loading = true;
   }

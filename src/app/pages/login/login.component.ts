@@ -35,6 +35,7 @@ export class LoginComponent {
       });
       await this.router.navigateByUrl('');
     } catch (error: any) {
+      this.userService.logout();
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,

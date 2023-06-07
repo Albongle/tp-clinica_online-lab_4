@@ -14,7 +14,7 @@ import { UserCredential } from 'firebase/auth';
 })
 export class UserService {
   private _userLogged: User | undefined;
-  private _userImageUrl: string | null;
+  private _userImageUrl: string | undefined;
   constructor(
     private readonly firebaseAuthProvider: FirebaseAuthProvider,
     private readonly firebaseStoreProvider: FirebaseStoreProvider,
@@ -27,20 +27,22 @@ export class UserService {
       email,
       password
     );
+
     const user = await this.findUserFromSessionByEmail();
     if (user?.userRole !== UserRole.ADMIN) {
       if (result.user.emailVerified) {
         await this.rewriteFieldVerified(user!, result);
-
         if (user instanceof Specialist) {
           await this.validateSpecialist(user);
         }
+      } else {
+        await this.logout();
+        throw new Error('Debe validar su correo electronico');
       }
-      await this.logout();
-      throw new Error('Debe validar su correo electronico');
     }
     this._userLogged = user;
-    this._userImageUrl = await this.getUrlPhotoProfile(1);
+    this._userImageUrl = await this.getUrlPhotoProfile(user?.profilePhoto!);
+
     return this._userLogged;
   }
 
@@ -52,9 +54,30 @@ export class UserService {
     await this.firebaseAuthProvider.sendEmailVerification();
     await this.saveUserWithIdInStore(user.userId, user);
     this._userLogged = user;
-    await this.router.navigateByUrl('login');
+    await this.logout();
     return this._userLogged;
   }
+
+  public async getUsersFromStoreMapped() {
+    const users = await this.getUsersFromStore();
+    const user = {
+      userId: '',
+      verified: '',
+      userRole: '',
+      name: '',
+      lastName: '',
+      age: '',
+      email: '',
+      password: '',
+      socialWork: '',
+      profilePhoto: '',
+      profilePhotoTwo: '',
+      verifiedByAdmin: '',
+      speciality: '',
+    };
+    return users.map((u) => ({ ...user, ...u }));
+  }
+
   public async getUsersFromStore() {
     const users = (await firstValueFrom(
       this.firebaseStoreProvider.getCollection('usuarios')
@@ -90,15 +113,22 @@ export class UserService {
   public async setUserLogger() {
     this._userLogged = await this.findUserFromSessionByEmail();
     if (this._userLogged) {
-      this._userImageUrl = await this.getUrlPhotoProfile(1);
+      this._userImageUrl = await this.getUrlPhotoProfile(
+        this._userLogged.profilePhoto
+      );
     }
   }
-  public async getUrlPhotoProfile(index: number) {
-    const reference = this.firebaseStoreProvider.referenceCloudStorage(
-      `${this._userLogged?.email}_${index}`
-    );
-    const url = await this.firebaseStoreProvider.getUrlFromFile(reference);
-    return url;
+  public async getUrlPhotoProfile(fileName: string) {
+    try {
+      const reference =
+        this.firebaseStoreProvider.referenceCloudStorage(fileName);
+      const url = await this.firebaseStoreProvider.getUrlFromFile(reference);
+      return url;
+    } catch (error) {
+      console.warn('no se obtuvo la imagen del usuario');
+    }
+
+    return undefined;
   }
 
   private async findUserFromSessionByEmail() {

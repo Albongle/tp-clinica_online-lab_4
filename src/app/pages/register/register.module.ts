@@ -22,5 +22,6 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     FormsModule,
     LoadingModule,
   ],
+  exports: [RegisterComponent],
 })
 export class RegisterModule {}
