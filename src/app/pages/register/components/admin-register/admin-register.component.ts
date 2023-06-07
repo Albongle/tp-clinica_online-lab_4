@@ -60,10 +60,10 @@ export class AdminRegisterComponent {
 
   protected register() {
     try {
-      this.userService.registerWithFirebase({
-        email: 'alejandro.bongioanni@gmail.com',
-        password: '12345678',
-      });
+      // this.userService.registerWithFirebase({
+      //   email: 'alejandro.bongioanni@gmail.com',
+      //   password: '12345678',
+      // });
       this.alertService.showAlert({ icon: 'success', message: 'Registro ok' });
     } catch (error: any) {
       this.alertService.showAlert({ icon: 'error', message: error.message });

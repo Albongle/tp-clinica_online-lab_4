@@ -1,7 +1,7 @@
 import { User, UserRole } from './user.model';
 
 export class Especialist extends User {
-  public verified: boolean;
+  public verifiedByAdmin: boolean;
   public speciality: string;
   constructor(params: {
     name: string;

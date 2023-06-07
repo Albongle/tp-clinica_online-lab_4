@@ -262,7 +262,9 @@
             formControlName="profilePhoto"
             class="form-control"
             id="profilePhoto"
-            placeholder="profilePhoto"
+            accept=".jpeg,.jpg,.png,.svg"
+            placeholder="Foto de perfil 1"
+            (input)="selectFile($event, 1)"
           />
 
           <span
@@ -282,7 +284,9 @@
             formControlName="profilePhotoTwo"
             class="form-control"
             id="profilePhotoTwo"
-            placeholder="profilePhotoTwo"
+            accept=".jpeg,.jpg,.png,.svg"
+            placeholder="Foto de perfil 2"
+            (input)="selectFile($event, 2)"
           />
 
           <span

@@ -4,8 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
-  User,
 } from '@angular/fire/auth';
+import { User } from '../models/users/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +13,13 @@ import {
 export class FirebaseAuthProvider {
   constructor(private readonly fireAuth: Auth) {}
 
-  public loginWithEmailAndPassword(user: any) {
-    return signInWithEmailAndPassword(
-      this.fireAuth,
-      user.email!,
-      user.password!
-    );
+  public loginWithEmailAndPassword(email: string, password: string) {
+    return signInWithEmailAndPassword(this.fireAuth, email, password);
   }
 
-  public async registerUserWithEmailAndPassword(user: any) {
+  public async registerUserWithEmailAndPassword(user: User) {
+    console.log(user);
+
     return createUserWithEmailAndPassword(
       this.fireAuth,
       user.email!,

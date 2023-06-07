@@ -13,7 +13,7 @@ export class LoginComponent {
   protected formLogin: FormGroup;
   constructor(
     private readonly alertService: AlertService,
-    private readonly userService: UserService,
+    protected readonly userService: UserService,
     private readonly router: Router,
     private readonly formBuilder: FormBuilder
   ) {
@@ -23,15 +23,12 @@ export class LoginComponent {
     });
   }
 
-  ngOnInit(): void {
-    if (this.userService.userLogged) {
-    }
-  }
-
   public async loginWithMailAndPassword() {
-    const user = { ...this.formLogin.value };
     try {
-      const userLog = await this.userService.loginWithEmailAndPassword(user);
+      const userLog = await this.userService.loginWithEmailAndPassword(
+        this.formLogin.value.email,
+        this.formLogin.value.password
+      );
       this.alertService.showAlert({
         icon: 'success',
         message: `Bienvenido ${userLog.email}`,
@@ -41,6 +38,7 @@ export class LoginComponent {
       this.alertService.showAlert({ icon: 'error', message: error.message });
     }
 
+    this.userService.setUserLogger();
     this.formLogin.reset();
   }
 }
