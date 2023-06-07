@@ -28,16 +28,8 @@ export class AuthorizationGuard implements CanActivate {
     | boolean
     | UrlTree {
     this.userService.setUserLogger();
-    if (this.userService.userLogged) {
-      if (this.userService.userLogged.verified) {
-        return true;
-      } else {
-        this.alertService.showAlert({
-          icon: 'info',
-          message: 'Debe verificar su correo',
-          timer: 2000,
-        });
-      }
+    if (this.userService.userLogged && this.userService.userLogged.verified) {
+      return true;
     }
     this.router.navigateByUrl('');
     return false;

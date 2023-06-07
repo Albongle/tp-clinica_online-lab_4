@@ -24,16 +24,20 @@ export class UserService {
       email,
       password
     );
-    const users = await this.getUsersFromStore();
-    const user = users.find(
-      (u: any) => u.email === email && u.password === password
-    ) as User;
-    user.verified = result.user.emailVerified;
-    await this.saveUserWithIdInStore(user.userId, user);
-    this.sessionStorageProvider.saveCurrentUser({ ...user, password: 'n/a' });
-    this._userLogged = user;
-    this._userImageUrl = await this.getUrlPhotoProfile(1);
-    return this._userLogged;
+    if (result.user.emailVerified) {
+      const users = await this.getUsersFromStore();
+      const user = users.find(
+        (u: any) => u.email === email && u.password === password
+      ) as User;
+      user.verified = result.user.emailVerified;
+      await this.saveUserWithIdInStore(user.userId, user);
+      this.sessionStorageProvider.saveCurrentUser({ ...user, password: 'n/a' });
+      this._userLogged = user;
+      this._userImageUrl = await this.getUrlPhotoProfile(1);
+      return this._userLogged;
+    }
+    this.logout();
+    throw new Error('Debe verificar su correo electronico');
   }
 
   public async registerWithFirebase(user: User) {
@@ -43,8 +47,8 @@ export class UserService {
     user.userId = result.user.uid;
     await this.firebaseAuthProvider.sendEmailVerification();
     await this.saveUserWithIdInStore(user.userId, user);
-    this.sessionStorageProvider.saveCurrentUser({ ...user, password: 'n/a' });
     this._userLogged = user;
+    this.router.navigateByUrl('login');
     return this._userLogged;
   }
   public async getUsersFromStore() {
@@ -65,7 +69,7 @@ export class UserService {
     this.firebaseAuthProvider.signOut().then(() => {
       this.sessionStorageProvider.clearCurrentUser();
       this._userLogged = null;
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('login');
     });
   }
 
