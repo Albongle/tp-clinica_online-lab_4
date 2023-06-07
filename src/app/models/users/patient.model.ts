@@ -1,4 +1,3 @@
-import { UploadResult } from '@angular/fire/storage';
 import { User, UserRole } from './user.model';
 
 export class Patient extends User {

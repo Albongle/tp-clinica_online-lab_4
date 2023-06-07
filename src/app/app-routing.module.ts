@@ -14,6 +14,7 @@ const routes: Routes = [
     path: 'welcome',
     loadChildren: () =>
       import('./pages/welcome/welcome.module').then((m) => m.WelcomeModule),
+    canActivate: [UserLoggedGuard],
   },
   {
     path: 'register',

@@ -17,17 +17,13 @@ export class UserLoggedGuard implements CanActivate {
     private readonly userService: UserService,
     private readonly router: Router
   ) {}
-  public canActivate(
+  public async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    this.userService.setUserLogger();
+  ): Promise<boolean | UrlTree> {
+    await this.userService.setUserLogger();
     if (this.userService.userLogged) {
-      this.router.navigateByUrl('games');
+      await this.router.navigateByUrl('games');
       return false;
     }
     return true;

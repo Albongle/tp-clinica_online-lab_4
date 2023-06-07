@@ -21,8 +21,8 @@ export class PatientRegisterComponent {
     private readonly formBuilder: FormBuilder
   ) {
     this.profilesPhotos = {
-      1: { fileName: '', file: '', reference: '' },
-      2: { fileName: '', file: '', reference: '' },
+      1: { fileName: '', file: '' },
+      2: { fileName: '', file: '' },
     };
     this.eventShowForm = new EventEmitter();
     this.formPatientRegister = this.formBuilder.group({
@@ -76,22 +76,26 @@ export class PatientRegisterComponent {
   protected async register() {
     try {
       if (this.formPatientRegister.valid) {
-        await this.uploadFiles();
         const user = this.createUser();
         await this.userService.registerWithFirebase(user);
-        this.alertService.showAlert({
+        await this.uploadFiles();
+        await this.alertService.showAlert({
           icon: 'success',
           message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
         });
         this.formPatientRegister.reset();
       } else {
-        this.alertService.showAlert({
+        await this.alertService.showAlert({
           icon: 'error',
           message: 'Debe completar todos los campos',
         });
       }
     } catch (error: any) {
-      this.alertService.showAlert({ icon: 'error', message: error.message });
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+        timer: 3000,
+      });
     }
   }
 
@@ -112,7 +116,7 @@ export class PatientRegisterComponent {
       this.profilesPhotos[
         index
       ].fileName = `${this.formPatientRegister.value.email}_${this.profilesPhotos[index].fileName}`;
-      this.profilesPhotos[index].reference = await this.userService.uploadPhoto(
+      await this.userService.uploadPhoto(
         this.profilesPhotos[index].fileName,
         this.profilesPhotos[index].file
       );
@@ -122,8 +126,6 @@ export class PatientRegisterComponent {
   private createUser() {
     return new Patient({
       ...this.formPatientRegister.value,
-      profilePhoto: this.profilesPhotos[1].reference,
-      profilePhotoTwo: this.profilesPhotos[2].reference,
     });
   }
 }

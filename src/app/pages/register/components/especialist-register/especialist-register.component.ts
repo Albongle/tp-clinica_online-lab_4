@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Specialist } from 'src/app/models/users/specialist.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { SpecialitiesService } from 'src/app/services/specialities.service';
 import { UserService } from 'src/app/services/user.service';
@@ -20,6 +21,7 @@ export class EspecialistRegisterComponent implements OnDestroy {
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
   private susbcribeSpecialities: Subscription;
+  private profilesPhotos: any;
   protected formSpecialistRegister: FormGroup;
   protected specialities: string[];
   protected showOtherSpeciality: boolean;
@@ -30,6 +32,9 @@ export class EspecialistRegisterComponent implements OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly specialitiesService: SpecialitiesService
   ) {
+    this.profilesPhotos = {
+      1: { fileName: '', file: '' },
+    };
     this.susbcribeSpecialities = this.specialitiesService
       .getAllSpecialities()
       .subscribe(
@@ -88,18 +93,31 @@ export class EspecialistRegisterComponent implements OnDestroy {
     this.susbcribeSpecialities.unsubscribe();
   }
 
-  protected register() {
+  protected async register() {
     try {
-      // this.userService.registerWithFirebase({
-      //   email: 'alejandro.bongioanni@gmail.com',
-      //   password: '12345678',
-      // });
-      this.alertService.showAlert({ icon: 'success', message: 'Registro ok' });
+      if (this.formSpecialistRegister.valid) {
+        this.validateSpeciality();
+        const user = this.createUser();
+        await this.userService.registerWithFirebase(user);
+        await this.uploadFiles();
+        await this.alertService.showAlert({
+          icon: 'success',
+          message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
+        });
+        this.formSpecialistRegister.reset();
+      } else {
+        await this.alertService.showAlert({
+          icon: 'error',
+          message: 'Debe completar todos los campos',
+        });
+      }
     } catch (error: any) {
-      this.alertService.showAlert({ icon: 'error', message: error.message });
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+      });
     }
   }
-
   protected return() {
     this.showForm = !this.showForm;
     this.eventShowForm.emit(this.showForm);
@@ -127,5 +145,29 @@ export class EspecialistRegisterComponent implements OnDestroy {
         'La nueva especialidad debe ser valida o no encontrase dentro del listado'
       );
     }
+  }
+  protected selectFile($event: Event, index: number) {
+    const target = $event.target as HTMLInputElement;
+    const file = target.files?.[0];
+    const profilePhoto = { file: file, fileName: index };
+    this.profilesPhotos[index] = profilePhoto;
+  }
+
+  private async uploadFiles() {
+    for (let index = 1; index < 2; index++) {
+      this.profilesPhotos[
+        index
+      ].fileName = `${this.formSpecialistRegister.value.email}_${this.profilesPhotos[index].fileName}`;
+      await this.userService.uploadPhoto(
+        this.profilesPhotos[index].fileName,
+        this.profilesPhotos[index].file
+      );
+    }
+  }
+
+  private createUser() {
+    return new Specialist({
+      ...this.formSpecialistRegister.value,
+    });
   }
 }

@@ -5,12 +5,12 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
   providedIn: 'root',
 })
 export class AlertService {
-  public showAlert(config: {
+  public async showAlert(config: {
     icon: SweetAlertIcon;
     message: string;
     timer?: number;
   }) {
-    Swal.fire({
+    await Swal.fire({
       position: 'center',
       icon: config.icon,
       title: config.message,

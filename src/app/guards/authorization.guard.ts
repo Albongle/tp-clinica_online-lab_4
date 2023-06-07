@@ -19,19 +19,15 @@ export class AuthorizationGuard implements CanActivate {
     private readonly router: Router,
     private readonly alertService: AlertService
   ) {}
-  public canActivate(
+  public async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    this.userService.setUserLogger();
-    if (this.userService.userLogged && this.userService.userLogged.verified) {
+  ): Promise<boolean | UrlTree> {
+    await this.userService.setUserLogger();
+    if (this.userService.userLogged) {
       return true;
     }
-    this.router.navigateByUrl('');
+    await this.router.navigateByUrl('');
     return false;
   }
 }

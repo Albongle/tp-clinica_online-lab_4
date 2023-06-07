@@ -29,16 +29,19 @@ export class LoginComponent {
         this.formLogin.value.email,
         this.formLogin.value.password
       );
-      this.alertService.showAlert({
+      await this.alertService.showAlert({
         icon: 'success',
-        message: `Bienvenido ${userLog.email}`,
+        message: `Bienvenido ${userLog!.email}`,
       });
-      this.router.navigateByUrl('');
+      await this.router.navigateByUrl('');
     } catch (error: any) {
-      this.alertService.showAlert({ icon: 'error', message: error.message });
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+      });
     }
 
-    this.userService.setUserLogger();
+    await this.userService.setUserLogger();
     this.formLogin.reset();
   }
 }

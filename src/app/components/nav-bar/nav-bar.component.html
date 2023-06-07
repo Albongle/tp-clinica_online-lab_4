@@ -45,9 +45,8 @@
                 [src]="userService.userImageUrl ?? imgDefault"
                 alt="img-usuario"
                 [ngStyle]="{ width: '32px', 'border-radius': '100%' }"
-              />{{ userService.userLogged.lastName }},{{
-                userService.userLogged.name
-              }}
+              />{{ userService.userLogged.lastName }},
+              {{ userService.userLogged.name }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" (click)="signOut()">Logout</a></li>

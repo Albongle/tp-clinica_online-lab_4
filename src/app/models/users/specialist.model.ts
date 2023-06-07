@@ -1,6 +1,6 @@
 import { User, UserRole } from './user.model';
 
-export class Especialist extends User {
+export class Specialist extends User {
   public verifiedByAdmin: boolean;
   public speciality: string;
   constructor(params: {
@@ -9,10 +9,10 @@ export class Especialist extends User {
     age: number;
     email: string;
     password: string;
-    profilePhoto: string;
     speciality: string;
   }) {
     super(params, UserRole.ESPECILIST);
     this.speciality = params.speciality;
+    this.verifiedByAdmin = false;
   }
 }
