@@ -1,4 +1,4 @@
-import { User, UserRole } from './user.model';
+import { User } from './user.model';
 
 export class Specialist extends User {
   public verifiedByAdmin: boolean;
@@ -8,6 +8,7 @@ export class Specialist extends User {
     name: string;
     lastName: string;
     age: number;
+    dni: string;
     email: string;
     password: string;
     speciality: string;
@@ -15,7 +16,7 @@ export class Specialist extends User {
     verifiedByAdmin: boolean;
     profilePhoto: string;
   }) {
-    super(params, UserRole.ESPECILIST);
+    super(params, 'specialist');
     this.verifiedByAdmin = params.verifiedByAdmin;
     this.speciality = params.speciality;
   }

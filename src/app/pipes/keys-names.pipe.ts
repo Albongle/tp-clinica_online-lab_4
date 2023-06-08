@@ -10,6 +10,7 @@ export class KeysMappedPipe implements PipeTransform {
       { key: 'verified', value: 'Email Verificado' },
       { key: 'userRole', value: 'Rol de Usuario' },
       { key: 'name', value: 'Nombre' },
+      { key: 'dni', value: 'Dni' },
       { key: 'lastName', value: 'Apellido' },
       { key: 'age', value: 'Edad' },
       { key: 'email', value: 'Email' },

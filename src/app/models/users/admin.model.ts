@@ -1,4 +1,4 @@
-import { User, UserRole } from './user.model';
+import { User } from './user.model';
 
 export class Admin extends User {
   constructor(params: {
@@ -7,10 +7,11 @@ export class Admin extends User {
     lastName: string;
     age: number;
     email: string;
+    dni: string;
     verified: boolean;
     password: string;
     profilePhoto: string;
   }) {
-    super(params, UserRole.ADMIN);
+    super(params, 'admin');
   }
 }

@@ -1,8 +1,52 @@
 <section class="row justify-content-end w-100 p-0 m-0">
   <div class="p-5 mt-4 shadow bg-body-tertiary rounded-3">
     <div class="container-fluid py-5">
-      <h1 class="text-center display-5 fw-bold">Usuarios registrados</h1>
-      <app-table [list]="listUsers"></app-table>
+      <h1 class="text-center display-5 fw-bold">Listar usuarios registrados</h1>
+
+      <section
+        class="row justify-content-center align-items-center m-0 p-0 w-100"
+        [hidden]="!showForm"
+      >
+        <button
+          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          (click)="chooseListOption('specialist')"
+          title="Especialistas"
+        >
+          <img
+            src="../../../assets/images/register/doctor.png"
+            class="card-img img-fluid rounded-circle"
+            alt="..."
+          />
+        </button>
+        <button
+          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          (click)="chooseListOption('patient')"
+          title="Pacientes"
+        >
+          <img
+            src="../../../assets/images/register/paciente.png"
+            class="card-img img-fluid rounded-circle"
+            alt="..."
+          />
+        </button>
+        <button
+          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          (click)="chooseListOption('admin')"
+          title="Administradores"
+        >
+          <img
+            src="../../../assets/images/register/admin.png"
+            class="card-img img-fluid rounded-circle"
+            alt="..."
+          />
+        </button>
+      </section>
+      <app-table-users
+        [list]="listFiltered"
+        [showForm]="showForm"
+        [roleOption]="listChoseOption"
+        (eventShowForm)="handlerUpdateView($event)"
+      ></app-table-users>
     </div>
   </div>
 

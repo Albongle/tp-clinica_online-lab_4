@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRole } from 'src/app/models/users/user.model';
 import { UserService } from 'src/app/services/user.service';
-export type RegisterOption = 'specialist' | 'patient' | 'admin';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -9,7 +10,7 @@ export type RegisterOption = 'specialist' | 'patient' | 'admin';
 export class RegisterComponent implements OnInit {
   protected loading: boolean;
   protected showForm: boolean;
-  protected registerChosenOption: RegisterOption;
+  protected registerChosenOption: UserRole;
   constructor(protected readonly userService: UserService) {
     this.showForm = true;
     this.loading = true;
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
       this.loading = false;
     }, 2300);
   }
-  protected chooseRegistrationOption(option: RegisterOption) {
+  protected chooseRegistrationOption(option: UserRole) {
     this.showForm = !this.showForm;
     this.registerChosenOption = option;
   }

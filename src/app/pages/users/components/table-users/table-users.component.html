@@ -1,0 +1,43 @@
+<section class="h-100 p-4" [hidden]="showForm">
+  <div class="w-100 row justify-content-center justify-content-sm-end p-2 m-0">
+    <button
+      title="Volver"
+      class="col-sm-1 col-md-2 col-8 btn btn-warning"
+      (click)="return()"
+    >
+      <i class="fa-solid fa-circle-arrow-left"></i>
+    </button>
+  </div>
+  <div class="table-responsive">
+    <table *ngIf="list" class="table table-striped table-ligth">
+      <thead class="table-dark">
+        <tr>
+          <th
+            class="text-center fw-bold"
+            *ngFor="let item of list[0] | keyvalue"
+          >
+            {{ item.key | keysmapped | uppercase }}
+          </th>
+          <th *ngIf="roleOption === 'specialist'">VALIDAR REGISTRO</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let element of list">
+          <td class="text-center" *ngFor="let item of element | keyvalue">
+            <div *ngIf="item.value">
+              {{ item.value }}
+            </div>
+          </td>
+          <td class="text-center" *ngIf="roleOption === 'specialist'">
+            <i
+              *ngIf="(element | specialist).verifiedByAdmin === false"
+              title="Validar"
+              class="btn btn-outline-success fa-solid fa-circle-check"
+              (click)="validateSpecialist(element)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

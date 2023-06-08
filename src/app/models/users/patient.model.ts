@@ -1,4 +1,4 @@
-import { User, UserRole } from './user.model';
+import { User } from './user.model';
 
 export class Patient extends User {
   public socialWork: string;
@@ -9,13 +9,14 @@ export class Patient extends User {
     lastName: string;
     age: number;
     email: string;
+    dni: string;
     verified: boolean;
     password: string;
     socialWork: string;
     profilePhoto: string;
     profilePhotoTwo: string;
   }) {
-    super(params, UserRole.PATIENT);
+    super(params, 'patient');
     this.socialWork = params.socialWork;
     this.profilePhotoTwo = params.profilePhotoTwo;
   }

@@ -11,7 +11,7 @@ export class SessionStorageProvider {
   constructor(private readonly firebaseAuthProvider: FirebaseAuthProvider) {
     this.key = `firebase:authUser:${this.firebaseAuthProvider.ApiKey}:[DEFAULT]`;
   }
-  public getCurrentUser() {
+  public getCurrentSession() {
     return JSON.parse(sessionStorage.getItem(this.key) as string) as User;
   }
 }

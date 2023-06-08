@@ -3,7 +3,7 @@ import { FirebaseAuthProvider } from '../providers/firebase_auth.provider';
 import { FirebaseStoreProvider } from '../providers/firebase_store.provider';
 import { SessionStorageProvider } from '../providers/session_storage.provider';
 import { Router } from '@angular/router';
-import { User, UserRole } from '../models/users/user.model';
+import { User } from '../models/users/user.model';
 import { firstValueFrom } from 'rxjs';
 import { Specialist } from '../models/users/specialist.model';
 import { Patient } from '../models/users/patient.model';
@@ -29,7 +29,7 @@ export class UserService {
     );
 
     const user = await this.findUserFromSessionByEmail();
-    if (user?.userRole !== UserRole.ADMIN) {
+    if (user?.userRole !== 'admin') {
       if (result.user.emailVerified) {
         await this.rewriteFieldVerified(user!, result);
         if (user instanceof Specialist) {
@@ -42,7 +42,6 @@ export class UserService {
     }
     this._userLogged = user;
     this._userImageUrl = await this.getUrlPhotoProfile(user?.profilePhoto!);
-
     return this._userLogged;
   }
 
@@ -56,26 +55,6 @@ export class UserService {
     this._userLogged = user;
     await this.logout();
     return this._userLogged;
-  }
-
-  public async getUsersFromStoreMapped() {
-    const users = await this.getUsersFromStore();
-    const user = {
-      userId: '',
-      verified: '',
-      userRole: '',
-      name: '',
-      lastName: '',
-      age: '',
-      email: '',
-      password: '',
-      socialWork: '',
-      profilePhoto: '',
-      profilePhotoTwo: '',
-      verifiedByAdmin: '',
-      speciality: '',
-    };
-    return users.map((u) => ({ ...user, ...u }));
   }
 
   public async getUsersFromStore() {
@@ -125,22 +104,35 @@ export class UserService {
       const url = await this.firebaseStoreProvider.getUrlFromFile(reference);
       return url;
     } catch (error) {
-      console.warn('no se obtuvo la imagen del usuario');
+      console.warn('No se obtuvo la imagen del usuario');
     }
 
     return undefined;
   }
 
+  // private async findUserForSessionByEmail(email: string) {
+  //   const users = await this.getUsersFromStore();
+  //   const user = users.find((u: any) => u.email === email);
+
+  //   switch (user?.userRole) {
+  //     case 'specialist':
+  //       return new Specialist(user as Specialist);
+  //     case 'patient':
+  //       return new Patient(user as Patient);
+  //   }
+  //   return user;
+  // }
+
   private async findUserFromSessionByEmail() {
-    const userSession = this.sessionStorageProvider.getCurrentUser();
+    const userSession = this.sessionStorageProvider.getCurrentSession();
     if (userSession) {
       const users = await this.getUsersFromStore();
       const user = users.find((u: any) => u.email === userSession.email);
 
       switch (user?.userRole) {
-        case UserRole.ESPECILIST:
+        case 'specialist':
           return new Specialist(user as Specialist);
-        case UserRole.PATIENT:
+        case 'patient':
           return new Patient(user as Patient);
       }
       return user;
@@ -163,5 +155,12 @@ export class UserService {
       user.verified = userCredential.user.emailVerified;
       await this.saveUserWithIdInStore(user.userId, user);
     }
+  }
+
+  public async authorizeSpecialistByAdmin(user: User) {
+    const specialist = user as Specialist;
+    specialist.verifiedByAdmin = true;
+    await this.saveUserWithIdInStore(specialist.userId, specialist);
+    return true;
   }
 }

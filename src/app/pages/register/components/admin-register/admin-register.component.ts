@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Admin } from 'src/app/models/users/admin.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class AdminRegisterComponent {
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
+  private profilesPhotos: any;
   protected formAdminRegister: FormGroup;
 
   constructor(
@@ -18,6 +20,7 @@ export class AdminRegisterComponent {
     private readonly alertService: AlertService,
     private readonly formBuilder: FormBuilder
   ) {
+    this.profilesPhotos = {};
     this.eventShowForm = new EventEmitter();
     this.formAdminRegister = this.formBuilder.group({
       name: [
@@ -58,20 +61,56 @@ export class AdminRegisterComponent {
     });
   }
 
-  protected register() {
+  protected async register() {
     try {
-      // this.userService.registerWithFirebase({
-      //   email: 'alejandro.bongioanni@gmail.com',
-      //   password: '12345678',
-      // });
-      this.alertService.showAlert({ icon: 'success', message: 'Registro ok' });
+      if (this.formAdminRegister.valid) {
+        await this.uploadFiles();
+        const user = this.createUser();
+        await this.userService.registerWithFirebase(user);
+        await this.alertService.showAlert({
+          icon: 'success',
+          message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
+        });
+        this.formAdminRegister.reset();
+      } else {
+        await this.alertService.showAlert({
+          icon: 'error',
+          message: 'Debe completar todos los campos',
+        });
+      }
     } catch (error: any) {
-      this.alertService.showAlert({ icon: 'error', message: error.message });
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+      });
     }
   }
 
   protected return() {
     this.showForm = !this.showForm;
     this.eventShowForm.emit(this.showForm);
+  }
+
+  protected selectFile($event: Event, index: number) {
+    const target = $event.target as HTMLInputElement;
+    const file = target.files?.[0];
+    this.profilesPhotos[index] = file;
+  }
+
+  private async uploadFiles() {
+    for (const key in this.profilesPhotos) {
+      const file = this.profilesPhotos[key] as File;
+      const extension = file?.name.split('.').pop();
+      const fileName = `${this.formAdminRegister.value.email}_${key}.${extension}`;
+      this.formAdminRegister.value.profilePhoto = fileName;
+      await this.userService.uploadPhoto(fileName, this.profilesPhotos[key]);
+    }
+  }
+
+  private createUser() {
+    return new Admin({
+      ...this.formAdminRegister.value,
+      verifiedByAdmin: false,
+    });
   }
 }

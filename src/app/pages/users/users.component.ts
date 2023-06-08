@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { User, UserRole } from 'src/app/models/users/user.model';
 
 @Component({
   selector: 'app-users',
@@ -7,10 +8,22 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  listUsers: any;
+  listUsers: User[];
+  listFiltered: User[];
+  protected showForm: boolean;
+  protected listChoseOption: UserRole;
   constructor(protected readonly userService: UserService) {
-    this.userService
-      .getUsersFromStoreMapped()
-      .then((users) => (this.listUsers = users));
+    this.showForm = true;
+  }
+
+  protected handlerUpdateView($event: any) {
+    this.showForm = $event as boolean;
+  }
+
+  protected async chooseListOption(option: UserRole) {
+    this.listUsers = await this.userService.getUsersFromStore();
+    this.listFiltered = this.listUsers.filter((u) => u.userRole === option);
+    this.showForm = !this.showForm;
+    this.listChoseOption = option;
   }
 }

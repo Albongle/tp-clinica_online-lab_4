@@ -1,8 +1,4 @@
-export enum UserRole {
-  ADMIN = 'admin',
-  ESPECILIST = 'specialist',
-  PATIENT = 'patient',
-}
+export type UserRole = 'specialist' | 'patient' | 'admin';
 
 export class User {
   public userId: string;
@@ -10,6 +6,7 @@ export class User {
   public userRole: UserRole;
   public name: string;
   public lastName: string;
+  public dni: string;
   public age: number;
   public email: string;
   public password: string;
@@ -20,6 +17,7 @@ export class User {
       userId: string;
       name: string;
       lastName: string;
+      dni: string;
       age: number;
       email: string;
       verified: boolean;
@@ -31,6 +29,7 @@ export class User {
     this.userId = params.userId;
     this.age = params.age;
     this.email = params.email;
+    this.dni = params.dni;
     this.lastName = params.lastName;
     this.name = params.name;
     this.password = params.password;
