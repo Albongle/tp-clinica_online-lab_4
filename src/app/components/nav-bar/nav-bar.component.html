@@ -49,7 +49,14 @@
               {{ userService.userLogged.name }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" (click)="signOut()">Logout</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  data-bs-dismiss="offcanvas"
+                  (click)="signOut()"
+                  >Logout</a
+                >
+              </li>
             </ul>
           </li>
         </ul>
