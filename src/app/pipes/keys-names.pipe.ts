@@ -1,27 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'keysNames',
+  name: 'keysmapped',
 })
-export class KeysNamesPipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): string {
-    const keysMapped = {
-      userId: 'Id Usuario',
-      verified: 'Verificado',
-      userRole: 'Rol de Usuario',
-      name: 'Nombre',
-      lastName: 'Apellido',
-      age: 'Edad',
-      email: 'Email',
-      password: 'Contraseña',
-      socialWork: 'Obra Social',
-      profilePhoto: 'Foto de perfil 1',
-      profilePhotoTwo: 'Foto de perfil 2',
-      verifiedByAdmin: 'Verficado por Admin',
-      speciality: 'Especialidad',
-    };
+export class KeysMappedPipe implements PipeTransform {
+  transform(value: unknown, ...args: unknown[]): string | undefined {
+    const keysMapped = [
+      { key: 'userId', value: 'Id Usuario' },
+      { key: 'verified', value: 'Email Verificado' },
+      { key: 'userRole', value: 'Rol de Usuario' },
+      { key: 'name', value: 'Nombre' },
+      { key: 'lastName', value: 'Apellido' },
+      { key: 'age', value: 'Edad' },
+      { key: 'email', value: 'Email' },
+      { key: 'password', value: 'Contraseña' },
+      { key: 'socialWork', value: 'Obra Social' },
+      { key: 'profilePhoto', value: 'Foto de perfil 1' },
+      { key: 'profilePhotoTwo', value: 'Foto de perfil 2' },
+      { key: 'verifiedByAdmin', value: 'Verificado por Admin' },
+      { key: 'speciality', value: 'Especialidad' },
+    ];
 
-    //@ts-ignore
-    return keysMapped[value];
+    return keysMapped.find((k) => k.key === value)?.value;
   }
 }

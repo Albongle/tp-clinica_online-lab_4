@@ -35,7 +35,7 @@ export class LoginComponent {
       });
       await this.router.navigateByUrl('');
     } catch (error: any) {
-      this.userService.logout();
+      await this.userService.logout();
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
@@ -44,5 +44,10 @@ export class LoginComponent {
 
     await this.userService.setUserLogger();
     this.formLogin.reset();
+  }
+
+  protected setUser($event: Event, email: string, password: string) {
+    $event.preventDefault();
+    this.formLogin.setValue({ email, password });
   }
 }

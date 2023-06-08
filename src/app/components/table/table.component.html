@@ -7,7 +7,7 @@
             class="text-center fw-bold"
             *ngFor="let item of list[0] | keyvalue"
           >
-            {{ item.key | keysNames }}
+            {{ item.key | keysmapped | uppercase }}
           </th>
         </tr>
       </thead>
