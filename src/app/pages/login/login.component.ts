@@ -63,6 +63,5 @@ export class LoginComponent {
   protected async handlerLoginQuickAccess($event: any) {
     const user: User = $event as User;
     this.formLogin.setValue({ email: user.email, password: user.password });
-    await this.loginWithMailAndPassword();
   }
 }

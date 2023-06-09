@@ -14,8 +14,7 @@ export class QuickAccessComponent {
     this.evenQuickAccessUser = new EventEmitter();
   }
 
-  protected setUser($event: Event, user: User) {
-    $event.preventDefault();
+  protected setUser(user: User) {
     this.evenQuickAccessUser.emit(user);
   }
 }
