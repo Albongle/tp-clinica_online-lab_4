@@ -1,117 +1,93 @@
-<section class="login">
+<section class="login w-100 m-0 p-0">
   <div
     class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
   >
     <form
       [formGroup]="formLogin"
       (ngSubmit)="loginWithMailAndPassword()"
-      class="bg-light shadow p-1 m-1 rounded col-xxl-3 col-lg-4 col-md-6 col-sm-8"
+      class="bg-light shadow p-1 m-1 rounded col-xxl-3 col-lg-5 col-md-6 col-sm-8"
     >
-      <h2 class="mt-1 text-center">Bienvenido</h2>
-      <div class="row p-2 m-2 justify-content-center align-items-center">
-        <img
-          class="col-xxl-3 col-lg-3 col-6 align-center m-1"
-          src="../../../assets/images/login/icon-login.png"
-          alt="login"
-        />
-        <input
-          type="text"
-          class="m-3 form-control"
-          name="email"
-          placeholder="Email Address"
-          formControlName="email"
-          autofocus=""
-        />
-        <div
-          [hidden]="
-            formLogin.controls['email'].pristine ||
-            !formLogin.controls['email'].errors
-          "
-        >
-          <span
-            *ngIf="formLogin.controls['email'].errors?.['required']"
-            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-            >Email es requerido</span
-          >
-          <span
-            *ngIf="formLogin.controls['email'].errors?.['email']"
-            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-            >Email debe ser valido</span
-          >
-        </div>
-        <input
-          type="password"
-          class="m-3 form-control"
-          name="password"
-          placeholder="Password"
-          formControlName="password"
-          autofocus=""
-        />
+      <div class="row justify-content-between align-items-center">
+        <div class="col-9 h-100 m-1">
+          <h2 class="mt-1 text-center">Bienvenido</h2>
+          <div class="row p-2 m-2 justify-content-center align-items-center">
+            <img
+              class="col-xxl-3 col-lg-3 col-6 align-center m-1"
+              src="../../../assets/images/login/icon-login.png"
+              alt="login"
+            />
+            <input
+              type="text"
+              class="m-3 form-control"
+              name="email"
+              placeholder="Email Address"
+              formControlName="email"
+              autofocus=""
+            />
+            <div
+              [hidden]="
+                formLogin.controls['email'].pristine ||
+                !formLogin.controls['email'].errors
+              "
+            >
+              <span
+                *ngIf="formLogin.controls['email'].errors?.['required']"
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Email es requerido</span
+              >
+              <span
+                *ngIf="formLogin.controls['email'].errors?.['email']"
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Email debe ser valido</span
+              >
+            </div>
+            <input
+              type="password"
+              class="m-3 form-control"
+              name="password"
+              placeholder="Password"
+              formControlName="password"
+              autofocus=""
+            />
 
-        <div
-          [hidden]="
-            formLogin.controls['password'].pristine ||
-            !formLogin.controls['password'].errors
-          "
-        >
-          <span
-            class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-            >Password es requerido</span
-          >
-        </div>
+            <div
+              [hidden]="
+                formLogin.controls['password'].pristine ||
+                !formLogin.controls['password'].errors
+              "
+            >
+              <span
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Password es requerido</span
+              >
+            </div>
 
-        <div class="row justify-content-center">
-          <button
-            title="Admin"
-            class="m-1 btn btn-outline-primary col-2 p-0"
-            (click)="setUser($event, 'admin@mail.com', '123456')"
-          >
-            <img
-              class="img-fluid"
-              src="../../../assets/images/users/admin_1.png"
-              alt="admin"
-            />
-          </button>
-          <button
-            title="Espcialista"
-            class="m-1 btn btn-outline-primary col-2 p-0"
-            (click)="setUser($event, 'jihori2818@pyadu.com', '123456')"
-          >
-            <img
-              class="img-fluid"
-              src="../../../assets/images/users/especialista_1.png"
-              alt="admin"
-            />
-          </button>
-          <button
-            title="Paciente"
-            class="m-1 btn btn-outline-primary col-2 p-0"
-            (click)="setUser($event, 'litihih761@ozatvn.com', '123456')"
-          >
-            <img
-              class="img-fluid"
-              src="../../../assets/images/users/paciente_1.png"
-              alt="admin"
-            />
-          </button>
+            <button
+              class="m-1 btn btn-lg btn-outline-success btn-block"
+              type="submit"
+            >
+              Login
+            </button>
+
+            <label>
+              Aun no tienes cuenta?
+              <span
+                class="btn align-item-center badge bg-success text-ligth msj-block"
+                routerLink="/register"
+              >
+                Registrate</span
+              ></label
+            >
+          </div>
         </div>
 
-        <button
-          class="m-1 btn btn-lg btn-outline-success btn-block"
-          type="submit"
-        >
-          Login
-        </button>
-
-        <label>
-          Aun no tienes cuenta?
-          <span
-            class="btn align-item-center badge bg-success text-ligth msj-block"
-            routerLink="/register"
-          >
-            Registrate</span
-          ></label
-        >
+        <div class="col-2 h-100 m-1">
+          <app-quick-access
+            class="w-100"
+            [listUsers]="userForQuickAccess"
+            (evenQuickAccessUser)="handlerLoginQuickAccess($event)"
+          ></app-quick-access>
+        </div>
       </div>
     </form>
   </div>

@@ -7,7 +7,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { AlertService } from '../services/alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +14,12 @@ import { AlertService } from '../services/alert.service';
 export class AuthorizationGuard implements CanActivate {
   constructor(
     private readonly userService: UserService,
-    private readonly router: Router,
-    private readonly alertService: AlertService
+    private readonly router: Router
   ) {}
   public async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
-    await this.userService.setUserLogger();
     if (this.userService.userLogged && this.userService.userLogged.verified) {
       return true;
     }

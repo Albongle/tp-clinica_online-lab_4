@@ -20,7 +20,6 @@ export class UserLoggedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
-    await this.userService.setUserLogger();
     if (!this.userService.userLogged) {
       return true;
     }

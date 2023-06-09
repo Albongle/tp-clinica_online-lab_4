@@ -16,7 +16,6 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
-    await this.userService.setUserLogger();
     if (
       this.userService.userLogged &&
       this.userService.userLogged.userRole === 'admin'

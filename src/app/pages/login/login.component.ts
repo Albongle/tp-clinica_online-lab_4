@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/users/user.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  protected userForQuickAccess: User[];
   protected formLogin: FormGroup;
   constructor(
     private readonly alertService: AlertService,
@@ -17,6 +19,7 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly formBuilder: FormBuilder
   ) {
+    this.setUserForQuickAccess();
     this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -42,12 +45,24 @@ export class LoginComponent {
       });
     }
 
-    await this.userService.setUserLogger();
     this.formLogin.reset();
   }
 
-  protected setUser($event: Event, email: string, password: string) {
-    $event.preventDefault();
-    this.formLogin.setValue({ email, password });
+  private async setUserForQuickAccess() {
+    const users = await this.userService.getUsersFromStore();
+
+    const usersMapped = await Promise.all(
+      users.map(async (u) => {
+        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
+        return u;
+      })
+    );
+    this.userForQuickAccess = usersMapped;
+  }
+
+  protected async handlerLoginQuickAccess($event: any) {
+    const user: User = $event as User;
+    this.formLogin.setValue({ email: user.email, password: user.password });
+    await this.loginWithMailAndPassword();
   }
 }

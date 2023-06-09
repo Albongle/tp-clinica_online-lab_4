@@ -30,17 +30,19 @@ export class TableUsersComponent {
   }
 
   protected async validateSpecialist(user: User) {
-    console.log(user);
     try {
       const result = await this.userService.authorizeSpecialistByAdmin(user);
       if (result) {
-        this.alertService.showAlert({
+        await this.alertService.showAlert({
           icon: 'success',
           message: 'Usuario authorizado con exito',
         });
       }
     } catch (error: any) {
-      this.alertService.showAlert({ icon: 'error', message: error.message });
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+      });
     }
   }
 }
