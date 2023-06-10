@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent {
   protected userForQuickAccess: User[];
   protected formLogin: FormGroup;
+  protected loading: boolean;
   constructor(
     private readonly alertService: AlertService,
     protected readonly userService: UserService,
@@ -28,6 +29,7 @@ export class LoginComponent {
 
   public async loginWithMailAndPassword() {
     try {
+      this.loading = true;
       const userLog = await this.userService.loginWithEmailAndPassword(
         this.formLogin.value.email,
         this.formLogin.value.password
@@ -44,11 +46,12 @@ export class LoginComponent {
         message: error.message,
       });
     }
-
+    this.loading = false;
     this.formLogin.reset();
   }
 
   private async setUserForQuickAccess() {
+    this.loading = true;
     const users = await this.userService.getUsersFromStore();
 
     const usersMapped = await Promise.all(
@@ -58,6 +61,7 @@ export class LoginComponent {
       })
     );
     this.userForQuickAccess = usersMapped;
+    this.loading = false;
   }
 
   protected async handlerLoginQuickAccess($event: any) {

@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class LoadingComponent {
   @Input() public loading: boolean;
+  @Input() public image: string | undefined;
 }
