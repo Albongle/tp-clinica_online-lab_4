@@ -84,6 +84,7 @@ export class EspecialistRegisterComponent implements OnDestroy {
           Validators.maxLength(15),
         ],
       ],
+      recaptchaReactive: [null, Validators.required],
     });
   }
 

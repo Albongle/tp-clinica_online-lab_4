@@ -67,6 +67,7 @@ export class PatientRegisterComponent {
           Validators.maxLength(15),
         ],
       ],
+      recaptchaReactive: [null, Validators.required],
     });
   }
 

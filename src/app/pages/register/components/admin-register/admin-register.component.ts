@@ -58,6 +58,7 @@ export class AdminRegisterComponent {
           Validators.maxLength(15),
         ],
       ],
+      recaptchaReactive: [null, Validators.required],
     });
   }
 
