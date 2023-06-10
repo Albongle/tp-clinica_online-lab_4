@@ -166,4 +166,8 @@ export class EspecialistRegisterComponent implements OnDestroy {
       verifiedByAdmin: false,
     });
   }
+
+  protected resolved($event: string) {
+    console.log($event);
+  }
 }

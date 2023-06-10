@@ -7,6 +7,7 @@ import { PatientRegisterComponent } from './components/patient-register/patient-
 import { EspecialistRegisterComponent } from './components/especialist-register/especialist-register.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     ReactiveFormsModule,
     FormsModule,
     LoadingModule,
+    RecaptchaModule,
   ],
   exports: [RegisterComponent],
 })

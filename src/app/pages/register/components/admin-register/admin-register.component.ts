@@ -113,4 +113,8 @@ export class AdminRegisterComponent {
       verifiedByAdmin: false,
     });
   }
+
+  protected resolved($event: string) {
+    throw new Error('Method not implemented.');
+  }
 }
