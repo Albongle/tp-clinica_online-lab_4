@@ -64,7 +64,9 @@ export class CreateAppoinmentComponent {
 
   protected async selectSpeciality(specialitie: string) {
     this.listOfspecialistsAvailable = this.listOfspecialist.filter(
-      (specialist) => specialist.speciality.description === specialitie
+      (specialist) =>
+        specialist.speciality.description === specialitie &&
+        specialist.verifiedByAdmin
     );
     const usersMapped = await Promise.all(
       this.listOfspecialistsAvailable.map(async (u) => {

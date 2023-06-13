@@ -3,15 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { MyProfileRoutingModule } from './my-profile-routing.module';
 import { MyProfileComponent } from './my-profile.component';
-
+import { KeysMappedPipe } from 'src/app/pipes/keys-names.pipe';
 
 @NgModule({
-  declarations: [
-    MyProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    MyProfileRoutingModule
-  ]
+  declarations: [MyProfileComponent, KeysMappedPipe],
+  imports: [CommonModule, MyProfileRoutingModule],
 })
-export class MyProfileModule { }
+export class MyProfileModule {}
