@@ -1,0 +1,144 @@
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-4 col-md-6 col-sm-8">
+    <div class="row w-100 justify-content-center align-items-center">
+      <h2 class="text-center">Solicitar Turno</h2>
+      <img
+        class="col-3 mt-1"
+        src="../../../../../assets/images/appoinment/calendario.png"
+        alt="register_paciente"
+      />
+    </div>
+    <form [formGroup]="formAppoinment" class="p-2" (ngSubmit)="create()">
+      <div class="row g-3 justify-content-center">
+        <div class="col-sm-6">
+          <label for="date" class="form-label">Fecha seleccionada</label>
+          <input
+            type="text"
+            formControldate="date"
+            class="form-control"
+            id="date"
+            disabled
+            placeholder="Fecha seleccionada"
+          />
+
+          <div
+            [hidden]="
+              formAppoinment.controls['date'].pristine ||
+              !formAppoinment.controls['date'].invalid
+            "
+          >
+            <span
+              *ngIf="formAppoinment.controls['date'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Debe elegir una fecha</span
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="lastName" class="form-label">Hora elegida</label>
+          <input
+            type="text"
+            formControldate="time"
+            class="form-control"
+            id="time"
+            disabled
+            placeholder="Hora seleccionada"
+          />
+          <div
+            [hidden]="
+              formAppoinment.controls['time'].pristine ||
+              !formAppoinment.controls['time'].invalid
+            "
+          >
+            <span
+              *ngIf="formAppoinment.controls['time'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Hora es requerido</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 justify-content-center">
+        <div class="col-sm-6">
+          <label for="dni" class="form-label">Especialista</label>
+          <input
+            type="text"
+            formControldate="specialist"
+            class="form-control"
+            id="time"
+            disabled
+            placeholder="Hora seleccionada"
+          />
+
+          <div
+            [hidden]="
+              formAppoinment.controls['specialist'].pristine ||
+              !formAppoinment.controls['specialist'].invalid
+            "
+          >
+            <span
+              *ngIf="formAppoinment.controls['specialist'].errors?.['required']"
+              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+              >Dni es requerido</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row mt-1 g-3 justify-content-center">
+          <div class="col-12">
+            <p class="fw-bold">Elija una especialidad:</p>
+            <div
+              *ngFor="let speciality of listOfspecialities"
+              class="form-check form-switch"
+            >
+              <label class="form-check-label" for="{{ speciality }}">{{
+                speciality
+              }}</label>
+              <input
+                class="form-check-input"
+                id="{{ speciality }}"
+                type="radio"
+                name="speciality"
+                formControlName="speciality"
+                value="{{ speciality }}"
+                (click)="selectSpeciality(speciality)"
+              />
+            </div>
+            <div
+              [hidden]="
+                formAppoinment.controls['speciality'].pristine ||
+                !formAppoinment.controls['speciality'].invalid
+              "
+            >
+              <span
+                *ngIf="formAppoinment.controls['speciality'].errors?.['required']"
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Especialidad es requerido</span
+              >
+              <span
+                *ngIf="formAppoinment.controls['speciality'].errors?.['minlength']"
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Debe poseer al menos 3 caracteres</span
+              >
+              <span
+                *ngIf="formAppoinment.controls['speciality'].errors?.['maxlength']"
+                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+                >Supero los caracteres</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <input
+        class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+        type="submit"
+        value="Solicitar Turno"
+      />
+    </form>
+  </div>
+</section>

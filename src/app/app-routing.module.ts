@@ -35,6 +35,22 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   {
+    path: 'appoinment',
+    loadChildren: () =>
+      import('./pages/appoinment/appoinment.module').then(
+        (m) => m.AppoinmentModule
+      ),
+    canActivate: [AuthorizationGuard],
+  },
+  {
+    path: 'myprofile',
+    loadChildren: () =>
+      import('./pages/my-profile/my-profile.module').then(
+        (m) => m.MyProfileModule
+      ),
+    canActivate: [AuthorizationGuard],
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./pages/not-found/not-found.module').then(

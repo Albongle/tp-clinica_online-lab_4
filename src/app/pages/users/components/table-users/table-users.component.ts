@@ -12,21 +12,21 @@ export class TableUsersComponent {
   @Input() public list: User[];
   @Input() public roleOption: UserRole;
   @Output() public eventSendUser: EventEmitter<User>;
-  @Output() public eventShowForm: EventEmitter<boolean>;
-  @Input() public showForm: boolean;
+  @Output() public eventShowTable: EventEmitter<boolean>;
+  @Input() public showTable: boolean;
 
   constructor(
     protected readonly userService: UserService,
     private readonly alertService: AlertService
   ) {
     this.eventSendUser = new EventEmitter();
-    this.eventShowForm = new EventEmitter();
-    this.showForm = true;
+    this.eventShowTable = new EventEmitter();
+    this.showTable = true;
   }
 
   protected return() {
-    this.showForm = !this.showForm;
-    this.eventShowForm.emit(this.showForm);
+    this.showTable = !this.showTable;
+    this.eventShowTable.emit(this.showTable);
   }
 
   protected async validateSpecialist(user: User) {

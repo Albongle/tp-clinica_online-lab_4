@@ -5,7 +5,7 @@
 
       <section
         class="row justify-content-center align-items-center m-0 p-0 w-100"
-        [hidden]="!showForm"
+        [hidden]="!showTable"
       >
         <button
           class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
@@ -43,9 +43,9 @@
       </section>
       <app-table-users
         [list]="listFiltered"
-        [showForm]="showForm"
+        [showTable]="showTable"
         [roleOption]="listChoseOption"
-        (eventShowForm)="handlerUpdateView($event)"
+        (eventShowTable)="handlerUpdateView($event)"
       ></app-table-users>
     </div>
   </div>

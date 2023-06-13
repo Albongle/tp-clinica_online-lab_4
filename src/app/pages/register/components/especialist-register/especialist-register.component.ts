@@ -1,12 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Specialist } from 'src/app/models/users/specialist.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { SpecialitiesService } from 'src/app/services/specialities.service';
@@ -17,10 +10,9 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './especialist-register.component.html',
   styleUrls: ['./especialist-register.component.scss'],
 })
-export class EspecialistRegisterComponent implements OnDestroy {
+export class EspecialistRegisterComponent {
   @Output() public eventShowForm: EventEmitter<boolean>;
   @Input() public showForm: boolean;
-  private susbcribeSpecialities: Subscription;
   private profilesPhotos: any;
   protected formSpecialistRegister: FormGroup;
   protected specialities: string[];
@@ -32,13 +24,8 @@ export class EspecialistRegisterComponent implements OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly specialitiesService: SpecialitiesService
   ) {
+    this.setSpecialities();
     this.profilesPhotos = {};
-    this.susbcribeSpecialities = this.specialitiesService
-      .getAllSpecialities()
-      .subscribe(
-        (specialities) =>
-          (this.specialities = specialities.map((s: any) => s.description))
-      );
     this.eventShowForm = new EventEmitter();
     this.formSpecialistRegister = this.formBuilder.group({
       name: [
@@ -86,10 +73,6 @@ export class EspecialistRegisterComponent implements OnDestroy {
       ],
       recaptchaReactive: [null, Validators.required],
     });
-  }
-
-  ngOnDestroy(): void {
-    this.susbcribeSpecialities.unsubscribe();
   }
 
   protected async register() {
@@ -170,5 +153,10 @@ export class EspecialistRegisterComponent implements OnDestroy {
 
   protected resolved($event: string) {
     console.log($event);
+  }
+
+  private async setSpecialities() {
+    const specialities = await this.specialitiesService.getAllSpecialities();
+    this.specialities = specialities.map((s) => s.description);
   }
 }

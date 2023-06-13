@@ -23,7 +23,7 @@ export class UserLoggedGuard implements CanActivate {
     if (!this.userService.userLogged) {
       return true;
     }
-    await this.router.navigateByUrl('games');
+    await this.router.navigateByUrl('appoinment');
     return false;
   }
 }

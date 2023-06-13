@@ -96,7 +96,41 @@
             >Usuarios</a
           >
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="userService.userLogged" class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="appoinment"
+            data-bs-dismiss="offcanvas"
+            >{{
+              userService.userLogged.userRole === "patient"
+                ? "Mis Turnos"
+                : "Turnos"
+            }}</a
+          >
+        </li>
+
+        <li
+          *ngIf="
+            userService.userLogged &&
+            (userService.userLogged.userRole === 'patient' ||
+              userService.userLogged.userRole === 'admin')
+          "
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            routerLink="appoinment/createappoinment"
+            data-bs-dismiss="offcanvas"
+            >Solicitar Turno</a
+          >
+        </li>
+
+        <li *ngIf="userService.userLogged" class="nav-item">
+          <a class="nav-link" routerLink="myprofile" data-bs-dismiss="offcanvas"
+            >Mi Perfil</a
+          >
+        </li>
+        <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -114,7 +148,7 @@
             </li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
 
       <!-- <form class="d-flex mt-3" role="search">
