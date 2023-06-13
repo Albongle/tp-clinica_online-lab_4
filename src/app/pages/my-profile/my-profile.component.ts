@@ -12,6 +12,7 @@ export class MyProfileComponent {
   protected imgDefault;
   protected user: User;
   protected date: string;
+  protected showSchedule: boolean;
   constructor(private readonly userService: UserService) {
     this.setParamsFromUsserLogged();
     this.imgDefault = '../../../assets/images/user_default.png';
@@ -24,5 +25,13 @@ export class MyProfileComponent {
       this.userService.userLogged!
     );
     this.user = this.userService.userLogged!;
+  }
+
+  protected showFormSchedule() {
+    this.showSchedule = true;
+  }
+
+  protected handlerUpdateView($event: any) {
+    this.showSchedule = $event as boolean;
   }
 }

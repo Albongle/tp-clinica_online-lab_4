@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Specialist } from '../models/users/specialist.model';
+import { Specialist } from 'src/app/models/users/specialist.model';
 
 @Pipe({
   name: 'specialist',

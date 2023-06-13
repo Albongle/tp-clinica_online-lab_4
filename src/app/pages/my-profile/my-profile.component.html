@@ -1,5 +1,8 @@
 <section class="profile">
-  <article class="row justify-content-center h-100 m-0 p-0 align-items-center">
+  <article
+    class="row justify-content-center h-100 m-0 p-0 align-items-center"
+    [hidden]="showSchedule"
+  >
     <div
       class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 card mb-3"
       style="max-width: 540px"
@@ -14,12 +17,36 @@
         </div>
         <div class="col-md-8">
           <div *ngIf="user" class="card-body">
-            <h5 class="card-title">{{ user.lastName }}, {{ user.name }}</h5>
+            <h5 class="card-title">
+              <span class="fs-3 badge text-bg-primary"
+                >{{ user.lastName }}, {{ user.name }}</span
+              >
+            </h5>
             <div class="card-text">
               <ul>
-                <li *ngFor="let item of user | keyvalue">
-                  {{ item.key | keysmapped | uppercase }}: {{ item.value }}
-                </li>
+                <div
+                  *ngIf="
+                    user.userRole === 'specialist';
+                    then thenBlock;
+                    else elseBlock
+                  "
+                ></div>
+                <ng-template #thenBlock>
+                  <li *ngFor="let item of user | specialist | keyvalue">
+                    <div *ngIf="item.key === 'speciality'; else elseBlock">
+                      {{ item.key | keysmapped | uppercase }}:
+                      {{ item.value | specialitie }}
+                    </div>
+                    <ng-template #elseBlock>
+                      {{ item.key | keysmapped | uppercase }}: {{ item.value }}
+                    </ng-template>
+                  </li>
+                </ng-template>
+                <ng-template #elseBlock>
+                  <li *ngFor="let item of user | keyvalue">
+                    {{ item.key | keysmapped | uppercase }}: {{ item.value }}
+                  </li>
+                </ng-template>
               </ul>
             </div>
             <p class="card-text">
@@ -27,9 +54,24 @@
                 >Actualizado a {{ date }}</small
               >
             </p>
+            <div
+              *ngIf="user.userRole === 'specialist'"
+              class="card-footer border border-0"
+            >
+              <button
+                class="w-100 m-1 btn btn-outline-primary"
+                (click)="showFormSchedule()"
+              >
+                Planificar Horarios
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </article>
+  <app-manage-schedule
+    [showSchedule]="showSchedule"
+    (eventShowSchedule)="handlerUpdateView($event)"
+  ></app-manage-schedule>
 </section>
