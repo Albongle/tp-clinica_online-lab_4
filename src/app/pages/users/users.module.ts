@@ -6,6 +6,7 @@ import { RegisterModule } from '../register/register.module';
 import { TableUsersComponent } from './components/table-users/table-users.component';
 import { KeysMappedPipe } from 'src/app/pipes/keys-names.pipe';
 import { SpecialistPipe } from 'src/app/pipes/specialist.pipe';
+import { SpecialitiePipe } from 'src/app/pipes/specialitie.pipe';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SpecialistPipe } from 'src/app/pipes/specialist.pipe';
     TableUsersComponent,
     KeysMappedPipe,
     SpecialistPipe,
+    SpecialitiePipe,
   ],
   imports: [CommonModule, UsersRoutingModule, RegisterModule],
 })

@@ -23,11 +23,29 @@
       </thead>
       <tbody class="table-group-divider">
         <tr *ngFor="let element of list">
-          <td class="text-center" *ngFor="let item of element | keyvalue">
-            <div *ngIf="item.value">
+          <td
+            class="text-center"
+            *ngIf="roleOption === 'specialist'; then thenBlock; else elseBlock"
+          ></td>
+          <ng-template #thenBlock>
+            <td
+              class="text-center"
+              *ngFor="let item of element | specialist | keyvalue"
+            >
+              <div *ngIf="item.key === 'speciality'; else elseBlock">
+                {{ item.value | specialitie }}
+              </div>
+              <ng-template #elseBlock>
+                {{ item.value }}
+              </ng-template>
+            </td>
+          </ng-template>
+          <ng-template #elseBlock>
+            <td class="text-center" *ngFor="let item of element | keyvalue">
               {{ item.value }}
-            </div>
-          </td>
+            </td>
+          </ng-template>
+
           <td class="text-center" *ngIf="roleOption === 'specialist'">
             <i
               *ngIf="(element | specialist).verifiedByAdmin === false"

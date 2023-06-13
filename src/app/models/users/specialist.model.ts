@@ -1,8 +1,9 @@
+import { Speciality } from '../speciality.model';
 import { User } from './user.model';
 
 export class Specialist extends User {
   public verifiedByAdmin: boolean;
-  public speciality: string;
+  public speciality: Speciality;
   constructor(params: {
     userId: string;
     name: string;
@@ -11,7 +12,7 @@ export class Specialist extends User {
     dni: string;
     email: string;
     password: string;
-    speciality: string;
+    speciality: Speciality;
     verified: boolean;
     verifiedByAdmin: boolean;
     profilePhoto: string;

@@ -127,8 +127,4 @@ export class PatientRegisterComponent {
       ...this.formPatientRegister.value,
     });
   }
-
-  protected resolved($event: string) {
-    console.log($event);
-  }
 }

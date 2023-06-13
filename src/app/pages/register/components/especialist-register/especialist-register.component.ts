@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Speciality } from 'src/app/models/speciality.model';
 import { Specialist } from 'src/app/models/users/specialist.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { SpecialitiesService } from 'src/app/services/specialities.service';
@@ -145,14 +146,14 @@ export class EspecialistRegisterComponent {
   }
 
   private createUser() {
+    const speciality = new Speciality({
+      description: this.formSpecialistRegister.value.speciality,
+    });
     return new Specialist({
       ...this.formSpecialistRegister.value,
       verifiedByAdmin: false,
+      speciality,
     });
-  }
-
-  protected resolved($event: string) {
-    console.log($event);
   }
 
   private async setSpecialities() {

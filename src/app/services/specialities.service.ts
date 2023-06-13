@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseStoreProvider } from '../providers/firebase_store.provider';
 import { firstValueFrom } from 'rxjs';
-import { Specialitie } from '../models/specialitie.model';
+import { Speciality } from '../models/speciality.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class SpecialitiesService {
   public async getAllSpecialities() {
     const specialities = (await firstValueFrom(
       this.firebaseStoreProvider.getCollection('especialidades')
-    )) as Specialitie[];
+    )) as Speciality[];
     return specialities;
   }
 }

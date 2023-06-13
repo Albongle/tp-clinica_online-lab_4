@@ -18,9 +18,10 @@ export class CreateAppoinmentComponent {
   protected listOfpatients: Patient[];
   protected listOfspecialistsAvailable: Specialist[];
   protected formAppoinment: FormGroup;
+  protected chosenSpecislist: Specialist;
 
   constructor(
-    private readonly userService: UserService,
+    protected readonly userService: UserService,
     private readonly specialitiesService: SpecialitiesService,
     private readonly alertService: AlertService,
     private readonly appoinmentService: AppoinmentService,
@@ -30,13 +31,16 @@ export class CreateAppoinmentComponent {
     this.setSpecialities();
     if (this.userService.userLogged?.userRole === 'admin') {
       this.setPatients();
-      this.formAppoinment = this.formBuilder.group({
-        speciality: ['', Validators.required],
-        date: [''],
-        time: [''],
-        specialist: [null],
-      });
     }
+    this.formAppoinment = this.formBuilder.group({
+      speciality: ['', Validators.required],
+      date: ['', Validators.required],
+      time: ['', Validators.required],
+      specialist: ['', Validators.required],
+    });
+    this.formAppoinment.controls['specialist'].disable();
+    this.formAppoinment.controls['date'].disable();
+    this.formAppoinment.controls['time'].disable();
   }
 
   private async setSpecialist() {
@@ -58,7 +62,27 @@ export class CreateAppoinmentComponent {
     ) as Patient[];
   }
 
-  protected selectSpeciality(specialitie: string) {}
+  protected async selectSpeciality(specialitie: string) {
+    this.listOfspecialistsAvailable = this.listOfspecialist.filter(
+      (specialist) => specialist.speciality.description === specialitie
+    );
+    const usersMapped = await Promise.all(
+      this.listOfspecialistsAvailable.map(async (u) => {
+        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
+        return u;
+      })
+    );
+
+    this.listOfspecialistsAvailable = usersMapped;
+    this.formAppoinment.controls['specialist'].reset();
+  }
+
+  protected chooseSpecialist(specialist: Specialist) {
+    this.chosenSpecislist = specialist;
+    this.formAppoinment.controls['specialist'].setValue(
+      `Apellido: ${this.chosenSpecislist.lastName} Nombre:${this.chosenSpecislist.name}`
+    );
+  }
 
   protected create() {}
 }

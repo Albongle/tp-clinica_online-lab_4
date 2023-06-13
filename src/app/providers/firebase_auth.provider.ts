@@ -51,9 +51,8 @@ export class FirebaseAuthProvider {
       await this.validateEmailVerified(userCredential.user);
 
       await this.validateSpecialist(this._userLogged!);
-    } else {
-      this.__userAdmin = new Admin({ ...this._userLogged });
     }
+
     this._profilePhoto = await this.getProfilePhoto(
       this.userLogged?.profilePhoto!
     );
@@ -61,6 +60,9 @@ export class FirebaseAuthProvider {
   }
 
   public async registerUserWithEmailAndPassword(user: User) {
+    if (this._userLogged && this.userLogged?.userRole === 'admin') {
+      this.__userAdmin = new Admin({ ...this._userLogged });
+    }
     const userCredential = await createUserWithEmailAndPassword(
       this.fireAuth,
       user.email,
@@ -70,6 +72,7 @@ export class FirebaseAuthProvider {
     user.userId = userCredential.user.uid;
     await sendEmailVerification(userCredential.user);
     await this.saveUserWithIdInStore(user.userId, user);
+
     if (this.__userAdmin) {
       await this.signOut();
       await this.loginWithEmailAndPassword(
