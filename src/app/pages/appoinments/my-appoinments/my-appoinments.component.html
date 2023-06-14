@@ -1,1 +1,54 @@
-<app-list-appoinments></app-list-appoinments>
+<section class="row justify-content-center w-100 m-0 p-0">
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">
+        Listado de turnos de:
+        <span class="badge rounded-pill text-bg-danger">
+          {{ userService.userLogged?.lastName }},
+          {{ userService.userLogged?.name }}</span
+        >
+      </h1>
+      <app-list-appoinments
+        [userRole]="userService.userLogged?.userRole!"
+        [userEmail]="userService.userLogged?.email!"
+        (eventChooseAppoinment)="handlerChooseAppoinment($event)"
+      ></app-list-appoinments>
+    </div>
+  </div>
+
+  <div class="row align-items-md-stretch">
+    <div class="m-md-3 mt-1 col-md-5">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h2>Change the background</h2>
+        <p>
+          Swap the background-color utility and add a `.text-*` color utility to
+          mix up the jumbotron look. Then, mix and match with additional
+          component themes and more.
+        </p>
+        <button class="btn btn-outline-light" type="button">
+          Example button
+        </button>
+      </div>
+    </div>
+    <div class="m-md-3 mt-1 col-md-5">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h2>Solo Mostrar</h2>
+        <p>Aca va el detalle</p>
+      </div>
+    </div>
+    <div class="m-md-3 mt-1 col-md-5">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h2>Add borders</h2>
+        <p>
+          Or, keep it light and add a border for some added definition to the
+          boundaries of your content. Be sure to look under the hood at the
+          source HTML here as we've adjusted the alignment and sizing of both
+          column's content for equal-height.
+        </p>
+        <button class="btn btn-outline-secondary" type="button">
+          Example button
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
