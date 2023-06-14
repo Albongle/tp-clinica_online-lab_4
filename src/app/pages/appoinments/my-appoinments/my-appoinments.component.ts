@@ -8,9 +8,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-appoinments.component.scss'],
 })
 export class MyAppoinmentsComponent {
+  protected reason: string;
   constructor(protected readonly userService: UserService) {}
 
   protected handlerChooseAppoinment(appoinment: Appoinment) {
     console.log(appoinment);
+  }
+
+  protected cancelAppoinment() {
+    console.log(this.reason);
   }
 }

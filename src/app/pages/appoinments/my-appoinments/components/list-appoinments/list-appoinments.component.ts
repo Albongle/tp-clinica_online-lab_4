@@ -16,6 +16,7 @@ import { AppoinmentService } from 'src/app/services/appoinment.service';
 })
 export class ListAppoinmentsComponent implements OnChanges {
   protected listOfAppoinments: Appoinment[];
+  private listOfAppoinmentsBackUp: Appoinment[];
   @Output() public eventChooseAppoinment: EventEmitter<Appoinment>;
   @Input() public userEmail: string;
   @Input() public userRole: string;
@@ -41,12 +42,26 @@ export class ListAppoinmentsComponent implements OnChanges {
           (appoinment) => appoinment.specialist.email === this.userEmail
         );
       }
+      this.listOfAppoinmentsBackUp = [...this.listOfAppoinments];
     } else {
       this.listOfAppoinments = [];
+      this.listOfAppoinmentsBackUp = [];
     }
   }
 
   protected chooseAppoinment(appoinment: Appoinment) {
     this.eventChooseAppoinment.emit(appoinment);
+  }
+
+  protected searchAppoinment($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    const textInput = input.value;
+
+    this.listOfAppoinments = this.listOfAppoinmentsBackUp.filter(
+      (appoinment) =>
+        appoinment.specialist.name.includes(textInput) ||
+        appoinment.specialist.lastName.includes(textInput) ||
+        appoinment.specialist.speciality.description.includes(textInput)
+    );
   }
 }
