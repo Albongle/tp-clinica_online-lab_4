@@ -1,4 +1,6 @@
+<!-- Espcialidad -->
 <section
+  [hidden]="hiddenSpecialities"
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
   <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
@@ -29,7 +31,53 @@
             type="radio"
             name="speciality"
             value="{{ speciality }}"
-            (click)="selectSpeciality(speciality)"
+            (click)="chooseEspeciality(speciality)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paciente solo admin -->
+<section
+  [hidden]="hiddenPatients || userService.userLogged?.userRole !== 'admin'"
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
+    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+      <button
+        title="Volver"
+        class="col-md-3 col-2 btn btn-warning"
+        (click)="returnToSpecialities()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <div class="row w-100 m-0 justify-content-center align-items-center">
+      <h2 class="text-center">Elija un paciente</h2>
+      <img class="col-2 mt-1" [src]="imgPatient" alt="register_paciente" />
+    </div>
+
+    <div class="row mt-1 g-6 justify-content-center">
+      <div class="col-sm-6">
+        <label for="specialitie" class="fw-bold text-center form-label"
+          >Elija un paciente:
+        </label>
+        <div
+          *ngFor="let patient of listOfPatients"
+          class="form-check form-switch"
+        >
+          <label class="form-check-label" for="{{ patient.userId }}"
+            >{{ patient.lastName }}, {{ patient.name }}</label
+          >
+          <input
+            class="form-check-input"
+            id="{{ patient.userId }}"
+            type="radio"
+            name="speciality"
+            value="{{ patient }}"
+            (click)="choosePatient(patient)"
           />
         </div>
       </div>
@@ -39,11 +87,13 @@
       class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
       type="button"
       value="Siguiente"
+      (click)="confirmPatient()"
     />
   </div>
 </section>
-
+<!-- Especialistas -->
 <section
+  [hidden]="hiddenSpecialist"
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
   <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
@@ -100,8 +150,9 @@
     </div>
   </div>
 </section>
-
+<!-- Fechas -->
 <section
+  [hidden]="hiddenDates"
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
   <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
@@ -127,12 +178,12 @@
       <div class="row g-3 justify-content-center">
         <div class="col-sm-12">
           <div class="row justify-content-center">
-            <label for="dni" class="text-center form-label"
+            <label for="days" class="text-center form-label"
               >Dias Disponibles:
             </label>
             <div
               *ngIf="
-                availableSchedule && availableSchedule.length > 0;
+                listOfAvailablesDays && listOfAvailablesDays.length > 0;
                 then blockThenSchedule;
                 else blockElseSchedule
               "
@@ -140,9 +191,10 @@
             <ng-template #blockThenSchedule>
               <button
                 class="m-1 col-6 btn btn-outline-success"
-                *ngFor="let day of availableSchedule"
+                *ngFor="let availableDay of listOfAvailablesDays"
+                (click)="chooseDay(availableDay)"
               >
-                {{ day.message }}
+                {{ availableDay.dayOfWeek }} - {{ availableDay.date }}
               </button>
             </ng-template>
             <ng-template #blockElseSchedule
@@ -154,8 +206,9 @@
     </div>
   </div>
 </section>
-
+<!-- Horarios -->
 <section
+  [hidden]="hiddenTimes"
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
   <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
@@ -177,34 +230,36 @@
       />
     </div>
 
-    <div class="row mt-1 g-6 justify-content-center">
-      <div class="col-sm-6">
-        <label for="specialitie" class="fw-bold text-center form-label"
-          >Elija una especialidad:
-        </label>
-        <div
-          *ngFor="let speciality of listOfSpecialities"
-          class="form-check form-switch"
+    <div class="row justify-content-center">
+      <label for="days" class="text-center form-label"
+        >Horarios Disponibles:
+      </label>
+      <div
+        *ngIf="
+          listOfAvailablesTimes && listOfAvailablesTimes.length > 0;
+          then blockThenTimes;
+          else blockElseTimes
+        "
+      ></div>
+      <ng-template #blockThenTimes>
+        <button
+          class="m-1 col-4 btn btn-outline-success"
+          *ngFor="let availableTime of listOfAvailablesTimes"
+          (click)="chooseTime(availableTime)"
         >
-          <label class="form-check-label" for="{{ speciality }}">{{
-            speciality
-          }}</label>
-          <input
-            class="form-check-input"
-            id="{{ speciality }}"
-            type="radio"
-            name="speciality"
-            value="{{ speciality }}"
-            (click)="selectSpeciality(speciality)"
-          />
-        </div>
-      </div>
+          {{ availableTime.timeStart }} - {{ availableTime.timeStart }}
+        </button>
+      </ng-template>
+      <ng-template #blockElseTimes
+        >El especialista no tiene horarios aun para la fecha</ng-template
+      >
     </div>
 
     <input
       class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
       type="button"
       value="Confirmar turno"
+      (click)="create()"
     />
   </div>
 </section>

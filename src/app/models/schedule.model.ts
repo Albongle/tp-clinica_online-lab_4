@@ -12,7 +12,20 @@ export enum DaysOfWeek {
 }
 
 export class Day {
-  public day: DaysOfWeek;
-  public timeStart: number;
-  public timeEnd: number;
+  public dayOfWeek: DaysOfWeek;
+  public date: string | undefined;
+  public timeStart: string;
+  public timeEnd: string;
+
+  constructor(day?: {
+    dayOfWeek: DaysOfWeek;
+    date: string | undefined;
+    timeStart: string;
+    timeEnd: string;
+  }) {
+    this.dayOfWeek = day?.dayOfWeek!;
+    this.date = day?.date;
+    this.timeStart = day?.timeStart!;
+    this.timeEnd = day?.timeEnd!;
+  }
 }

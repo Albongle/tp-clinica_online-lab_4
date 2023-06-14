@@ -36,12 +36,14 @@ export class TableUsersComponent {
         await this.alertService.showAlert({
           icon: 'success',
           message: 'Usuario authorizado con exito',
+          timer: 2000,
         });
       }
     } catch (error: any) {
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
+        timer: 2000,
       });
     }
   }

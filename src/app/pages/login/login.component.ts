@@ -37,6 +37,7 @@ export class LoginComponent {
       await this.alertService.showAlert({
         icon: 'success',
         message: `Bienvenido ${userLog!.email}`,
+        timer: 2000,
       });
       await this.router.navigateByUrl('');
     } catch (error: any) {
@@ -44,6 +45,7 @@ export class LoginComponent {
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
+        timer: 2000,
       });
     }
     this.loading = false;

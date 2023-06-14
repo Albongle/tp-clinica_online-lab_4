@@ -23,4 +23,11 @@ export class AppoinmentService {
       JSON.parse(JSON.stringify(appoinment))
     );
   }
+
+  public saveAppoinmenInStore(appoinment: Appoinment) {
+    return this.firebaseStoreProvider.saveDoc(
+      'turnos',
+      JSON.parse(JSON.stringify(appoinment))
+    );
+  }
 }

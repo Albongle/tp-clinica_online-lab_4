@@ -75,9 +75,9 @@ export class ManageScheduleComponent {
         this.timeValidator();
         this.schedule.days = this.selectedDays.map((day) => {
           const newDay = new Day();
-          newDay.day = day;
-          newDay.timeStart = parseInt(this.formSchedule.value.timeStart);
-          newDay.timeEnd = parseInt(this.formSchedule.value.timeEnd);
+          newDay.dayOfWeek = day;
+          newDay.timeStart = this.formSchedule.value.timeStart;
+          newDay.timeEnd = this.formSchedule.value.timeEnd;
 
           return newDay;
         });
@@ -87,6 +87,7 @@ export class ManageScheduleComponent {
         await this.alertService.showAlert({
           icon: 'success',
           message: 'Planificacion cargada con exito',
+          timer: 2000,
         });
 
         this.formSchedule.reset();
@@ -94,12 +95,14 @@ export class ManageScheduleComponent {
         await this.alertService.showAlert({
           icon: 'error',
           message: error.message,
+          timer: 2000,
         });
       }
     } else {
       await this.alertService.showAlert({
         icon: 'error',
         message: 'Debe completar las opciones',
+        timer: 2000,
       });
     }
   }

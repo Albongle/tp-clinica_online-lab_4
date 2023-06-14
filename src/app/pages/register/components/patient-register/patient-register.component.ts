@@ -80,19 +80,21 @@ export class PatientRegisterComponent {
         await this.alertService.showAlert({
           icon: 'success',
           message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
+          timer: 2000,
         });
         this.formPatientRegister.reset();
       } else {
         await this.alertService.showAlert({
           icon: 'error',
           message: 'Debe completar todos los campos',
+          timer: 2000,
         });
       }
     } catch (error: any) {
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
-        timer: 3000,
+        timer: 2000,
       });
     }
   }

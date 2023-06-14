@@ -71,18 +71,21 @@ export class AdminRegisterComponent {
         await this.alertService.showAlert({
           icon: 'success',
           message: `Registro completado con exito para ${user.lastName}, ${user.name}`,
+          timer: 2000,
         });
         this.formAdminRegister.reset();
       } else {
         await this.alertService.showAlert({
           icon: 'error',
           message: 'Debe completar todos los campos',
+          timer: 2000,
         });
       }
     } catch (error: any) {
       await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
+        timer: 2000,
       });
     }
   }
