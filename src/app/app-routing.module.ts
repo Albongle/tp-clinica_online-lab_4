@@ -44,20 +44,12 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard],
   },
   {
-    path: 'myappoinments',
+    path: 'appoinments',
     loadChildren: () =>
-      import('./pages/my-appoinments/my-appoinments.module').then(
-        (m) => m.MyAppoinmentsModule
+      import('./pages/appoinments/appoinments.module').then(
+        (m) => m.AppoinmentsModule
       ),
   },
-  {
-    path: 'createappoinments',
-    loadChildren: () =>
-      import('./pages/create-appoinments/create-appoinments.module').then(
-        (m) => m.CreateAppoinmentsModule
-      ),
-  },
-  { path: 'appoinments', loadChildren: () => import('./pages/appoinments/appoinments.module').then(m => m.AppoinmentsModule) },
   {
     path: '**',
     loadChildren: () =>
