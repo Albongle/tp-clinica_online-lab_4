@@ -2,13 +2,13 @@ export class Schedule {
   public days: Day[];
 }
 export enum DaysOfWeek {
-  Lunes = 'Lunes',
-  Martes = 'Martes',
-  Miercoles = 'Miercoles',
-  Jueves = 'Jueves',
-  Viernes = 'Viernes',
-  Sabado = 'Sabado',
-  Domingo = 'Domingo',
+  Lunes = 'lunes',
+  Martes = 'martes',
+  Miercoles = 'miércoles',
+  Jueves = 'jueves',
+  Viernes = 'viernes',
+  Sabado = 'sábado',
+  Domingo = 'domingo',
 }
 
 export class Day {

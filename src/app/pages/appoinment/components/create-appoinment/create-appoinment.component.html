@@ -1,73 +1,81 @@
 <section
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
-  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8">
-    <div class="row w-100 justify-content-center align-items-center">
-      <h2 class="text-center">Solicitar Turno</h2>
+  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
+    <div class="row w-100 m-0 justify-content-center align-items-center">
+      <h2 class="text-center">Elija una especialidad</h2>
       <img
-        class="col-3 mt-1"
-        src="../../../../../assets/images/appoinment/calendario.png"
+        class="col-2 mt-1"
+        src="../../../../../assets/images/appoinment/especialidad.png"
         alt="register_paciente"
       />
     </div>
-    <form [formGroup]="formAppoinment" class="p-2" (ngSubmit)="create()">
-      <div class="row g-3 justify-content-center">
-        <div class="col-sm-6">
-          <label for="date" class="form-label">Fecha seleccionada</label>
-          <input
-            type="text"
-            formControlName="date"
-            class="form-control"
-            id="date"
-            placeholder="Fecha seleccionada"
-          />
-          <div
-            [hidden]="
-              formAppoinment.controls['date'].pristine ||
-              !formAppoinment.controls['date'].invalid
-            "
-          >
-            <span
-              *ngIf="formAppoinment.controls['date'].errors?.['required']"
-              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-              >Debe elegir una fecha</span
-            >
-          </div>
-        </div>
 
-        <div class="col-sm-6">
-          <label for="lastName" class="form-label">Hora elegida</label>
+    <div class="row mt-1 g-6 justify-content-center">
+      <div class="col-sm-6">
+        <label for="specialitie" class="fw-bold text-center form-label"
+          >Elija una especialidad:
+        </label>
+        <div
+          *ngFor="let speciality of listOfSpecialities"
+          class="form-check form-switch"
+        >
+          <label class="form-check-label" for="{{ speciality }}">{{
+            speciality
+          }}</label>
           <input
-            type="text"
-            formControlName="time"
-            class="form-control"
-            id="time"
-            placeholder="Hora seleccionada"
+            class="form-check-input"
+            id="{{ speciality }}"
+            type="radio"
+            name="speciality"
+            value="{{ speciality }}"
+            (click)="selectSpeciality(speciality)"
           />
-          <div
-            [hidden]="
-              formAppoinment.controls['time'].pristine ||
-              !formAppoinment.controls['time'].invalid
-            "
-          >
-            <span
-              *ngIf="formAppoinment.controls['time'].errors?.['required']"
-              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-              >Hora es requerido</span
-            >
-          </div>
         </div>
       </div>
+    </div>
+
+    <input
+      class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+      type="button"
+      value="Siguiente"
+    />
+  </div>
+</section>
+
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
+    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+      <button
+        title="Volver"
+        class="col-md-3 col-2 btn btn-warning"
+        (click)="returnToSpecialities()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <div class="row w-100 m-0 justify-content-center align-items-center">
+      <h2 class="text-center">Elija un espcialista</h2>
+      <img
+        class="col-2 mt-1"
+        src="../../../../../assets/images/appoinment/especialista.png"
+        alt="register_paciente"
+      />
+    </div>
+
+    <div class="row mt-1 g-6 justify-content-center">
       <div class="row g-3 justify-content-center">
         <div class="col-sm-12">
           <div class="row justify-content-center">
-            <label for="dni" class="form-label"
+            <label for="dni" class="text-center form-label"
               >Especialistas Disponibles:
             </label>
             <div
               *ngIf="
-                listOfspecialistsAvailable &&
-                  listOfspecialistsAvailable.length > 0;
+                listOfSpecialistsAvailable &&
+                  listOfSpecialistsAvailable.length > 0;
                 then blockThen;
                 else blockElse
               "
@@ -75,7 +83,7 @@
             <ng-template #blockThen>
               <button
                 class="m-1 col-2 btn btn-outline-success"
-                *ngFor="let specialist of listOfspecialistsAvailable"
+                *ngFor="let specialist of listOfSpecialistsAvailable"
                 (click)="chooseSpecialist(specialist)"
               >
                 <img
@@ -87,82 +95,116 @@
             </ng-template>
             <ng-template #blockElse>Sin Especialistas</ng-template>
           </div>
-
-          <input
-            type="text"
-            class="form-control"
-            formControlName="specialist"
-            id="specialist"
-            placeholder="Especialista elegido"
-          />
-
-          <div
-            [hidden]="
-              formAppoinment.controls['specialist'].pristine ||
-              !formAppoinment.controls['specialist'].invalid
-            "
-          >
-            <span
-              *ngIf="formAppoinment.controls['specialist'].errors?.['required']"
-              class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-              >Dni es requerido</span
-            >
-          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="row mt-1 g-3 justify-content-center">
-          <div class="col-12">
-            <p class="fw-bold">Elija una especialidad:</p>
-            <div
-              *ngFor="let speciality of listOfspecialities"
-              class="form-check form-switch"
-            >
-              <label class="form-check-label" for="{{ speciality }}">{{
-                speciality
-              }}</label>
-              <input
-                class="form-check-input"
-                id="{{ speciality }}"
-                type="radio"
-                name="speciality"
-                formControlName="speciality"
-                value="{{ speciality }}"
-                (click)="selectSpeciality(speciality)"
-              />
-            </div>
-            <div
-              [hidden]="
-                formAppoinment.controls['speciality'].pristine ||
-                !formAppoinment.controls['speciality'].invalid
-              "
-            >
-              <span
-                *ngIf="formAppoinment.controls['speciality'].errors?.['required']"
-                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-                >Especialidad es requerido</span
-              >
-              <span
-                *ngIf="formAppoinment.controls['speciality'].errors?.['minlength']"
-                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-                >Debe poseer al menos 3 caracteres</span
-              >
-              <span
-                *ngIf="formAppoinment.controls['speciality'].errors?.['maxlength']"
-                class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-                >Supero los caracteres</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <input
-        class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
-        type="submit"
-        value="Solicitar Turno"
-      />
-    </form>
+    </div>
   </div>
 </section>
-{{ formAppoinment.value | json }}
+
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
+    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+      <button
+        title="Volver"
+        class="col-md-3 col-2 btn btn-warning"
+        (click)="returnToSpecialist()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <div class="row w-100 m-0 justify-content-center align-items-center">
+      <h2 class="text-center">Elija una fecha</h2>
+      <img
+        class="col-2 mt-1"
+        src="../../../../../assets/images/appoinment/calendario.png"
+        alt="register_paciente"
+      />
+    </div>
+
+    <div class="row mt-1 g-6 justify-content-center">
+      <div class="row g-3 justify-content-center">
+        <div class="col-sm-12">
+          <div class="row justify-content-center">
+            <label for="dni" class="text-center form-label"
+              >Dias Disponibles:
+            </label>
+            <div
+              *ngIf="
+                availableSchedule && availableSchedule.length > 0;
+                then blockThenSchedule;
+                else blockElseSchedule
+              "
+            ></div>
+            <ng-template #blockThenSchedule>
+              <button
+                class="m-1 col-6 btn btn-outline-success"
+                *ngFor="let day of availableSchedule"
+              >
+                {{ day.message }}
+              </button>
+            </ng-template>
+            <ng-template #blockElseSchedule
+              >El especialista no tiene agenda aun</ng-template
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+>
+  <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">
+    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+      <button
+        title="Volver"
+        class="col-md-3 col-2 btn btn-warning"
+        (click)="returnToDate()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <div class="row w-100 m-0 justify-content-center align-items-center">
+      <h2 class="text-center">Elija un horario</h2>
+      <img
+        class="col-2 mt-1"
+        src="../../../../../assets/images/appoinment/horario.png"
+        alt="register_paciente"
+      />
+    </div>
+
+    <div class="row mt-1 g-6 justify-content-center">
+      <div class="col-sm-6">
+        <label for="specialitie" class="fw-bold text-center form-label"
+          >Elija una especialidad:
+        </label>
+        <div
+          *ngFor="let speciality of listOfSpecialities"
+          class="form-check form-switch"
+        >
+          <label class="form-check-label" for="{{ speciality }}">{{
+            speciality
+          }}</label>
+          <input
+            class="form-check-input"
+            id="{{ speciality }}"
+            type="radio"
+            name="speciality"
+            value="{{ speciality }}"
+            (click)="selectSpeciality(speciality)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <input
+      class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+      type="button"
+      value="Confirmar turno"
+    />
+  </div>
+</section>
