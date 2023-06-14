@@ -104,7 +104,7 @@ export class CreateAppoinmentComponent {
     this.hiddenSpecialities = true;
   }
 
-  protected chooseSpecialist(specialist: Specialist) {
+  protected async chooseSpecialist(specialist: Specialist) {
     this.chosenSpecialist = specialist;
 
     if (this.chosenSpecialist.speciality.schedule.days) {
@@ -114,7 +114,11 @@ export class CreateAppoinmentComponent {
       this.hiddenDates = false;
       this.hiddenSpecialist = true;
     } else {
-      console.log('Sin planificacion');
+      await this.alertService.showAlert({
+        icon: 'info',
+        message: 'El especialista no dispone de agenda aun.',
+        timer: 2000,
+      });
     }
   }
 
@@ -209,7 +213,7 @@ export class CreateAppoinmentComponent {
     this.hiddenTimes = true;
   }
 
-  protected async create() {
+  private async createAppoinment() {
     if (this.userService.userLogged?.userRole !== 'admin') {
       this.chosenPatient = this.userService.userLogged as Patient;
     }
@@ -237,16 +241,17 @@ export class CreateAppoinmentComponent {
     this.hiddenTimes = false;
   }
 
-  protected chooseTime(time: Time) {
+  protected async chooseTime(time: Time) {
     this.chosenTime = time;
+    await this.createAppoinment();
   }
 
-  protected confirmPatient() {
+  protected async confirmPatient() {
     if (this.chosenPatient) {
       this.hiddenPatients = true;
       this.hiddenSpecialist = false;
     } else {
-      this.alertService.showAlert({
+      await this.alertService.showAlert({
         icon: 'warning',
         message: 'Debe selecionar un paciente antes de avanzar',
       });
@@ -275,6 +280,8 @@ export class CreateAppoinmentComponent {
           timer: 2000,
         });
       }
+      this.hiddenSpecialities = false;
+      this.hiddenTimes = true;
     }
   }
 }
