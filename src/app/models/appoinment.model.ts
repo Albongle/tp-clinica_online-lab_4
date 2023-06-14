@@ -9,18 +9,19 @@ export class Appoinment {
   public review: string | undefined;
   public survey: string | undefined;
 
-  constructor(appoinment?: {
+  constructor(appoinment: {
     day: Day;
     patient: Patient;
     specialist: Specialist;
-    state: 'pending' | 'complete' | 'cancel' | 'accepted' | undefined;
-    review?: string | undefined;
-    survey?: string | undefined;
+    state?: 'pending' | 'complete' | 'cancel' | 'accepted';
+    review?: string;
+    survey?: string;
   }) {
-    this.day = appoinment!.day;
-    this.patient = appoinment!.patient;
-    this.specialist = appoinment!.specialist;
-    this.review = appoinment!.review;
-    this.survey = appoinment!.survey;
+    this.day = appoinment.day;
+    this.patient = appoinment.patient;
+    this.specialist = appoinment.specialist;
+    this.state = appoinment.state;
+    this.review = appoinment.review;
+    this.survey = appoinment.survey;
   }
 }

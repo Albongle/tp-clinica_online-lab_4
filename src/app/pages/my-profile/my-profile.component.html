@@ -34,17 +34,19 @@
                 <ng-template #thenBlock>
                   <li *ngFor="let item of user | specialist | keyvalue">
                     <div *ngIf="item.key === 'speciality'; else elseBlock">
-                      {{ item.key | keysmapped | uppercase }}:
+                      {{ item.key | keyusersmapped | uppercase }}:
                       {{ item.value | specialitie }}
                     </div>
                     <ng-template #elseBlock>
-                      {{ item.key | keysmapped | uppercase }}: {{ item.value }}
+                      {{ item.key | keyusersmapped | uppercase }}:
+                      {{ item.value }}
                     </ng-template>
                   </li>
                 </ng-template>
                 <ng-template #elseBlock>
                   <li *ngFor="let item of user | keyvalue">
-                    {{ item.key | keysmapped | uppercase }}: {{ item.value }}
+                    {{ item.key | keyusersmapped | uppercase }}:
+                    {{ item.value }}
                   </li>
                 </ng-template>
               </ul>

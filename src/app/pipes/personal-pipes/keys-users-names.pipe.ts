@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'keysmapped',
+  name: 'keyusersmapped',
 })
-export class KeysMappedPipe implements PipeTransform {
+export class KeysUserMappedPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string | undefined {
     const keysMapped = [
       { key: 'userId', value: 'Id Usuario' },

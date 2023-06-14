@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KeysMappedPipe } from './keys-names.pipe';
+import { KeysUserMappedPipe } from './keys-users-names.pipe';
 import { SpecialistPipe } from './specialist.pipe';
 import { SpecialitiePipe } from './specialitie.pipe';
+import { AppoinmentMappedListPipe } from './appoinment-list-mapped.pipe';
 
 @NgModule({
-  declarations: [KeysMappedPipe, SpecialistPipe, SpecialitiePipe],
+  declarations: [
+    KeysUserMappedPipe,
+    SpecialistPipe,
+    SpecialitiePipe,
+    AppoinmentMappedListPipe,
+  ],
   imports: [CommonModule],
-  exports: [KeysMappedPipe, SpecialistPipe, SpecialitiePipe],
+  exports: [
+    KeysUserMappedPipe,
+    SpecialistPipe,
+    SpecialitiePipe,
+    AppoinmentMappedListPipe,
+  ],
 })
 export class PersonalPipesModule {}

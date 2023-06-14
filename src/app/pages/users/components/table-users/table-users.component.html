@@ -16,7 +16,7 @@
             class="text-center fw-bold"
             *ngFor="let item of list[0] | keyvalue"
           >
-            {{ item.key | keysmapped | uppercase }}
+            {{ item.key | keyusersmapped | uppercase }}
           </th>
           <th *ngIf="roleOption === 'specialist'">VALIDAR REGISTRO</th>
         </tr>
