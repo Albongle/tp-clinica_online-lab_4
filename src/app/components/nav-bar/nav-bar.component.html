@@ -99,7 +99,11 @@
         <li *ngIf="userService.userLogged" class="nav-item">
           <a
             class="nav-link"
-            routerLink="appoinment"
+            [routerLink]="
+              userService.userLogged.userRole === 'patient'
+                ? 'myappoinments'
+                : 'appoinments'
+            "
             data-bs-dismiss="offcanvas"
             >{{
               userService.userLogged.userRole === "patient"
@@ -119,7 +123,7 @@
         >
           <a
             class="nav-link"
-            routerLink="appoinment/createappoinment"
+            routerLink="createappoinments"
             data-bs-dismiss="offcanvas"
             >Solicitar Turno</a
           >

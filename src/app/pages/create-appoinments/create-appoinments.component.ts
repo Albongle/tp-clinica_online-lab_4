@@ -8,12 +8,13 @@ import { AppoinmentService } from 'src/app/services/appoinment.service';
 import { SpecialitiesService } from 'src/app/services/specialities.service';
 import { UserService } from 'src/app/services/user.service';
 type Time = { timeStart: string; timeEnd: string };
+
 @Component({
-  selector: 'app-create-appoinment',
-  templateUrl: './create-appoinment.component.html',
-  styleUrls: ['./create-appoinment.component.scss'],
+  selector: 'app-create-appoinments',
+  templateUrl: './create-appoinments.component.html',
+  styleUrls: ['./create-appoinments.component.scss'],
 })
-export class CreateAppoinmentComponent {
+export class CreateAppoinmentsComponent {
   protected hiddenSpecialities: boolean;
   protected hiddenPatients: boolean;
   protected hiddenSpecialist: boolean;

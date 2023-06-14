@@ -34,14 +34,7 @@ const routes: Routes = [
       import('./pages/users/users.module').then((m) => m.UsersModule),
     canActivate: [AdminGuard],
   },
-  {
-    path: 'appoinment',
-    loadChildren: () =>
-      import('./pages/appoinment/appoinment.module').then(
-        (m) => m.AppoinmentModule
-      ),
-    canActivate: [AuthorizationGuard],
-  },
+
   {
     path: 'myprofile',
     loadChildren: () =>
@@ -50,6 +43,21 @@ const routes: Routes = [
       ),
     canActivate: [AuthorizationGuard],
   },
+  {
+    path: 'myappoinments',
+    loadChildren: () =>
+      import('./pages/my-appoinments/my-appoinments.module').then(
+        (m) => m.MyAppoinmentsModule
+      ),
+  },
+  {
+    path: 'createappoinments',
+    loadChildren: () =>
+      import('./pages/create-appoinments/create-appoinments.module').then(
+        (m) => m.CreateAppoinmentsModule
+      ),
+  },
+  { path: 'appoinments', loadChildren: () => import('./pages/appoinments/appoinments.module').then(m => m.AppoinmentsModule) },
   {
     path: '**',
     loadChildren: () =>

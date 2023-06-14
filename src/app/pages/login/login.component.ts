@@ -39,7 +39,7 @@ export class LoginComponent {
         message: `Bienvenido ${userLog!.email}`,
         timer: 2000,
       });
-      await this.router.navigateByUrl('');
+      await this.router.navigateByUrl('myprofile');
     } catch (error: any) {
       await this.userService.logout();
       await this.alertService.showAlert({
