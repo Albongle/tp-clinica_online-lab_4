@@ -13,7 +13,12 @@
     *ngIf="userRole === 'patient'"
     class="bg-light shadow p-2 rounded table-responsive"
   >
-    <table *ngIf="listOfAppoinments" class="table table-striped table-ligth">
+    <app-table-appoinments
+      *ngIf="listOfAppoinments"
+      [listOfAppoinments]="listOfAppoinments | patientappoinmentlist"
+      (eventSendSelectedElement)="chooseAppoinment($event)"
+    ></app-table-appoinments>
+    <!-- <table *ngIf="listOfAppoinments" class="table table-striped table-ligth">
       <thead class="table-dark">
         <tr>
           <ng-container
@@ -59,14 +64,19 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 
   <div
     *ngIf="userRole === 'specialist'"
     class="bg-light shadow p-2 rounded table-responsive"
   >
-    <table *ngIf="listOfAppoinments" class="table table-striped table-ligth">
+    <app-table-appoinments
+      *ngIf="listOfAppoinments"
+      [listOfAppoinments]="listOfAppoinments | specialistappoinmentlist"
+      (eventSendSelectedElement)="chooseAppoinment($event)"
+    ></app-table-appoinments>
+    <!-- <table *ngIf="listOfAppoinments" class="table table-striped table-ligth">
       <thead class="table-dark">
         <tr>
           <ng-container
@@ -114,6 +124,6 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 </section>

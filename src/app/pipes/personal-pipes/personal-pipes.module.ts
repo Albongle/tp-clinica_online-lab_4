@@ -5,6 +5,7 @@ import { SpecialistPipe } from './specialist.pipe';
 import { SpecialitiePipe } from './specialitie.pipe';
 import { SpecialistAppoinmentMappedListPipe } from './specialist-appoinment-list-mapped.pipe';
 import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mapped.pipe copy';
+import { AnyPipe } from './any.pipe';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mappe
     SpecialitiePipe,
     PatientAppoinmentMappedListPipe,
     SpecialistAppoinmentMappedListPipe,
+    AnyPipe,
   ],
   imports: [CommonModule],
   exports: [
@@ -21,6 +23,7 @@ import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mappe
     SpecialitiePipe,
     PatientAppoinmentMappedListPipe,
     SpecialistAppoinmentMappedListPipe,
+    AnyPipe,
   ],
 })
 export class PersonalPipesModule {}

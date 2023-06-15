@@ -6,9 +6,10 @@ import { PersonalPipesModule } from 'src/app/pipes/personal-pipes/personal-pipes
 import { FormsModule } from '@angular/forms';
 import { ListAppoinmentComponent } from './components/list-appoinment/list-appoinment.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { TableAppoinmentsComponent } from './components/table-appoinments/table-appoinments.component';
 
 @NgModule({
-  declarations: [MyAppoinmentsComponent, ListAppoinmentComponent],
+  declarations: [MyAppoinmentsComponent, ListAppoinmentComponent, TableAppoinmentsComponent],
   imports: [
     CommonModule,
     MyAppoinmentsRoutingModule,
