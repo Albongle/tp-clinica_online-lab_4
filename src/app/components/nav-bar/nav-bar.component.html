@@ -100,13 +100,13 @@
           <a
             class="nav-link"
             [routerLink]="
-              userService.userLogged.userRole === 'patient'
+              userService.userLogged.userRole !== 'admin'
                 ? 'appoinments/myappoinments'
                 : 'appoinments'
             "
             data-bs-dismiss="offcanvas"
             >{{
-              userService.userLogged.userRole === "patient"
+              userService.userLogged.userRole !== "admin"
                 ? "Mis Turnos"
                 : "Turnos"
             }}</a

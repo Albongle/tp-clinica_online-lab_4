@@ -3,21 +3,24 @@ import { CommonModule } from '@angular/common';
 import { KeysUserMappedPipe } from './keys-users-names.pipe';
 import { SpecialistPipe } from './specialist.pipe';
 import { SpecialitiePipe } from './specialitie.pipe';
-import { AppoinmentMappedListPipe } from './appoinment-list-mapped.pipe';
+import { SpecialistAppoinmentMappedListPipe } from './specialist-appoinment-list-mapped.pipe';
+import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mapped.pipe copy';
 
 @NgModule({
   declarations: [
     KeysUserMappedPipe,
     SpecialistPipe,
     SpecialitiePipe,
-    AppoinmentMappedListPipe,
+    PatientAppoinmentMappedListPipe,
+    SpecialistAppoinmentMappedListPipe,
   ],
   imports: [CommonModule],
   exports: [
     KeysUserMappedPipe,
     SpecialistPipe,
     SpecialitiePipe,
-    AppoinmentMappedListPipe,
+    PatientAppoinmentMappedListPipe,
+    SpecialistAppoinmentMappedListPipe,
   ],
 })
 export class PersonalPipesModule {}

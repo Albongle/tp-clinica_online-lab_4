@@ -15,7 +15,8 @@
         <tr>
           <ng-container
             *ngFor="
-              let item of (listOfAppoinments | appoinmentlist)[0] | keyvalue
+              let item of (listOfAppoinments | specialistappoinmentlist)[0]
+                | keyvalue
             "
           >
             <ng-template
@@ -33,7 +34,9 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let element of listOfAppoinments | appoinmentlist">
+        <tr
+          *ngFor="let element of listOfAppoinments | specialistappoinmentlist"
+        >
           <ng-container *ngFor="let item of element | keyvalue">
             <ng-template
               *ngIf="item.key !== 'Objeto'; then thenTdBlock"

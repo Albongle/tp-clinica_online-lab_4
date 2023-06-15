@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Appoinment } from 'src/app/models/appoinment.model';
 
 @Pipe({
-  name: 'appoinmentlist',
+  name: 'patientappoinmentlist',
 })
-export class AppoinmentMappedListPipe implements PipeTransform {
+export class PatientAppoinmentMappedListPipe implements PipeTransform {
   transform(
     value: Appoinment[],
     ...args: unknown[]

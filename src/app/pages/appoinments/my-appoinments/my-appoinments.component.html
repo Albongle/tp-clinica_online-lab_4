@@ -8,11 +8,25 @@
           {{ userService.userLogged?.name }}</span
         >
       </h1>
-      <app-list-appoinments
-        [userRole]="userService.userLogged?.userRole!"
-        [userEmail]="userService.userLogged?.email!"
-        (eventChooseAppoinment)="handlerChooseAppoinment($event)"
-      ></app-list-appoinments>
+      <ng-template
+        *ngIf="
+          userService.userLogged?.userRole === 'patient';
+          then thenPatientBlock;
+          else elseSpecialistBlock
+        "
+      ></ng-template>
+      <ng-template #thenPatientBlock>
+        <app-patient-list-appoinment
+          [userEmail]="userService.userLogged?.email!"
+          (eventChooseAppoinment)="handlerChooseAppoinment($event)"
+        ></app-patient-list-appoinment>
+      </ng-template>
+      <ng-template #elseSpecialistBlock>
+        <app-specilist-list-appoinment
+          [userEmail]="userService.userLogged?.email!"
+          (eventChooseAppoinment)="handlerChooseAppoinment($event)"
+        ></app-specilist-list-appoinment>
+      </ng-template>
     </div>
   </div>
 
@@ -41,36 +55,38 @@
     </div>
     <div class="m-md-3 mt-1 col-md-5">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <h2>Solo Mostrar</h2>
-        <p>Aca va el detalle</p>
+        <h2>Ver reseña</h2>
+        <p>Aca va la reseña</p>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <h2>Add borders</h2>
-        <p>
-          Or, keep it light and add a border for some added definition to the
-          boundaries of your content. Be sure to look under the hood at the
-          source HTML here as we've adjusted the alignment and sizing of both
-          column's content for equal-height.
-        </p>
-        <button class="btn btn-outline-secondary" type="button">
-          Example button
-        </button>
+        <h2>Competar ecuesta</h2>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <h2>Add borders</h2>
-        <p>
-          Or, keep it light and add a border for some added definition to the
-          boundaries of your content. Be sure to look under the hood at the
-          source HTML here as we've adjusted the alignment and sizing of both
-          column's content for equal-height.
-        </p>
-        <button class="btn btn-outline-secondary" type="button">
-          Example button
-        </button>
+        <h2>Calificar Atencion</h2>
+        <div
+          *ngFor="let item of listCalification"
+          class="form-check form-check-inline"
+        >
+          <input
+            class="form-check-input"
+            type="radio"
+            name="calification"
+            id="inlineRadio-{{ item }}"
+            value="option1"
+          />
+          <label class="form-check-label" for="inlineRadio-{{ item }}">{{
+            item
+          }}</label>
+        </div>
+        <div class="row">
+          <button class="btn btn-outline-secondary" type="button">
+            Enviar calification
+          </button>
+        </div>
       </div>
     </div>
   </div>

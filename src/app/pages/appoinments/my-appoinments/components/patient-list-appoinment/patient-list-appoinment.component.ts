@@ -10,11 +10,11 @@ import { Appoinment } from 'src/app/models/appoinment.model';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 
 @Component({
-  selector: 'app-list-appoinments',
-  templateUrl: './list-appoinments.component.html',
-  styleUrls: ['./list-appoinments.component.scss'],
+  selector: 'app-patient-list-appoinment',
+  templateUrl: './patient-list-appoinment.component.html',
+  styleUrls: ['./patient-list-appoinment.component.scss'],
 })
-export class ListAppoinmentsComponent implements OnChanges {
+export class PatientListAppoinmentComponent implements OnChanges {
   protected listOfAppoinments: Appoinment[];
   private listOfAppoinmentsBackUp: Appoinment[];
   @Output() public eventChooseAppoinment: EventEmitter<Appoinment>;
@@ -30,18 +30,10 @@ export class ListAppoinmentsComponent implements OnChanges {
   }
 
   private async setAppoinments() {
-    if (this.userRole && this.userEmail) {
-      if (this.userRole === 'patient') {
-        this.listOfAppoinments = (
-          await this.appointmentService.getAllAppoinment()
-        ).filter((appoinment) => appoinment.patient.email === this.userEmail);
-      } else if (this.userRole === 'specialist') {
-        this.listOfAppoinments = (
-          await this.appointmentService.getAllAppoinment()
-        ).filter(
-          (appoinment) => appoinment.specialist.email === this.userEmail
-        );
-      }
+    if (this.userEmail) {
+      this.listOfAppoinments = (
+        await this.appointmentService.getAllAppoinment()
+      ).filter((appoinment) => appoinment.patient.email === this.userEmail);
       this.listOfAppoinmentsBackUp = [...this.listOfAppoinments];
     } else {
       this.listOfAppoinments = [];
