@@ -21,7 +21,14 @@
 
   <div class="row align-items-md-stretch justify-content-center">
     <div class="m-md-3 mt-1 col-md-5">
-      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+      <div
+        [hidden]="
+          !appoinmentSelected ||
+          appoinmentSelected.state === 'complete' ||
+          appoinmentSelected.state === 'cancel'
+        "
+        class="h-100 p-5 bg-body-tertiary border rounded-3"
+      >
         <h2>Cancelar turno</h2>
         <textarea
           class="w-100 border rounded-3"
@@ -43,18 +50,31 @@
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
-      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+      <div
+        *ngIf="appoinmentSelected && appoinmentSelected.review !== undefined"
+        class="h-100 p-5 bg-body-tertiary border rounded-3"
+      >
         <h2>Ver reseña</h2>
         <p>Aca va la reseña</p>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
-      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+      <div
+        *ngIf="
+          appoinmentSelected &&
+          appoinmentSelected.state === 'complete' &&
+          appoinmentSelected.review !== undefined
+        "
+        class="h-100 p-5 bg-body-tertiary border rounded-3"
+      >
         <h2>Competar ecuesta</h2>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
-      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+      <div
+        *ngIf="appoinmentSelected && appoinmentSelected.state === 'complete'"
+        class="h-100 p-5 bg-body-tertiary border rounded-3"
+      >
         <h2>Calificar Atencion</h2>
         <div
           *ngFor="let item of listCalification"

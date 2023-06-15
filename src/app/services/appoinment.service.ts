@@ -25,8 +25,11 @@ export class AppoinmentService {
   }
 
   public saveAppoinmenInStore(appoinment: Appoinment) {
+    const doc = this.firebaseStoreProvider.createDoc('turnos');
+
+    appoinment.id = doc.id;
     return this.firebaseStoreProvider.saveDoc(
-      'turnos',
+      doc,
       JSON.parse(JSON.stringify(appoinment))
     );
   }

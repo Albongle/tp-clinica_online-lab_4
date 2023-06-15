@@ -2,6 +2,7 @@ import { Day } from './schedule.model';
 import { Patient } from './users/patient.model';
 import { Specialist } from './users/specialist.model';
 export class Appoinment {
+  public id: string;
   public day: Day;
   public patient: Patient;
   public specialist: Specialist;

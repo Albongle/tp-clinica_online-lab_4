@@ -5,9 +5,9 @@ import {
   collection,
   setDoc,
   doc,
+  DocumentReference,
+  DocumentData,
 } from '@angular/fire/firestore';
-
-import { addDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +19,15 @@ export class FirebaseStoreProvider {
     return collectionData(collection(this.firestore, col));
   }
 
-  public saveDoc(col: string, doc: any) {
-    return addDoc(collection(this.firestore, col), doc);
+  public saveDoc(doc: DocumentReference<DocumentData>, data: any) {
+    return setDoc(doc, data);
   }
 
   public setDocWithId(col: string, id: any, data: any) {
     return setDoc(doc(this.firestore, col, id), data);
+  }
+
+  public createDoc(col: string) {
+    return doc(collection(this.firestore, col));
   }
 }

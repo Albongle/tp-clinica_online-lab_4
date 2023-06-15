@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-appoinments.component.scss'],
 })
 export class MyAppoinmentsComponent {
+  protected appoinmentSelected: Appoinment | undefined;
   protected loading: boolean;
   protected reason: string;
   protected listCalification: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -46,7 +47,7 @@ export class MyAppoinmentsComponent {
   }
 
   protected handlerChooseAppoinment(appoinment: Appoinment) {
-    console.log(appoinment);
+    this.appoinmentSelected = appoinment;
   }
 
   protected searchAppoinment(value: string) {
