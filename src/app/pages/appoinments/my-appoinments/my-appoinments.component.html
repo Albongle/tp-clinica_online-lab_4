@@ -1,6 +1,7 @@
 <section class="row justify-content-center w-100 m-0 p-0">
   <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
+    <app-loading [loading]="loading"></app-loading>
+    <div [hidden]="loading" class="container-fluid py-5">
       <h1 class="display-5 fw-bold">
         Listado de turnos de:
         <span class="badge rounded-pill text-bg-danger">
@@ -8,25 +9,13 @@
           {{ userService.userLogged?.name }}</span
         >
       </h1>
-      <ng-template
-        *ngIf="
-          userService.userLogged?.userRole === 'patient';
-          then thenPatientBlock;
-          else elseSpecialistBlock
-        "
-      ></ng-template>
-      <ng-template #thenPatientBlock>
-        <app-patient-list-appoinment
-          [userEmail]="userService.userLogged?.email!"
-          (eventChooseAppoinment)="handlerChooseAppoinment($event)"
-        ></app-patient-list-appoinment>
-      </ng-template>
-      <ng-template #elseSpecialistBlock>
-        <app-specilist-list-appoinment
-          [userEmail]="userService.userLogged?.email!"
-          (eventChooseAppoinment)="handlerChooseAppoinment($event)"
-        ></app-specilist-list-appoinment>
-      </ng-template>
+
+      <app-list-appoinment
+        [userRole]="userService.userLogged?.userRole!"
+        [listOfAppoinments]="listOfAppoinments"
+        (eventChooseAppoinment)="handlerChooseAppoinment($event)"
+        (eventFilterTable)="searchAppoinment($event)"
+      ></app-list-appoinment>
     </div>
   </div>
 
