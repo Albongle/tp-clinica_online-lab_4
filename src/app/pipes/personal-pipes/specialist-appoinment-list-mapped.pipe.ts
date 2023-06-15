@@ -23,6 +23,8 @@ export class SpecialistAppoinmentMappedListPipe implements PipeTransform {
         Horario: `${appoinment.day.timeStart} a ${appoinment.day.timeEnd}`,
         Paciente: `${appoinment.patient.lastName}, ${appoinment.patient.name}`,
         Especialidad: `${appoinment.specialist.speciality.description}`,
+        Reseña: appoinment.review,
+        Calificacion: appoinment.calification,
         Estado: `${appoinment.state}`,
       };
       return obj;

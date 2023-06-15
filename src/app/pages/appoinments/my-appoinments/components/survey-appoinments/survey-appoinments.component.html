@@ -1,0 +1,120 @@
+<div class="row w-100 justify-content-center align-items-center">
+  <h2 class="mt-1 col-12 text-center">Encuesta</h2>
+  <img
+    class="col-3 mt-1"
+    src="../../../assets/images/surveys/survey.png"
+    alt="register"
+  />
+</div>
+
+<form class="m-2 p-2" (ngSubmit)="sendSurvey()" [formGroup]="formSurvey">
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <p class="fw-bold">
+        Seleccione su experiencia con la aplicacion del 1 al 10
+      </p>
+      <label for="experience" class="form-label">Experiencia:</label>
+      <select class="form-select" formControlName="experience" id="experience">
+        <option value="" selected>Elija una opcion</option>
+        <option *ngFor="let value of optionExperience" [value]="value">
+          {{ value }}
+        </option>
+      </select>
+
+      <span
+        [hidden]="
+          formSurvey.controls['experience'].pristine ||
+          !formSurvey.controls['experience'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Prefencia es requerido</span
+      >
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <p class="fw-bold">Seleccione cual fue el juego que mas le gusto</p>
+      <label for="preference" class="form-label">Juego preferido:</label>
+      <select class="form-select" formControlName="preference" id="preference">
+        <option value="" selected>Elija una opcion</option>
+        <option *ngFor="let value of optionGame" [value]="value">
+          {{ value }}
+        </option>
+      </select>
+
+      <span
+        [hidden]="
+          formSurvey.controls['preference'].pristine ||
+          !formSurvey.controls['preference'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >El juego preferido es requerido</span
+      >
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <p class="fw-bold">Indica como nos conociste:</p>
+
+      <div class="form-check form-switch">
+        <label class="form-check-label" for="amigo">Amigo</label>
+        <input
+          class="form-check-input"
+          id="amigo"
+          type="radio"
+          name="find"
+          formControlName="find"
+          value="Amigo"
+        />
+      </div>
+      <div class="form-check form-switch">
+        <label class="form-check-label" for="internet">Internet</label>
+        <input
+          class="form-check-input"
+          id="internet"
+          type="radio"
+          name="find"
+          formControlName="find"
+          value="Internet"
+        />
+      </div>
+      <div class="form-check form-switch">
+        <label class="form-check-label" for="noticias">Noticias</label>
+        <input
+          class="form-check-input"
+          id="noticias"
+          type="radio"
+          name="find"
+          formControlName="find"
+          value="Noticias"
+        />
+      </div>
+      <div class="form-check form-switch">
+        <label class="form-check-label" for="otro">Otro</label>
+        <input
+          class="form-check-input"
+          id="otro"
+          type="radio"
+          name="find"
+          formControlName="find"
+          value="Otro"
+        />
+      </div>
+
+      <span
+        [hidden]="
+          formSurvey.controls['find'].pristine ||
+          !formSurvey.controls['find'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Debe seleccionar una opcion</span
+      >
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+  >
+    Enviar
+  </button>
+</form>

@@ -1,22 +1,44 @@
 import { Day } from './schedule.model';
+import { Survey } from './survey.model';
 import { Patient } from './users/patient.model';
 import { Specialist } from './users/specialist.model';
+export type AppoinmentState =
+  | 'pending'
+  | 'complete'
+  | 'cancel'
+  | 'accepted'
+  | undefined;
+
+export type AppoinmentCalification =
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | undefined;
 export class Appoinment {
   public id: string;
   public day: Day;
   public patient: Patient;
   public specialist: Specialist;
-  public state: 'pending' | 'complete' | 'cancel' | 'accepted' | undefined;
+  public state: AppoinmentState;
   public review: string | undefined;
-  public survey: string | undefined;
-
+  public survey: Survey | undefined;
+  public calification: AppoinmentCalification;
   constructor(appoinment: {
     day: Day;
     patient: Patient;
     specialist: Specialist;
-    state?: 'pending' | 'complete' | 'cancel' | 'accepted';
+    state?: AppoinmentState;
     review?: string;
-    survey?: string;
+    survey?: Survey;
+    calification?: AppoinmentCalification;
   }) {
     this.day = appoinment.day;
     this.patient = appoinment.patient;
@@ -24,5 +46,6 @@ export class Appoinment {
     this.state = appoinment.state;
     this.review = appoinment.review;
     this.survey = appoinment.survey;
+    this.calification = appoinment.calification;
   }
 }

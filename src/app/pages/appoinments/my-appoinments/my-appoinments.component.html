@@ -52,10 +52,10 @@
     <div class="m-md-3 mt-1 col-md-5">
       <div
         *ngIf="appoinmentSelected && appoinmentSelected.review !== undefined"
-        class="h-100 p-5 bg-body-tertiary border rounded-3"
+        class="h-100 p-5 text-bg-dark border rounded-3"
       >
-        <h2>Ver reseña</h2>
-        <p>Aca va la reseña</p>
+        <h2>Reseña</h2>
+        <p class="text-danger">{{ appoinmentSelected.review }}</p>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
@@ -67,13 +67,17 @@
         "
         class="h-100 p-5 bg-body-tertiary border rounded-3"
       >
-        <h2>Competar ecuesta</h2>
+        <app-survey-appoinments class="w-100"></app-survey-appoinments>
       </div>
     </div>
     <div class="m-md-3 mt-1 col-md-5">
       <div
-        *ngIf="appoinmentSelected && appoinmentSelected.state === 'complete'"
-        class="h-100 p-5 bg-body-tertiary border rounded-3"
+        *ngIf="
+          appoinmentSelected &&
+          appoinmentSelected.state === 'complete' &&
+          !appoinmentSelected.calification
+        "
+        class="h-100 p-5 text-bg-danger border rounded-3"
       >
         <h2>Calificar Atencion</h2>
         <div
