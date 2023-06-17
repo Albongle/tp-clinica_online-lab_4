@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Appoinment } from 'src/app/models/appoinment.model';
+import { Appoinment, AppoinmentState } from 'src/app/models/appoinment.model';
 
 @Component({
   selector: 'app-table-appoinments',
@@ -9,11 +9,18 @@ import { Appoinment } from 'src/app/models/appoinment.model';
 export class TableAppoinmentsComponent {
   @Input() public listOfAppoinments: any[];
   @Output() public eventSendSelectedElement: EventEmitter<Appoinment>;
+  @Output() public eventSendState: EventEmitter<AppoinmentState>;
 
   constructor() {
     this.eventSendSelectedElement = new EventEmitter();
+    this.eventSendState = new EventEmitter();
   }
   protected chooseElement(appoinment: any) {
     this.eventSendSelectedElement.emit(appoinment as Appoinment);
+  }
+
+  protected acceptedAppoinment(appoinment: any) {
+    this.eventSendSelectedElement.emit(appoinment as Appoinment);
+    this.eventSendState.emit('accepted' as AppoinmentState);
   }
 }

@@ -23,7 +23,7 @@ export class AlertService {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Aceptart',
+      confirmButtonText: 'Aceptar',
     });
   }
 }

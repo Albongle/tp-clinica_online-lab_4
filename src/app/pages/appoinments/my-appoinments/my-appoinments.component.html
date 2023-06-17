@@ -15,6 +15,7 @@
         [listOfAppoinments]="listOfAppoinments"
         (eventChooseAppoinment)="handlerChooseAppoinment($event)"
         (eventFilterTable)="searchAppoinment($event)"
+        (eventAcceptedAppoinment)="aceptedAppoinment($event)"
       ></app-list-appoinment>
     </div>
   </div>
@@ -23,8 +24,11 @@
     <div
       *ngIf="
         appoinmentSelected &&
-        appoinmentSelected.state !== 'complete' &&
-        appoinmentSelected.state !== 'cancel'
+        ((userService.userLogged?.userRole! === 'patient' &&
+          appoinmentSelected.state !== 'complete' &&
+          appoinmentSelected.state !== 'cancel') ||
+          (userService.userLogged?.userRole! === 'specialist' &&
+            appoinmentSelected.state === 'pending'))
       "
       class="m-md-3 mt-1 col-md-5"
     >
@@ -50,6 +54,35 @@
       </div>
     </div>
     <div
+      *ngIf="
+        userService.userLogged?.userRole === 'specialist' &&
+        appoinmentSelected &&
+        appoinmentSelected.state === 'accepted'
+      "
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h2>Finalizar turno</h2>
+        <textarea
+          class="w-100 border rounded-3"
+          name="motivos"
+          id="motivos"
+          cols="30"
+          maxlength="255"
+          rows="10"
+          [(ngModel)]="reason"
+          placeholder="Ingrese los comentarios para la finalizacion del turno"
+        ></textarea>
+        <button
+          class="btn btn-outline-danger"
+          type="button"
+          (click)="completeAppoinment()"
+        >
+          Finaliar
+        </button>
+      </div>
+    </div>
+    <div
       *ngIf="appoinmentSelected && appoinmentSelected.review"
       class="m-md-3 mt-1 col-md-5"
     >
@@ -60,6 +93,7 @@
     </div>
     <div
       *ngIf="
+        userService.userLogged?.userRole === 'patient' &&
         appoinmentSelected &&
         appoinmentSelected.state === 'complete' &&
         appoinmentSelected.review &&
@@ -76,6 +110,7 @@
     </div>
     <div
       *ngIf="
+        userService.userLogged?.userRole === 'patient' &&
         appoinmentSelected &&
         appoinmentSelected.state === 'complete' &&
         !appoinmentSelected.calification

@@ -25,7 +25,8 @@ export class PatientAppoinmentMappedListPipe implements PipeTransform {
         Especialidad: `${appoinment.specialist.speciality.description}`,
         Reseña: appoinment.review,
         Estado: appoinment.state,
-        'Calificacion Brindada': appoinment.calification,
+        'Encuesta realizada': `${appoinment.survey ? 'Si' : 'No'}`,
+        'Calificacion brindada': appoinment.calification,
       };
 
       return obj;

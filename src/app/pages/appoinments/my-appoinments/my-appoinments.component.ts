@@ -3,6 +3,7 @@ import { Subscription, map } from 'rxjs';
 import {
   Appoinment,
   AppoinmentCalification,
+  AppoinmentState,
 } from 'src/app/models/appoinment.model';
 import { Survey } from 'src/app/models/survey.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -23,6 +24,7 @@ export class MyAppoinmentsComponent implements OnDestroy {
   protected listOfAppoinments: Appoinment[];
   private listOfAppoinmentsBackUp: Appoinment[];
   private appoinmentsSubcription: Subscription;
+  protected acctionOnAppoinment: string | undefined;
 
   constructor(
     protected readonly userService: UserService,
@@ -83,34 +85,11 @@ export class MyAppoinmentsComponent implements OnDestroy {
   }
 
   protected async cancelAppoinment() {
-    if (this.reason) {
-      try {
-        await this.appointmentService.saveAppoinmentWithIdInStore(
-          this.appoinmentSelected?.id!,
-          { ...this.appoinmentSelected!, state: 'cancel', review: this.reason }
-        );
-        await this.alertService.showAlert({
-          icon: 'success',
-          message: 'Turno cancelado con exito',
-          timer: 2000,
-        });
-        this.appoinmentSelected = undefined;
-      } catch (error: any) {
-        await this.alertService.showAlert({
-          icon: 'error',
-          message: error.message,
-          timer: 2000,
-        });
-      }
+    await this.updateStateAppoinment('cancel', false);
+  }
 
-      this.reason = undefined;
-    } else {
-      await this.alertService.showAlert({
-        icon: 'error',
-        message: 'Debe indicar los motivos de cancelacion',
-        timer: 2000,
-      });
-    }
+  protected async completeAppoinment() {
+    await this.updateStateAppoinment('complete', false);
   }
 
   protected async qualify() {
@@ -160,5 +139,50 @@ export class MyAppoinmentsComponent implements OnDestroy {
         timer: 2000,
       });
     }
+  }
+
+  private async updateStateAppoinment(
+    state: AppoinmentState,
+    notRequireReason: boolean
+  ) {
+    console.log('llegue aca');
+    console.log(this.appoinmentSelected);
+
+    if (notRequireReason || this.reason) {
+      try {
+        await this.appointmentService.saveAppoinmentWithIdInStore(
+          this.appoinmentSelected?.id!,
+          {
+            ...this.appoinmentSelected!,
+            state: state,
+            review: this.reason,
+          }
+        );
+        await this.alertService.showAlert({
+          icon: 'success',
+          message: 'Turno modificado con exito',
+          timer: 2000,
+        });
+        this.appoinmentSelected = undefined;
+      } catch (error: any) {
+        await this.alertService.showAlert({
+          icon: 'error',
+          message: error.message,
+          timer: 2000,
+        });
+      }
+
+      this.reason = undefined;
+    } else {
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: 'Debe dejar una reseña al momento modificar el turno',
+        timer: 2000,
+      });
+    }
+  }
+
+  protected async aceptedAppoinment(state: AppoinmentState) {
+    await this.updateStateAppoinment(state, true);
   }
 }

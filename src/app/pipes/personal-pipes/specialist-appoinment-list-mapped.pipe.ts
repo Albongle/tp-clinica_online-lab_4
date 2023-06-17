@@ -26,6 +26,7 @@ export class SpecialistAppoinmentMappedListPipe implements PipeTransform {
         Reseña: appoinment.review,
         Estado: appoinment.state,
         'Calificacion recibida': appoinment.calification,
+        'Aceptar turno': '',
       };
 
       return obj;

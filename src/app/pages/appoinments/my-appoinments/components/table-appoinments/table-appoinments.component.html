@@ -28,8 +28,8 @@
         <ng-template #thenTdBlock>
           <ng-template
             *ngIf="
-              item.key === 'Calificacion Brindada' ||
-                item.key === 'Calificacion Recibida';
+              item.key === 'Calificacion brindada' ||
+                item.key === 'Calificacion recibida';
               then thenRatingBlock;
               else elseNoRatingBlock
             "
@@ -43,10 +43,27 @@
               ></p-rating></td
           ></ng-template>
           <ng-template #elseNoRatingBlock>
-            <td class="text-center">
-              {{ item.value }}
-            </td></ng-template
-          >
+            <ng-template
+              *ngIf="
+                item.key === 'Aceptar turno' &&
+                  element.Objeto.state === 'pending';
+                then thenAceptarBlock;
+                else elseValueBlock
+              "
+            ></ng-template>
+            <ng-template #thenAceptarBlock>
+              <td class="text-center">
+                <i
+                  class="btn btn-outline-success fa-solid fa-circle-check"
+                  (click)="acceptedAppoinment(element.Objeto)"
+                ></i></td
+            ></ng-template>
+            <ng-template #elseValueBlock>
+              <td class="text-center">
+                {{ item.value }}
+              </td></ng-template
+            >
+          </ng-template>
         </ng-template>
       </ng-container>
 
