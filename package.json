@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "firebase": "^9.22.1",
     "ng-recaptcha": "^12.0.1",
+    "primeng": "^16.0.1",
     "remove": "^0.1.5",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.7.10",

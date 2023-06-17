@@ -11,19 +11,14 @@ import { AlertService } from 'src/app/services/alert.service';
 export class SurveyAppoinmentsComponent {
   protected formSurvey: FormGroup;
   protected optionExperience: number[];
-  protected optionGame: string[];
+  protected optionAppoinment: string[];
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly alertService: AlertService
   ) {
     this.optionExperience = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    this.optionGame = [
-      'Adivina el numero',
-      'Ahorcado',
-      'Preguntados',
-      'Mayor o Menor',
-    ];
+    this.optionAppoinment = ['Telefonica', 'Internet', 'Presencial'];
     this.formSurvey = this.formBuilder.group({
       experience: ['', [Validators.required, Validators.minLength(1)]],
       preference: ['', [Validators.required, Validators.minLength(1)]],

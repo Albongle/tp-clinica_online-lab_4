@@ -33,11 +33,11 @@
   </div>
   <div class="row mt-1 g-3 justify-content-center">
     <div class="col-12">
-      <p class="fw-bold">Seleccione cual fue el juego que mas le gusto</p>
-      <label for="preference" class="form-label">Juego preferido:</label>
+      <p class="fw-bold">Indique su preferencia en la solicitud de turnos</p>
+      <label for="preference" class="form-label">Preferencia turno:</label>
       <select class="form-select" formControlName="preference" id="preference">
         <option value="" selected>Elija una opcion</option>
-        <option *ngFor="let value of optionGame" [value]="value">
+        <option *ngFor="let value of optionAppoinment" [value]="value">
           {{ value }}
         </option>
       </select>

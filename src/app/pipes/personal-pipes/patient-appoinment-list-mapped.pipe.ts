@@ -24,8 +24,10 @@ export class PatientAppoinmentMappedListPipe implements PipeTransform {
         Especialista: `${appoinment.specialist.lastName}, ${appoinment.specialist.name}`,
         Especialidad: `${appoinment.specialist.speciality.description}`,
         Reseña: appoinment.review,
-        Estado: `${appoinment.state}`,
+        Estado: appoinment.state,
+        'Calificacion Brindada': appoinment.calification,
       };
+
       return obj;
     });
   }

@@ -8,6 +8,7 @@ import { ListAppoinmentComponent } from './components/list-appoinment/list-appoi
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { TableAppoinmentsComponent } from './components/table-appoinments/table-appoinments.component';
 import { SurveyAppoinmentsComponent } from './components/survey-appoinments/survey-appoinments.component';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SurveyAppoinmentsComponent } from './components/survey-appoinments/surv
     FormsModule,
     LoadingModule,
     ReactiveFormsModule,
+    RatingModule,
   ],
 })
 export class MyAppoinmentsModule {}

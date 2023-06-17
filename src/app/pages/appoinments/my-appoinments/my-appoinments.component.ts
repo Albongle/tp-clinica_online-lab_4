@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { Appoinment } from 'src/app/models/appoinment.model';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription, map } from 'rxjs';
+import {
+  Appoinment,
+  AppoinmentCalification,
+} from 'src/app/models/appoinment.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -8,42 +13,50 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './my-appoinments.component.html',
   styleUrls: ['./my-appoinments.component.scss'],
 })
-export class MyAppoinmentsComponent {
+export class MyAppoinmentsComponent implements OnDestroy {
   protected appoinmentSelected: Appoinment | undefined;
   protected loading: boolean;
-  protected reason: string;
+  protected reason: string | undefined;
   protected listCalification: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  protected calification: AppoinmentCalification;
   protected listOfAppoinments: Appoinment[];
   private listOfAppoinmentsBackUp: Appoinment[];
+  private appoinmentsSubcription: Subscription;
 
   constructor(
     protected readonly userService: UserService,
-    private readonly appointmentService: AppoinmentService
+    private readonly appointmentService: AppoinmentService,
+    private readonly alertService: AlertService
   ) {
     this.loading = true;
     this.setAppoinments();
   }
+  ngOnDestroy(): void {
+    this.appoinmentsSubcription.unsubscribe();
+  }
 
   private async setAppoinments() {
-    setTimeout(async () => {
-      if (this.userService.userLogged?.userRole === 'patient') {
-        this.listOfAppoinments = (
-          await this.appointmentService.getAllAppoinment()
-        ).filter(
-          (appoinment) =>
-            appoinment.patient.email === this.userService.userLogged?.email
-        );
-      } else if (this.userService.userLogged?.userRole === 'specialist') {
-        this.listOfAppoinments = (
-          await this.appointmentService.getAllAppoinment()
-        ).filter(
-          (appoinment) =>
-            appoinment.specialist.email === this.userService.userLogged?.email
-        );
-      }
-      this.loading = false;
-      this.listOfAppoinmentsBackUp = [...this.listOfAppoinments];
-    }, 2000);
+    this.appoinmentsSubcription = this.appointmentService
+      .getAllAppoinment()
+      .pipe(map((data) => data as Appoinment[]))
+      .subscribe((appoinments: Appoinment[]) => {
+        setTimeout(() => {
+          if (this.userService.userLogged?.userRole === 'patient') {
+            this.listOfAppoinments = appoinments.filter(
+              (appoinment: Appoinment) =>
+                appoinment.patient.email === this.userService.userLogged?.email
+            );
+          } else if (this.userService.userLogged?.userRole === 'specialist') {
+            this.listOfAppoinments = appoinments.filter(
+              (appoinment: Appoinment) =>
+                appoinment.specialist.email ===
+                this.userService.userLogged?.email
+            );
+          }
+          this.listOfAppoinmentsBackUp = [...this.listOfAppoinments];
+          this.loading = false;
+        }, 2000);
+      });
   }
 
   protected handlerChooseAppoinment(appoinment: Appoinment) {
@@ -68,7 +81,67 @@ export class MyAppoinmentsComponent {
     }
   }
 
-  protected cancelAppoinment() {
-    console.log(this.reason);
+  protected async cancelAppoinment() {
+    if (this.reason) {
+      try {
+        await this.appointmentService.saveAppoinmentWithIdInStore(
+          this.appoinmentSelected?.id!,
+          { ...this.appoinmentSelected!, state: 'cancel', review: this.reason }
+        );
+        await this.alertService.showAlert({
+          icon: 'success',
+          message: 'Turno cancelado con exito',
+          timer: 2000,
+        });
+        this.appoinmentSelected = undefined;
+      } catch (error: any) {
+        await this.alertService.showAlert({
+          icon: 'error',
+          message: error.message,
+          timer: 2000,
+        });
+      }
+
+      this.reason = undefined;
+    } else {
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: 'Debe indicar los motivos de cancelacion',
+        timer: 2000,
+      });
+    }
+  }
+
+  protected async qualify() {
+    const result = await this.alertService.showAlert({
+      icon: 'question',
+      message: `Confirma una calificacion de ${this.calification} estrellas en la atencion?`,
+      showCancelButton: true,
+      showConfirmButton: true,
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await this.appointmentService.saveAppoinmentWithIdInStore(
+          this.appoinmentSelected?.id!,
+          { ...this.appoinmentSelected!, calification: this.calification }
+        );
+        await this.alertService.showAlert({
+          icon: 'success',
+          message: 'Calificacion establecida con exito',
+          timer: 2000,
+        });
+        this.appoinmentSelected = undefined;
+        this.calification = undefined;
+      } catch (error: any) {
+        await this.alertService.showAlert({
+          icon: 'error',
+          message: error.message,
+          timer: 2000,
+        });
+      }
+    } else {
+      this.calification = undefined;
+    }
   }
 }

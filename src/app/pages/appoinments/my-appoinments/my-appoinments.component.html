@@ -20,15 +20,15 @@
   </div>
 
   <div class="row align-items-md-stretch justify-content-center">
-    <div class="m-md-3 mt-1 col-md-5">
-      <div
-        [hidden]="
-          !appoinmentSelected ||
-          appoinmentSelected.state === 'complete' ||
-          appoinmentSelected.state === 'cancel'
-        "
-        class="h-100 p-5 bg-body-tertiary border rounded-3"
-      >
+    <div
+      *ngIf="
+        appoinmentSelected &&
+        appoinmentSelected.state !== 'complete' &&
+        appoinmentSelected.state !== 'cancel'
+      "
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <h2>Cancelar turno</h2>
         <textarea
           class="w-100 border rounded-3"
@@ -49,56 +49,44 @@
         </button>
       </div>
     </div>
-    <div class="m-md-3 mt-1 col-md-5">
-      <div
-        *ngIf="appoinmentSelected && appoinmentSelected.review !== undefined"
-        class="h-100 p-5 text-bg-dark border rounded-3"
-      >
+    <div
+      *ngIf="appoinmentSelected && appoinmentSelected.review"
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 text-bg-dark border rounded-3">
         <h2>Reseña</h2>
         <p class="text-danger">{{ appoinmentSelected.review }}</p>
       </div>
     </div>
-    <div class="m-md-3 mt-1 col-md-5">
-      <div
-        *ngIf="
-          appoinmentSelected &&
-          appoinmentSelected.state === 'complete' &&
-          appoinmentSelected.review !== undefined
-        "
-        class="h-100 p-5 bg-body-tertiary border rounded-3"
-      >
+    <div
+      *ngIf="
+        appoinmentSelected &&
+        appoinmentSelected.state === 'complete' &&
+        appoinmentSelected.review
+      "
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <app-survey-appoinments class="w-100"></app-survey-appoinments>
       </div>
     </div>
-    <div class="m-md-3 mt-1 col-md-5">
-      <div
-        *ngIf="
-          appoinmentSelected &&
-          appoinmentSelected.state === 'complete' &&
-          !appoinmentSelected.calification
-        "
-        class="h-100 p-5 text-bg-danger border rounded-3"
-      >
-        <h2>Calificar Atencion</h2>
-        <div
-          *ngFor="let item of listCalification"
-          class="form-check form-check-inline"
-        >
-          <input
-            class="form-check-input"
-            type="radio"
-            name="calification"
-            id="inlineRadio-{{ item }}"
-            value="option1"
-          />
-          <label class="form-check-label" for="inlineRadio-{{ item }}">{{
-            item
-          }}</label>
-        </div>
-        <div class="row">
-          <button class="btn btn-outline-secondary" type="button">
-            Enviar calification
-          </button>
+    <div
+      *ngIf="
+        appoinmentSelected &&
+        appoinmentSelected.state === 'complete' &&
+        !appoinmentSelected.calification
+      "
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <div class="row justify-content-center align-items-center w-100">
+          <h2 class="text-center">Calificar Atencion</h2>
+          <p-rating
+            class="text-center fs-1 col-6 p-1"
+            [(ngModel)]="calification"
+            [cancel]="false"
+            (ngModelChange)="qualify()"
+          ></p-rating>
         </div>
       </div>
     </div>
