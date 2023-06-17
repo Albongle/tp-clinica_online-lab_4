@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Question, Survey } from 'src/app/models/survey.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -12,11 +12,13 @@ export class SurveyAppoinmentsComponent {
   protected formSurvey: FormGroup;
   protected optionExperience: number[];
   protected optionAppoinment: string[];
+  @Output() public eventSendSurvey: EventEmitter<Survey>;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly alertService: AlertService
   ) {
+    this.eventSendSurvey = new EventEmitter();
     this.optionExperience = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.optionAppoinment = ['Telefonica', 'Internet', 'Presencial'];
     this.formSurvey = this.formBuilder.group({
@@ -25,18 +27,21 @@ export class SurveyAppoinmentsComponent {
       find: ['', Validators.required],
     });
   }
-  public sendSurvey() {
+  public async sendSurvey() {
     try {
       this.validateForm();
-      //guardar encuesta
-      this.alertService.showAlert({
+      const survey = this.getSurvey();
+      this.eventSendSurvey.emit(survey);
+      await this.alertService.showAlert({
         icon: 'success',
         message: 'Registro completado con exito, gracias por participar',
+        timer: 2000,
       });
     } catch (error: any) {
-      this.alertService.showAlert({
+      await this.alertService.showAlert({
         icon: 'error',
         message: error.message,
+        timer: 2000,
       });
     }
     this.formSurvey.reset();
@@ -55,7 +60,7 @@ export class SurveyAppoinmentsComponent {
         response: this.formSurvey.controls['experience'].value,
       }),
       new Question({
-        question: 'Juego Preferido',
+        question: 'Medio de contacto preferido',
         response: this.formSurvey.controls['preference'].value,
       }),
       new Question({

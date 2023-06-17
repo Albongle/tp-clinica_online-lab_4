@@ -62,12 +62,16 @@
       *ngIf="
         appoinmentSelected &&
         appoinmentSelected.state === 'complete' &&
-        appoinmentSelected.review
+        appoinmentSelected.review &&
+        !appoinmentSelected.survey
       "
       class="m-md-3 mt-1 col-md-5"
     >
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <app-survey-appoinments class="w-100"></app-survey-appoinments>
+        <app-survey-appoinments
+          class="w-100"
+          (eventSendSurvey)="handlerSurvey($event)"
+        ></app-survey-appoinments>
       </div>
     </div>
     <div

@@ -4,6 +4,7 @@ import {
   Appoinment,
   AppoinmentCalification,
 } from 'src/app/models/appoinment.model';
+import { Survey } from 'src/app/models/survey.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 import { UserService } from 'src/app/services/user.service';
@@ -142,6 +143,22 @@ export class MyAppoinmentsComponent implements OnDestroy {
       }
     } else {
       this.calification = undefined;
+    }
+  }
+
+  protected async handlerSurvey(survey: Survey) {
+    try {
+      await this.appointmentService.saveAppoinmentWithIdInStore(
+        this.appoinmentSelected?.id!,
+        { ...this.appoinmentSelected!, survey }
+      );
+      this.appoinmentSelected = undefined;
+    } catch (error: any) {
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+        timer: 2000,
+      });
     }
   }
 }
