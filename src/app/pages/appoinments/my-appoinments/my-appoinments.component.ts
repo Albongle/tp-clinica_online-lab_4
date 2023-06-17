@@ -145,9 +145,6 @@ export class MyAppoinmentsComponent implements OnDestroy {
     state: AppoinmentState,
     notRequireReason: boolean
   ) {
-    console.log('llegue aca');
-    console.log(this.appoinmentSelected);
-
     if (notRequireReason || this.reason) {
       try {
         await this.appointmentService.saveAppoinmentWithIdInStore(
