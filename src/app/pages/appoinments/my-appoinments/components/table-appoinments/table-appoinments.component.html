@@ -24,11 +24,30 @@
         <ng-template
           *ngIf="item.key !== 'Objeto'; then thenTdBlock"
         ></ng-template>
+
         <ng-template #thenTdBlock>
-          <td class="text-center" #thenThBlock>
-            {{ item.value }}
-          </td></ng-template
-        >
+          <ng-template
+            *ngIf="
+              item.key === 'Calificacion Brindada' ||
+                item.key === 'Calificacion Recibida';
+              then thenRatingBlock;
+              else elseNoRatingBlock
+            "
+          ></ng-template>
+          <ng-template #thenRatingBlock>
+            <td class="text-center">
+              <p-rating
+                [(ngModel)]="item.value"
+                [readonly]="true"
+                [cancel]="false"
+              ></p-rating></td
+          ></ng-template>
+          <ng-template #elseNoRatingBlock>
+            <td class="text-center">
+              {{ item.value }}
+            </td></ng-template
+          >
+        </ng-template>
       </ng-container>
 
       <td *ngIf="listOfAppoinments.length > 0" class="text-center">
