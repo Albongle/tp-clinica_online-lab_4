@@ -130,5 +130,22 @@
         </div>
       </div>
     </div>
+    <div
+      *ngIf="
+        userService.userLogged?.userRole === 'specialist' &&
+        appoinmentSelected &&
+        appoinmentSelected.state === 'complete' &&
+        !appoinmentSelected.hasClinicHistory
+      "
+      class="m-md-3 mt-1 col-md-5"
+    >
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <div class="row justify-content-center align-items-center w-100">
+          <app-create-clinic-history
+            (eventSendClinicHistory)="handlerClinicHistory($event)"
+          ></app-create-clinic-history>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

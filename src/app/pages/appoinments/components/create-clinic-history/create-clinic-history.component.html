@@ -1,0 +1,145 @@
+<div class="row w-100 justify-content-center align-items-center">
+  <h2 class="mt-1 col-12 text-center">Historia Clinica</h2>
+  <img
+    class="col-3 mt-1"
+    src="../../../../../assets/images/appoinment/historia_clinica.png"
+    alt="register"
+  />
+</div>
+
+<form
+  class="m-2 p-2"
+  (ngSubmit)="sendClinicHistory()"
+  [formGroup]="formClinicHistory"
+>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Altura:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="height"
+        placeholder="Altura del paciente"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['height'].pristine ||
+          !formClinicHistory.controls['height'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Altura es requerido</span
+      >
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Peso:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="weight"
+        placeholder="Peso del paciente"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['weight'].pristine ||
+          !formClinicHistory.controls['weight'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Peso del paciente es requerido</span
+      >
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Temperatura:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="temperture"
+        placeholder="Peso del paciente"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['temperture'].pristine ||
+          !formClinicHistory.controls['temperture'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Temperatura del paciente es requerido</span
+      >
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Presion:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="pressure"
+        placeholder="Presion del paciente"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['pressure'].pristine ||
+          !formClinicHistory.controls['pressure'].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Presion del paciente es requerido</span
+      >
+    </div>
+  </div>
+
+  <div
+    *ngFor="let item of aditionalField"
+    class="row mt-1 g-3 justify-content-center"
+  >
+    <div class="col-12">
+      <label for="experience" class="form-label"
+        >Campo adicional: {{ item }}</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        [formControlName]="'additional_' + item"
+        placeholder="Campo Adicional {{ item }}"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['additional_' + item].pristine ||
+          !formClinicHistory.controls['additional_' + item].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Valor adicional del paciente es requerido</span
+      >
+    </div>
+  </div>
+  <div class="w-100 m-0 p-1 row justify-content-evenly">
+    <button
+      type="submit"
+      class="mt-3 ms-1 col-lg-3 col-sm-4 btn btn-lg btn-outline-success btn-block"
+      (click)="addField($event)"
+    >
+      <i class="text-center fa-solid fa-plus"></i>
+    </button>
+    <button
+      *ngIf="aditionalField.length > 0"
+      type="submit"
+      class="mt-3 ms-1 col-lg-3 col-sm-4 btn btn-lg btn-outline-danger btn-block"
+      (click)="removeField($event)"
+    >
+      <i class="fa-solid fa-minus"></i>
+    </button>
+  </div>
+
+  <button
+    type="submit"
+    class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+  >
+    Enviar
+  </button>
+</form>

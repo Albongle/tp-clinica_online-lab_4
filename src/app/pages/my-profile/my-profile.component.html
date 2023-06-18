@@ -67,6 +67,17 @@
                 Planificar Horarios
               </button>
             </div>
+            <div
+              *ngIf="user.userRole === 'patient'"
+              class="card-footer border border-0"
+            >
+              <button
+                class="w-100 m-1 btn btn-outline-primary"
+                (click)="showPageClinicalHistory()"
+              >
+                Historia Clinica
+              </button>
+            </div>
           </div>
         </div>
       </div>

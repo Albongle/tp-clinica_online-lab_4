@@ -13,6 +13,7 @@ export class MyProfileComponent {
   protected user: User;
   protected date: string;
   protected showSchedule: boolean;
+  protected showClinicalHistory: boolean;
   constructor(private readonly userService: UserService) {
     this.setParamsFromUsserLogged();
     this.imgDefault = '../../../assets/images/user_default.png';
@@ -30,6 +31,8 @@ export class MyProfileComponent {
   protected showFormSchedule() {
     this.showSchedule = true;
   }
+
+  protected showPageClinicalHistory() {}
 
   protected handlerUpdateView($event: any) {
     this.showSchedule = $event as boolean;
