@@ -1,22 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppoinmentsComponent } from './appoinments.component';
+import { CreateAppoinmentsComponent } from './components/create-appoinments/create-appoinments.component';
+import { MyAppoinmentsComponent } from './components/my-appoinments/my-appoinments.component';
+import { AdminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
-  { path: '', component: AppoinmentsComponent },
+  { path: '', component: AppoinmentsComponent, canActivate: [AdminGuard] },
   {
     path: 'myappoinments',
-    loadChildren: () =>
-      import('./my-appoinments/my-appoinments.module').then(
-        (m) => m.MyAppoinmentsModule
-      ),
+    component: MyAppoinmentsComponent,
   },
   {
     path: 'createappoinments',
-    loadChildren: () =>
-      import('./create-appoinments/create-appoinments.module').then(
-        (m) => m.CreateAppoinmentsModule
-      ),
+    component: CreateAppoinmentsComponent,
   },
 ];
 

@@ -19,7 +19,6 @@ export class MyAppoinmentsComponent implements OnDestroy {
   protected appoinmentSelected: Appoinment | undefined;
   protected loading: boolean;
   protected reason: string | undefined;
-  protected listCalification: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   protected calification: AppoinmentCalification;
   protected listOfAppoinments: Appoinment[];
   private listOfAppoinmentsBackUp: Appoinment[];
