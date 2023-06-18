@@ -31,4 +31,16 @@
       (eventSendState)="acceptedAppoinment($event)"
     ></app-table-appoinments>
   </div>
+
+  <div
+    *ngIf="userRole === 'admin'"
+    class="bg-light shadow p-2 rounded table-responsive"
+  >
+    <app-table-appoinments
+      *ngIf="listOfAppoinments"
+      [listOfAppoinments]="listOfAppoinments | adminappoinmentlist"
+      (eventSendSelectedElement)="chooseAppoinment($event)"
+      (eventSendState)="acceptedAppoinment($event)"
+    ></app-table-appoinments>
+  </div>
 </section>

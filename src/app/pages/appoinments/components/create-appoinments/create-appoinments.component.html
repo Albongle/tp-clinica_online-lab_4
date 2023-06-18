@@ -13,27 +13,19 @@
       />
     </div>
 
-    <div class="row mt-1 g-6 justify-content-center">
-      <div class="col-sm-6">
+    <div class="row w-100 m-0 mt-1 g-6 justify-content-center">
+      <div class="text-center col-sm-6">
         <label for="specialitie" class="fw-bold text-center form-label"
           >Elija una especialidad:
         </label>
-        <div
+        <button
           *ngFor="let speciality of listOfSpecialities"
-          class="form-check form-switch"
+          class="btn btn-outline-danger form-control mt-1"
+          (click)="chooseEspeciality(speciality.description)"
         >
-          <label class="form-check-label" for="{{ speciality }}">{{
-            speciality
-          }}</label>
-          <input
-            class="form-check-input"
-            id="{{ speciality }}"
-            type="radio"
-            name="speciality"
-            value="{{ speciality }}"
-            (click)="chooseEspeciality(speciality)"
-          />
-        </div>
+          <img class="col-2 image-fluid" src="{{ speciality.image }}" alt="" />
+          <p class="text-center">{{ speciality.description }}</p>
+        </button>
       </div>
     </div>
   </div>
@@ -83,12 +75,12 @@
       </div>
     </div>
 
-    <input
-      class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
-      type="button"
-      value="Siguiente"
+    <button
+      class="mt-3 w-100 btn form-control btn-outline-primary"
       (click)="confirmPatient()"
-    />
+    >
+      Siguiente
+    </button>
   </div>
 </section>
 <!-- Especialistas -->
@@ -131,17 +123,30 @@
               "
             ></div>
             <ng-template #blockThen>
-              <button
-                class="m-1 col-2 btn btn-outline-success"
-                *ngFor="let specialist of listOfSpecialistsAvailable"
-                (click)="chooseSpecialist(specialist)"
-              >
-                <img
-                  class="w-100 p-0 m-0 img-fluid rounded-circle"
-                  [src]="specialist.profilePhoto"
-                  alt="photo_especilista"
-                />
-              </button>
+              <div class="d-flex flex-column">
+                <div
+                  class="row justify-content-center align-items-center"
+                  *ngFor="let specialist of listOfSpecialistsAvailable"
+                  (click)="chooseSpecialist(specialist)"
+                >
+                  <div
+                    class="card btn btn-outline-success mt-1"
+                    style="width: 10rem"
+                  >
+                    <div class="card-body w-100">
+                      <h5 class="card-title text-center w-100">
+                        {{ specialist.lastName }},
+                        {{ specialist.name }}
+                      </h5>
+                    </div>
+                    <img
+                      class="w-100 p-1 m-0 img-fluid rounded-circle"
+                      [src]="specialist.profilePhoto"
+                      alt="photo_especilista"
+                    />
+                  </div>
+                </div>
+              </div>
             </ng-template>
             <ng-template #blockElse>Sin Especialistas</ng-template>
           </div>

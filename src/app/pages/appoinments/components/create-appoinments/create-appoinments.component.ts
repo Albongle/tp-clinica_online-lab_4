@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Appoinment } from 'src/app/models/appoinment.model';
 import { Day, DaysOfWeek } from 'src/app/models/schedule.model';
+import { Speciality } from 'src/app/models/speciality.model';
 import { Patient } from 'src/app/models/users/patient.model';
 import { Specialist } from 'src/app/models/users/specialist.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -23,7 +24,7 @@ export class CreateAppoinmentsComponent {
 
   protected listOfAvailablesDays: Day[];
   protected listOfAvailablesTimes: Time[];
-  protected listOfSpecialities: string[];
+  protected listOfSpecialities: Speciality[];
   protected listOfSpecialist: Specialist[];
   protected listOfPatients: Patient[];
   protected listOfSpecialistsAvailable: Specialist[];
@@ -63,8 +64,8 @@ export class CreateAppoinmentsComponent {
   }
 
   private async setSpecialities() {
-    const specialities = await this.specialitiesService.getAllSpecialities();
-    this.listOfSpecialities = specialities.map((s) => s.description);
+    this.listOfSpecialities =
+      await this.specialitiesService.getAllSpecialities();
   }
 
   private async setPatients() {
