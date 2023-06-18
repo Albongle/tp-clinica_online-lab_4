@@ -14,26 +14,18 @@
     </div>
 
     <div class="row w-100 mt-1 g-6 justify-content-center">
-      <div class="col-sm-6">
+      <div class="text-center col-sm-6">
         <label for="specialitie" class="fw-bold text-center form-label"
           >Elija una especialidad:
         </label>
-        <div
+        <button
           *ngFor="let speciality of listOfSpecialities"
-          class="form-check form-switch"
+          class="btn btn-outline-danger form-control mt-1"
+          (click)="chooseEspeciality(speciality.description)"
         >
-          <label class="form-check-label" for="{{ speciality }}">{{
-            speciality
-          }}</label>
-          <input
-            class="form-check-input"
-            id="{{ speciality }}"
-            type="radio"
-            name="speciality"
-            value="{{ speciality }}"
-            (click)="chooseEspeciality(speciality)"
-          />
-        </div>
+          <img class="col-2 image-fluid" src="{{ speciality.image }}" alt="" />
+          <p class="text-center">{{ speciality.description }}</p>
+        </button>
       </div>
     </div>
   </div>
