@@ -54,6 +54,8 @@ export class MyAppoinmentsComponent implements OnDestroy {
                 appoinment.specialist.email ===
                 this.userService.userLogged?.email
             );
+          } else {
+            this.listOfAppoinments = appoinments;
           }
           this.listOfAppoinmentsBackUp = [...this.listOfAppoinments];
           this.loading = false;
@@ -69,16 +71,26 @@ export class MyAppoinmentsComponent implements OnDestroy {
     if (this.userService.userLogged?.userRole === 'patient') {
       this.listOfAppoinments = this.listOfAppoinmentsBackUp.filter(
         (appoinment) =>
-          appoinment.specialist.name.includes(value) ||
-          appoinment.specialist.lastName.includes(value) ||
-          appoinment.specialist.speciality.description.includes(value)
+          appoinment.specialist.name
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          appoinment.specialist.lastName
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          appoinment.specialist.speciality.description
+            .toLowerCase()
+            .includes(value.toLowerCase())
       );
     } else {
       this.listOfAppoinments = this.listOfAppoinmentsBackUp.filter(
         (appoinment) =>
-          appoinment.patient.name.includes(value) ||
-          appoinment.patient.lastName.includes(value) ||
-          appoinment.specialist.speciality.description.includes(value)
+          appoinment.patient.name.toLowerCase().includes(value.toLowerCase()) ||
+          appoinment.patient.lastName
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          appoinment.specialist.speciality.description
+            .toLowerCase()
+            .includes(value.toLowerCase())
       );
     }
   }

@@ -24,9 +24,10 @@
     <div
       *ngIf="
         appoinmentSelected &&
-        ((userService.userLogged?.userRole! === 'patient' &&
-          appoinmentSelected.state !== 'complete' &&
-          appoinmentSelected.state !== 'cancel') ||
+        (userService.userLogged?.userRole! === 'patient' ||
+          (userService.userLogged?.userRole! === 'admin' &&
+            appoinmentSelected.state !== 'complete' &&
+            appoinmentSelected.state !== 'cancel') ||
           (userService.userLogged?.userRole! === 'specialist' &&
             appoinmentSelected.state === 'pending'))
       "

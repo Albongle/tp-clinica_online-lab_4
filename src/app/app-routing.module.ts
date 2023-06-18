@@ -49,6 +49,7 @@ const routes: Routes = [
       import('./pages/appoinments/appoinments.module').then(
         (m) => m.AppoinmentsModule
       ),
+    canActivate: [AuthorizationGuard],
   },
   {
     path: '**',
