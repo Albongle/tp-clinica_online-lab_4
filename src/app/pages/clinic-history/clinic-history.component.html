@@ -3,7 +3,10 @@
   [hidden]="!showClinicHistory"
 >
   <div class="row justify-content-evenly bg-light w-100 ali shadow p-1 rounded">
-    <div class="w-100 row justify-content-center justify-content-sm-end p-2">
+    <div
+      *ngIf="userService.userLogged?.userRole === 'patient'"
+      class="w-100 row justify-content-center justify-content-sm-end p-2"
+    >
       <button
         title="Volver"
         class="col-md-1 col-2 btn btn-warning"
@@ -12,7 +15,7 @@
         <i class="fa-solid fa-circle-arrow-left"></i>
       </button>
     </div>
-    <h2 class="text-center">Historia clinica</h2>
+    <h2 class="text-center display-5 fw-bold">Historia clinica</h2>
     <div
       *ngFor="let item of listOfClinicHistory"
       class="card m-2"
@@ -32,8 +35,18 @@
               {{ item.appoinment.specialist.speciality.description }}
             </h5>
             <p class="card-text">
-              Atentedido por: {{ item.appoinment.specialist.lastName }},
-              {{ item.appoinment.specialist.name }}
+              Paciente:
+              <span class="badge text-bg-danger"
+                >{{ item.appoinment.patient.lastName }},
+                {{ item.appoinment.patient.name }}</span
+              >
+            </p>
+            <p class="card-text">
+              Especialista:
+              <span class="badge text-bg-info"
+                >{{ item.appoinment.specialist.lastName }},
+                {{ item.appoinment.specialist.name }}</span
+              >
             </p>
 
             <ul>

@@ -13,15 +13,33 @@ export class ClinicHistoryComponent {
   @Output() public eventReturnToHome: EventEmitter<boolean>;
   @Input() public showClinicHistory: boolean;
   constructor(
-    private readonly userService: UserService,
+    protected readonly userService: UserService,
     private readonly clinicHistoryService: ClinicHistoryService
   ) {
     this.setListClinicalHistory();
     this.eventReturnToHome = new EventEmitter();
   }
   private async setListClinicalHistory() {
-    this.listOfClinicHistory =
-      await this.clinicHistoryService.getAllClinicHistory();
+    if (this.userService.userLogged?.userRole === 'patient') {
+      this.listOfClinicHistory = (
+        await this.clinicHistoryService.getAllClinicHistory()
+      ).filter(
+        (clinicHistory) =>
+          clinicHistory.appoinment.patient.email ===
+          this.userService.userLogged?.email
+      );
+    } else if (this.userService.userLogged?.userRole === 'specialist') {
+      this.listOfClinicHistory = (
+        await this.clinicHistoryService.getAllClinicHistory()
+      ).filter(
+        (clinicHistory) =>
+          clinicHistory.appoinment.specialist.email ===
+          this.userService.userLogged?.email
+      );
+    } else {
+      this.listOfClinicHistory =
+        await this.clinicHistoryService.getAllClinicHistory();
+    }
   }
   protected returnToHome() {
     this.showClinicHistory = !this.showClinicHistory;
