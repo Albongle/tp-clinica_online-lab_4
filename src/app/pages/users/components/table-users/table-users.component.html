@@ -68,18 +68,20 @@
               <ng-template
                 *ngIf="
                   item.key === 'profilePhoto';
-                  then thenProfilePhoto;
-                  else elseProfilePhoto
+                  then thenElseEspcialistBlockProfilePhoto;
+                  else elseElseEspcialistBlockProfilePhoto
                 "
               ></ng-template>
-              <ng-template #thenProfilePhoto>
+              <ng-template #thenElseEspcialistBlockProfilePhoto>
                 <img
-                  class="img-fluid rounded rounded-3"
+                  class="p-1 img-fluid rounded rounded-3"
                   src="{{ item.value }}"
                   alt="foto_perfil"
                 />
               </ng-template>
-              <ng-template #elseProfilePhoto>{{ item.value }}</ng-template>
+              <ng-template #elseElseEspcialistBlockProfilePhoto>{{
+                item.value
+              }}</ng-template>
             </td>
           </ng-template>
 

@@ -85,6 +85,39 @@
             >Registrate</a
           >
         </li>
+        <!-- <div
+          *ngIf="
+            userService.userLogged &&
+            userService.userLogged.userRole === 'admin'
+          "
+          class="d-flex"
+        >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                routerLink="users"
+              >
+                Usuarios
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    data-bs-dismiss="offcanvas"
+                    routerLink="users"
+                    >Historia Clinica</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div> -->
         <li
           *ngIf="
             userService.userLogged &&

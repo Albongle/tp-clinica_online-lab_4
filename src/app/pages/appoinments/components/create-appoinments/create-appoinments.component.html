@@ -1,6 +1,11 @@
+<app-loading
+  [loading]="loading"
+  [image]="'../../../assets/images/loading.gif'"
+></app-loading>
+
 <!-- Espcialidad -->
 <section
-  [hidden]="hiddenSpecialities"
+  [hidden]="hiddenSpecialities || loading"
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
 >
   <div class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 p-3">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Appoinment } from 'src/app/models/appoinment.model';
 import { Day, DaysOfWeek } from 'src/app/models/schedule.model';
 import { Speciality } from 'src/app/models/speciality.model';
@@ -15,7 +15,7 @@ type Time = { timeStart: string; timeEnd: string };
   templateUrl: './create-appoinments.component.html',
   styleUrls: ['./create-appoinments.component.scss'],
 })
-export class CreateAppoinmentsComponent {
+export class CreateAppoinmentsComponent implements OnInit {
   protected hiddenSpecialities: boolean;
   protected hiddenPatients: boolean;
   protected hiddenSpecialist: boolean;
@@ -35,12 +35,14 @@ export class CreateAppoinmentsComponent {
   protected chosenTime: Time;
   protected imgPatient: string;
 
+  protected loading: boolean;
   constructor(
     protected readonly userService: UserService,
     private readonly specialitiesService: SpecialitiesService,
     private readonly alertService: AlertService,
     private readonly appoinmentService: AppoinmentService
   ) {
+    this.loading = true;
     this.hiddenPatients = true;
     this.hiddenSpecialist = true;
     this.hiddenDates = true;
@@ -54,6 +56,11 @@ export class CreateAppoinmentsComponent {
     if (this.userService.userLogged?.userRole === 'admin') {
       this.setPatients();
     }
+  }
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2300);
   }
 
   private async setSpecialist() {
