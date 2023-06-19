@@ -1,6 +1,10 @@
+<app-loading
+  [loading]="loading"
+  [image]="'../../../assets/images/loading.gif'"
+></app-loading>
 <section
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
-  [hidden]="!showClinicHistory"
+  [hidden]="!showClinicHistory || loading"
 >
   <div class="row justify-content-evenly bg-light w-100 ali shadow p-1 rounded">
     <div

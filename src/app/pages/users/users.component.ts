@@ -10,14 +10,15 @@ import { User, UserRole } from 'src/app/models/users/user.model';
 export class UsersComponent {
   listUsers: User[];
   listFiltered: User[];
+  protected showClinicHistory: boolean;
   protected showTable: boolean;
   protected listChoseOption: UserRole;
   constructor(protected readonly userService: UserService) {
     this.showTable = true;
   }
 
-  protected handlerUpdateView($event: any) {
-    this.showTable = $event as boolean;
+  protected handlerUpdateView(showTable: boolean) {
+    this.showTable = showTable;
   }
 
   protected async chooseListOption(option: UserRole) {
