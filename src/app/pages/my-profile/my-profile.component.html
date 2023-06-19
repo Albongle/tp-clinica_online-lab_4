@@ -1,7 +1,7 @@
 <section class="profile">
   <article
     class="row justify-content-center h-100 m-0 p-0 align-items-center"
-    [hidden]="showSchedule"
+    [hidden]="showSchedule || showClinicalHistory"
   >
     <div
       class="bg-light shadow p-1 rounded col-lg-5 col-md-6 col-sm-8 card mb-3"
@@ -67,6 +67,17 @@
                 Planificar Horarios
               </button>
             </div>
+            <div
+              *ngIf="user.userRole === 'patient'"
+              class="card-footer border border-0"
+            >
+              <button
+                class="w-100 m-1 btn btn-outline-primary"
+                (click)="showPageClinicalHistory()"
+              >
+                Historia Clinica
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -74,6 +85,10 @@
   </article>
   <app-manage-schedule
     [showSchedule]="showSchedule"
-    (eventShowSchedule)="handlerUpdateView($event)"
+    (eventShowSchedule)="handlerUpdateScheduleView($event)"
   ></app-manage-schedule>
+  <app-clinic-history
+    [showClinicHistory]="showClinicalHistory"
+    (eventReturnToHome)="handlerUpdateClinicHistoryView($event)"
+  ></app-clinic-history>
 </section>

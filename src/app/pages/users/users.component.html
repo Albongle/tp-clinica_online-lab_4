@@ -49,11 +49,80 @@
       ></app-table-users>
     </div>
   </div>
+</section>
 
-  <div class="mt-4 rounded-3">
-    <div class="container-fluid">
-      <h1 class="text-center display-5 fw-bold">Crear nuevos usuarios</h1>
-      <app-register></app-register>
+<section class="row justify-content-end w-100 p-0 m-0">
+  <div class="p-5 mt-4 shadow bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="text-center display-5 fw-bold">
+        Crear usuarios/Historial clinico
+      </h1>
+      <section
+        class="row justify-content-center align-items-center m-0 p-0 w-100"
+        [hidden]="showClinicHistory || showCreateUsers"
+      >
+        <div class="col-xxl-1 col-sm-3 m-1 p-3">
+          <button
+            class="btn btn-outline-secondary"
+            (click)="activateCreateUsers()"
+            title="Crear Usuarios"
+          >
+            <img
+              src="../../../assets/images/users/crear_usuario.png"
+              class="card-img img-fluid rounded-circle"
+              alt="..."
+            />
+          </button>
+          <p class="text-center">Crear usuarios</p>
+        </div>
+        <div class="col-xxl-1 col-sm-3 m-1 p-3">
+          <button
+            class="btn btn-outline-secondary"
+            (click)="activateClinicHistory()"
+            title="Historial clinico"
+          >
+            <img
+              src="../../../assets/images/users/historial_medico.png"
+              class="card-img img-fluid rounded-circle"
+              alt="..."
+            />
+          </button>
+          <p class="text-center">Historial clinico</p>
+        </div>
+      </section>
+      <div class="mt-4 rounded-3" [hidden]="!showCreateUsers">
+        <div class="container-fluid">
+          <div
+            class="w-100 row justify-content-center justify-content-sm-end p-2 m-0"
+          >
+            <button
+              title="Volver"
+              class="col-sm-1 col-md-2 col-8 btn btn-warning"
+              (click)="return()"
+            >
+              <i class="fa-solid fa-circle-arrow-left"></i>
+            </button>
+          </div>
+          <app-register></app-register>
+        </div>
+      </div>
+
+      <div class="mt-4 rounded-3" [hidden]="!showClinicHistory">
+        <div class="container-fluid">
+          <div
+            class="w-100 row justify-content-center justify-content-sm-end p-2 m-0"
+          >
+            <button
+              title="Volver"
+              class="col-sm-1 col-md-2 col-8 btn btn-warning"
+              (click)="return()"
+            >
+              <i class="fa-solid fa-circle-arrow-left"></i>
+            </button>
+          </div>
+          <app-clinic-history [showClinicHistory]="true"></app-clinic-history>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Appoinment } from 'src/app/models/appoinment.model';
 import { Day, DaysOfWeek } from 'src/app/models/schedule.model';
 import { Speciality } from 'src/app/models/speciality.model';
@@ -15,7 +15,7 @@ type Time = { timeStart: string; timeEnd: string };
   templateUrl: './create-appoinments.component.html',
   styleUrls: ['./create-appoinments.component.scss'],
 })
-export class CreateAppoinmentsComponent {
+export class CreateAppoinmentsComponent implements OnInit {
   protected hiddenSpecialities: boolean;
   protected hiddenPatients: boolean;
   protected hiddenSpecialist: boolean;
@@ -35,12 +35,14 @@ export class CreateAppoinmentsComponent {
   protected chosenTime: Time;
   protected imgPatient: string;
 
+  protected loading: boolean;
   constructor(
     protected readonly userService: UserService,
     private readonly specialitiesService: SpecialitiesService,
     private readonly alertService: AlertService,
     private readonly appoinmentService: AppoinmentService
   ) {
+    this.loading = true;
     this.hiddenPatients = true;
     this.hiddenSpecialist = true;
     this.hiddenDates = true;
@@ -55,12 +57,27 @@ export class CreateAppoinmentsComponent {
       this.setPatients();
     }
   }
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2300);
+  }
 
   private async setSpecialist() {
     const users = await this.userService.getUsersFromStore();
-    this.listOfSpecialist = users.filter(
+
+    const specialists = users.filter(
       (user) => user.userRole === 'specialist'
     ) as Specialist[];
+    this.listOfSpecialist = await Promise.all(
+      specialists.map(async (specialist) => {
+        specialist.speciality.image =
+          await this.specialitiesService.getSpecialityPhoto(
+            specialist.speciality
+          );
+        return specialist;
+      })
+    );
   }
 
   private async setSpecialities() {
@@ -70,16 +87,9 @@ export class CreateAppoinmentsComponent {
 
   private async setPatients() {
     const users = await this.userService.getUsersFromStore();
-    const patients = users.filter(
+    this.listOfPatients = users.filter(
       (user) => user.userRole === 'patient'
     ) as Patient[];
-    const patientsMapped = await Promise.all(
-      patients.map(async (u) => {
-        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
-        return u;
-      })
-    );
-    this.listOfPatients = patientsMapped;
   }
 
   protected async chooseEspeciality(specialitie: string) {
@@ -89,14 +99,6 @@ export class CreateAppoinmentsComponent {
         specialist.verifiedByAdmin
     );
 
-    const usersMapped = await Promise.all(
-      this.listOfSpecialistsAvailable.map(async (u) => {
-        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
-        return u;
-      })
-    );
-
-    this.listOfSpecialistsAvailable = usersMapped;
     if (this.userService.userLogged?.userRole === 'admin') {
       this.hiddenPatients = false;
     } else {
@@ -229,6 +231,8 @@ export class CreateAppoinmentsComponent {
       state: 'pending',
     });
     await this.confirmAppoinment(appoinment);
+    this.listOfAvailablesDays = [];
+    this.listOfAvailablesTimes = [];
   }
 
   protected choosePatient(patient: Patient) {

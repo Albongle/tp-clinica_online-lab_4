@@ -19,6 +19,7 @@ export class Appoinment {
   public review: string | undefined;
   public survey: Survey | undefined;
   public calification: AppoinmentCalification;
+  public hasClinicHistory?: boolean;
   constructor(appoinment: {
     day: Day;
     patient: Patient;

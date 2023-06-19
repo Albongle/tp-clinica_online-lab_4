@@ -16,7 +16,7 @@ export class EspecialistRegisterComponent {
   @Input() public showForm: boolean;
   private profilesPhotos: any;
   protected formSpecialistRegister: FormGroup;
-  protected specialities: string[];
+  protected listOfSpecialities: Speciality[];
   protected showOtherSpeciality: boolean;
 
   constructor(
@@ -118,10 +118,10 @@ export class EspecialistRegisterComponent {
 
   private validateSpeciality() {
     if (
-      this.specialities.some(
+      this.listOfSpecialities.some(
         (speciality) =>
           this.showOtherSpeciality &&
-          speciality ===
+          speciality.description ===
             this.formSpecialistRegister.controls['speciality'].value
       ) ||
       this.formSpecialistRegister.controls['speciality'].value.toLowerCase() ===
@@ -152,6 +152,11 @@ export class EspecialistRegisterComponent {
     const speciality = new Speciality({
       description: this.formSpecialistRegister.value.speciality,
     });
+    if (this.showOtherSpeciality) {
+      speciality.image = 'especialidad_default.png';
+    } else {
+      speciality.image = `${this.formSpecialistRegister.value.speciality}.png`;
+    }
     return new Specialist({
       ...this.formSpecialistRegister.value,
       verifiedByAdmin: false,
@@ -160,7 +165,7 @@ export class EspecialistRegisterComponent {
   }
 
   private async setSpecialities() {
-    const specialities = await this.specialitiesService.getAllSpecialities();
-    this.specialities = specialities.map((s) => s.description);
+    this.listOfSpecialities =
+      await this.specialitiesService.getAllSpecialities();
   }
 }

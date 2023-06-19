@@ -28,7 +28,7 @@ export class SpecialitiesService {
     return specialities;
   }
 
-  private async getSpecialityPhoto(speciality: Speciality) {
+  public async getSpecialityPhoto(speciality: Speciality) {
     try {
       const reference = this.firebaseStorageProvider.referenceCloudStorage(
         speciality.image!

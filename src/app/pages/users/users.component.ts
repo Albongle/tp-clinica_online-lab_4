@@ -10,14 +10,16 @@ import { User, UserRole } from 'src/app/models/users/user.model';
 export class UsersComponent {
   listUsers: User[];
   listFiltered: User[];
+  protected showClinicHistory: boolean;
+  protected showCreateUsers: boolean;
   protected showTable: boolean;
   protected listChoseOption: UserRole;
   constructor(protected readonly userService: UserService) {
     this.showTable = true;
   }
 
-  protected handlerUpdateView($event: any) {
-    this.showTable = $event as boolean;
+  protected handlerUpdateView(showTable: boolean) {
+    this.showTable = showTable;
   }
 
   protected async chooseListOption(option: UserRole) {
@@ -25,5 +27,19 @@ export class UsersComponent {
     this.listFiltered = this.listUsers.filter((u) => u.userRole === option);
     this.showTable = !this.showTable;
     this.listChoseOption = option;
+  }
+
+  protected activateCreateUsers() {
+    this.showCreateUsers = true;
+    this.showClinicHistory = false;
+  }
+  protected activateClinicHistory() {
+    this.showClinicHistory = true;
+    this.showCreateUsers = false;
+  }
+
+  return() {
+    this.showCreateUsers = false;
+    this.showClinicHistory = false;
   }
 }

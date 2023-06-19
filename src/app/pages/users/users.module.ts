@@ -5,6 +5,7 @@ import { UsersComponent } from './users.component';
 import { RegisterModule } from '../register/register.module';
 import { TableUsersComponent } from './components/table-users/table-users.component';
 import { PersonalPipesModule } from 'src/app/pipes/personal-pipes/personal-pipes.module';
+import { ClinicHisttoryModule } from '../clinic-history/clinic-histtory.module';
 
 @NgModule({
   declarations: [UsersComponent, TableUsersComponent],
@@ -13,6 +14,7 @@ import { PersonalPipesModule } from 'src/app/pipes/personal-pipes/personal-pipes
     UsersRoutingModule,
     RegisterModule,
     PersonalPipesModule,
+    ClinicHisttoryModule,
   ],
 })
 export class UsersModule {}

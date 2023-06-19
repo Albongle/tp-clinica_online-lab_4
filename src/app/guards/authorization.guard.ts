@@ -39,7 +39,7 @@ export class AuthorizationGuard implements CanActivate {
           }
       }
     }
-    await this.router.navigateByUrl('');
+    await this.router.navigateByUrl('error');
     return false;
   }
 }

@@ -1,0 +1,201 @@
+<div class="row w-100 justify-content-center align-items-center">
+  <h2 class="mt-1 col-12 text-center">Historia Clinica</h2>
+  <img
+    class="col-3 mt-1"
+    src="../../../../../assets/images/appoinment/historia_clinica.png"
+    alt="register"
+  />
+</div>
+
+<form
+  class="m-2 p-2"
+  (ngSubmit)="sendClinicHistory()"
+  [formGroup]="formClinicHistory"
+>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Altura:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="height"
+        placeholder="Altura del paciente"
+      />
+
+      <div
+        [hidden]="
+          formClinicHistory.controls['height'].pristine ||
+          !formClinicHistory.controls['height'].invalid
+        "
+      >
+        <span
+          *ngIf="formClinicHistory.controls['height'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Altura es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['height'].errors?.['min'] || formClinicHistory.controls['height'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para altura invalido</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Peso:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="weight"
+        placeholder="Peso del paciente"
+      />
+
+      <div
+        [hidden]="
+          formClinicHistory.controls['weight'].pristine ||
+          !formClinicHistory.controls['weight'].invalid
+        "
+      >
+        <span
+          *ngIf="formClinicHistory.controls['weight'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Peso es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['weight'].errors?.['min'] || formClinicHistory.controls['weight'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para peso invalido</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Temperatura:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="temperture"
+        placeholder="Peso del paciente"
+      />
+
+      <div
+        [hidden]="
+          formClinicHistory.controls['temperture'].pristine ||
+          !formClinicHistory.controls['temperture'].invalid
+        "
+      >
+        <span
+          *ngIf="formClinicHistory.controls['temperture'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Temperatura es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['temperture'].errors?.['min'] || formClinicHistory.controls['temperture'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para temperatura invalido</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1 g-3 justify-content-center">
+    <div class="col-12">
+      <label for="experience" class="form-label">Presion:</label>
+      <input
+        class="form-control"
+        type="number"
+        formControlName="pressure"
+        placeholder="Presion del paciente"
+      />
+
+      <div
+        [hidden]="
+          formClinicHistory.controls['pressure'].pristine ||
+          !formClinicHistory.controls['pressure'].invalid
+        "
+      >
+        <span
+          *ngIf="formClinicHistory.controls['pressure'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Presion es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['pressure'].errors?.['min'] || formClinicHistory.controls['pressure'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para presion invalido</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngFor="let item of aditionalField"
+    class="row mt-1 g-3 justify-content-center"
+  >
+    <div class="col-sm-6">
+      <label [for]="'key_' + item" class="form-label"
+        >Clave adicional: {{ item }}</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        [formControlName]="'key_' + item"
+        placeholder="Clave Adicional {{ item }}"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['key_' + item].pristine ||
+          !formClinicHistory.controls['key_' + item].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Clave es requerido</span
+      >
+    </div>
+    <div class="col-sm-6">
+      <label [for]="'value_' + item" class="form-label"
+        >Valor adicional: {{ item }}</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        [formControlName]="'value_' + item"
+        placeholder="Valor Adicional {{ item }}"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['value_' + item].pristine ||
+          !formClinicHistory.controls['value_' + item].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Valor es requerido</span
+      >
+    </div>
+  </div>
+  <div class="w-100 m-0 p-1 row justify-content-evenly">
+    <button
+      type="submit"
+      class="mt-3 ms-1 col-lg-3 col-sm-4 btn btn-lg btn-outline-success btn-block"
+      (click)="addField($event)"
+    >
+      <i class="text-center fa-solid fa-plus"></i>
+    </button>
+    <button
+      *ngIf="aditionalField.length > 0"
+      type="submit"
+      class="mt-3 ms-1 col-lg-3 col-sm-4 btn btn-lg btn-outline-danger btn-block"
+      (click)="removeField($event)"
+    >
+      <i class="fa-solid fa-minus"></i>
+    </button>
+  </div>
+
+  <button
+    type="submit"
+    class="mt-3 w-100 btn btn-lg btn-outline-primary btn-block"
+  >
+    Enviar
+  </button>
+</form>

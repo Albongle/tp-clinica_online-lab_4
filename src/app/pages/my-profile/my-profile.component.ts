@@ -13,6 +13,7 @@ export class MyProfileComponent {
   protected user: User;
   protected date: string;
   protected showSchedule: boolean;
+  protected showClinicalHistory: boolean;
   constructor(private readonly userService: UserService) {
     this.setParamsFromUsserLogged();
     this.imgDefault = '../../../assets/images/user_default.png';
@@ -21,9 +22,7 @@ export class MyProfileComponent {
   }
 
   private async setParamsFromUsserLogged() {
-    this.profilePhoto = await this.userService.getProfilePhoto(
-      this.userService.userLogged!
-    );
+    this.profilePhoto = this.userService.userLogged?.profilePhoto;
     this.user = this.userService.userLogged!;
   }
 
@@ -31,7 +30,14 @@ export class MyProfileComponent {
     this.showSchedule = true;
   }
 
-  protected handlerUpdateView($event: any) {
-    this.showSchedule = $event as boolean;
+  protected showPageClinicalHistory() {
+    this.showClinicalHistory = true;
+  }
+
+  protected handlerUpdateScheduleView(showSchedule: boolean) {
+    this.showSchedule = showSchedule;
+  }
+  protected handlerUpdateClinicHistoryView(showSchedule: boolean) {
+    this.showClinicalHistory = showSchedule;
   }
 }

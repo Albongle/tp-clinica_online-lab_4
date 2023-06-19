@@ -5,9 +5,11 @@ import {
   AppoinmentCalification,
   AppoinmentState,
 } from 'src/app/models/appoinment.model';
+import { ClinicHistory } from 'src/app/models/clinic_history.model';
 import { Survey } from 'src/app/models/survey.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
+import { ClinicHistoryService } from 'src/app/services/clinic_history.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -28,6 +30,7 @@ export class MyAppoinmentsComponent implements OnDestroy {
   constructor(
     protected readonly userService: UserService,
     private readonly appointmentService: AppoinmentService,
+    private readonly clinicHistoryService: ClinicHistoryService,
     private readonly alertService: AlertService
   ) {
     this.loading = true;
@@ -192,5 +195,28 @@ export class MyAppoinmentsComponent implements OnDestroy {
 
   protected async aceptedAppoinment(state: AppoinmentState) {
     await this.updateStateAppoinment(state, true);
+  }
+
+  protected async handlerClinicHistory(clinicHistory: ClinicHistory) {
+    try {
+      clinicHistory.appoinment = this.appoinmentSelected!;
+      await this.clinicHistoryService.saveClinicHistoryInStore(clinicHistory);
+      await this.appointmentService.saveAppoinmentWithIdInStore(
+        this.appoinmentSelected?.id!,
+        { ...this.appoinmentSelected!, hasClinicHistory: true }
+      );
+      await this.alertService.showAlert({
+        icon: 'success',
+        message: 'Historial almacendado con exito',
+        timer: 2000,
+      });
+      this.appoinmentSelected = undefined;
+    } catch (error: any) {
+      await this.alertService.showAlert({
+        icon: 'error',
+        message: error.message,
+        timer: 2000,
+      });
+    }
   }
 }

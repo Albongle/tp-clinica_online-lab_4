@@ -1,0 +1,83 @@
+<app-loading
+  [loading]="loading"
+  [image]="'../../../assets/images/loading.gif'"
+></app-loading>
+<section
+  class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
+  [hidden]="!showClinicHistory || loading"
+>
+  <div class="row justify-content-evenly bg-light w-100 ali shadow p-1 rounded">
+    <div
+      *ngIf="userService.userLogged?.userRole === 'patient'"
+      class="w-100 row justify-content-center justify-content-sm-end p-2"
+    >
+      <button
+        title="Volver"
+        class="col-md-1 col-2 btn btn-warning"
+        (click)="returnToHome()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+    <h2 class="text-center display-5 fw-bold">Historia clinica</h2>
+    <div
+      *ngFor="let item of listOfClinicHistory"
+      class="card m-2"
+      style="max-width: 540px"
+    >
+      <div class="row align-items-center h-100 g-0">
+        <div class="col-md-4">
+          <img
+            src="{{ item.appoinment.specialist.speciality.image }}"
+            class="img-fluid rounded-start"
+            alt="imagen_especialidad"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ item.appoinment.specialist.speciality.description }}
+            </h5>
+            <p class="card-text">
+              Paciente:
+              <span class="badge text-bg-danger"
+                >{{ item.appoinment.patient.lastName }},
+                {{ item.appoinment.patient.name }}</span
+              >
+            </p>
+            <p class="card-text">
+              Especialista:
+              <span class="badge text-bg-info"
+                >{{ item.appoinment.specialist.lastName }},
+                {{ item.appoinment.specialist.name }}</span
+              >
+            </p>
+
+            <ul>
+              <li *ngFor="let item of item | clinichistory | keyvalue">
+                {{ item.key }}: {{ item.value }}
+              </li>
+            </ul>
+
+            <p class="card-text">
+              <small class="text-body-secondary"
+                >{{ item.appoinment.day.dayOfWeek }} -
+                {{ item.appoinment.day.date }}</small
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-2 justify-content-center align-items-center">
+      <div class="col-5 text-center">
+        <button
+          class="btn btn-outline-primary"
+          (click)="downloadClinicHistory()"
+        >
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
