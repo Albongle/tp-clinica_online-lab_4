@@ -53,4 +53,11 @@ export class ClinicHistoryComponent implements OnInit {
     this.showClinicHistory = !this.showClinicHistory;
     this.eventReturnToHome.emit(this.showClinicHistory);
   }
+
+  protected downloadClinicHistory() {
+    this.clinicHistoryService.createPdf(
+      `${this.userService.userLogged?.lastName}-${this.userService.userLogged?.name}`,
+      this.listOfClinicHistory
+    );
+  }
 }

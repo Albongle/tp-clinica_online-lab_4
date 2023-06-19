@@ -69,55 +69,15 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- <section class="row justify-content-between g-4" [hidden]="!showClinicHistory">
-  <div class="w-100 row justify-content-center justify-content-sm-end p-2">
-    <button
-      title="Volver"
-      class="col-md-3 col-2 btn btn-warning"
-      (click)="returnToHome()"
-    >
-      <i class="fa-solid fa-circle-arrow-left"></i>
-    </button>
-  </div>
-  <div
-    *ngFor="let item of listOfClinicHistory"
-    class="card mb-3"
-    style="max-width: 540px"
-  >
-    <div class="row align-items-center h-100 g-0">
-      <div class="col-md-4">
-        <img
-          src="{{ item.appoinment.specialist.speciality.image }}"
-          class="img-fluid rounded-start"
-          alt="imagen_especialidad"
-        />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">
-            {{ item.appoinment.specialist.speciality.description }}
-          </h5>
-          <p class="card-text">
-            Atentedido por: {{ item.appoinment.specialist.lastName }},
-            {{ item.appoinment.specialist.name }}
-          </p>
-
-          <ul>
-            <li *ngFor="let item of item | clinichistory | keyvalue">
-              {{ item.key }}: {{ item.value }}
-            </li>
-          </ul>
-
-          <p class="card-text">
-            <small class="text-body-secondary"
-              >{{ item.appoinment.day.dayOfWeek }} -
-              {{ item.appoinment.day.date }}</small
-            >
-          </p>
-        </div>
+    <div class="row m-2 justify-content-center align-items-center">
+      <div class="col-5 text-center">
+        <button
+          class="btn btn-outline-primary"
+          (click)="downloadClinicHistory()"
+        >
+          Descargar
+        </button>
       </div>
     </div>
   </div>
-</section> -->
+</section>
