@@ -42,7 +42,7 @@
               aria-expanded="false"
             >
               <img
-                [src]="userService.userImageUrl ?? imgDefault"
+                [src]="userService.userLogged.profilePhoto || imgDefault"
                 alt="img-usuario"
                 [ngStyle]="{ width: '32px', 'border-radius': '100%' }"
               />{{ userService.userLogged.lastName }},

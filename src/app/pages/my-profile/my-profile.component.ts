@@ -22,9 +22,7 @@ export class MyProfileComponent {
   }
 
   private async setParamsFromUsserLogged() {
-    this.profilePhoto = await this.userService.getProfilePhoto(
-      this.userService.userLogged!
-    );
+    this.profilePhoto = this.userService.userLogged?.profilePhoto;
     this.user = this.userService.userLogged!;
   }
 

@@ -70,16 +70,9 @@ export class CreateAppoinmentsComponent {
 
   private async setPatients() {
     const users = await this.userService.getUsersFromStore();
-    const patients = users.filter(
+    this.listOfPatients = users.filter(
       (user) => user.userRole === 'patient'
     ) as Patient[];
-    const patientsMapped = await Promise.all(
-      patients.map(async (u) => {
-        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
-        return u;
-      })
-    );
-    this.listOfPatients = patientsMapped;
   }
 
   protected async chooseEspeciality(specialitie: string) {
@@ -89,14 +82,6 @@ export class CreateAppoinmentsComponent {
         specialist.verifiedByAdmin
     );
 
-    const usersMapped = await Promise.all(
-      this.listOfSpecialistsAvailable.map(async (u) => {
-        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
-        return u;
-      })
-    );
-
-    this.listOfSpecialistsAvailable = usersMapped;
     if (this.userService.userLogged?.userRole === 'admin') {
       this.hiddenPatients = false;
     } else {

@@ -54,15 +54,7 @@ export class LoginComponent {
 
   private async setUserForQuickAccess() {
     this.loading = true;
-    const users = await this.userService.getUsersFromStore();
-
-    const usersMapped = await Promise.all(
-      users.map(async (u) => {
-        u.profilePhoto = (await this.userService.getProfilePhoto(u)) as string;
-        return u;
-      })
-    );
-    this.userForQuickAccess = usersMapped;
+    this.userForQuickAccess = await this.userService.getUsersFromStore();
     this.loading = false;
   }
 

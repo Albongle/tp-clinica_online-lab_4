@@ -20,7 +20,7 @@ import { FirebaseStorageProvider } from './firebase_storage.provider';
 export class FirebaseAuthProvider {
   private __userAdmin: User | undefined;
   private _userLogged: User | undefined;
-  private _profilePhoto: string | undefined;
+
   constructor(
     private readonly fireAuth: Auth,
     private readonly firebaseStoreProvider: FirebaseStoreProvider,
@@ -30,9 +30,6 @@ export class FirebaseAuthProvider {
       this.findUserFromSessionByEmail(userFirebase)
         .then((user) => {
           this._userLogged = user;
-          this.getProfilePhoto(this.userLogged?.profilePhoto!)
-            .then((profilePhoto) => (this._profilePhoto = profilePhoto))
-            .catch((e) => Promise.reject(e));
         })
         .catch((e) => console.warn(e));
     });
@@ -53,9 +50,6 @@ export class FirebaseAuthProvider {
       await this.validateSpecialist(this._userLogged!);
     }
 
-    this._profilePhoto = await this.getProfilePhoto(
-      this.userLogged?.profilePhoto!
-    );
     return this.userLogged;
   }
 
@@ -86,14 +80,19 @@ export class FirebaseAuthProvider {
   public get userLogged() {
     return this._userLogged;
   }
-  public get profilePhoto() {
-    return this._profilePhoto;
-  }
 
   private async getUsersFromStore() {
-    const users = (await firstValueFrom(
+    let users = (await firstValueFrom(
       this.firebaseStoreProvider.getCollection('usuarios')
     )) as User[];
+    users = await Promise.all(
+      users.map(async (user) => {
+        return {
+          ...user,
+          profilePhoto: (await this.getProfilePhoto(user)) as string,
+        };
+      })
+    );
     return users;
   }
 
@@ -113,10 +112,11 @@ export class FirebaseAuthProvider {
     return undefined;
   }
 
-  private async getProfilePhoto(fileName: string) {
+  private async getProfilePhoto(user: User) {
     try {
-      const reference =
-        this.firebaseStorageProvider.referenceCloudStorage(fileName);
+      const reference = this.firebaseStorageProvider.referenceCloudStorage(
+        user.profilePhoto
+      );
       const url = await this.firebaseStorageProvider.getUrlFromFile(reference);
       return url;
     } catch (error) {

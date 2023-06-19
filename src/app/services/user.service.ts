@@ -34,9 +34,17 @@ export class UserService {
   }
 
   public async getUsersFromStore() {
-    const users = (await firstValueFrom(
+    let users = (await firstValueFrom(
       this.firebaseStoreProvider.getCollection('usuarios')
     )) as User[];
+    users = await Promise.all(
+      users.map(async (user) => {
+        return {
+          ...user,
+          profilePhoto: (await this.getProfilePhoto(user)) as string,
+        };
+      })
+    );
     return users;
   }
 
@@ -61,10 +69,6 @@ export class UserService {
     return this.firebaseAuthProvider.userLogged;
   }
 
-  public get userImageUrl() {
-    return this.firebaseAuthProvider.profilePhoto;
-  }
-
   public async authorizeSpecialistByAdmin(user: User) {
     const specialist = user as Specialist;
     specialist.verifiedByAdmin = true;
@@ -72,12 +76,13 @@ export class UserService {
     return true;
   }
 
-  public async getProfilePhoto(user: User) {
+  private async getProfilePhoto(user: User) {
     try {
       const reference = this.firebaseStorageProvider.referenceCloudStorage(
         user.profilePhoto
       );
       const url = await this.firebaseStorageProvider.getUrlFromFile(reference);
+
       return url;
     } catch (error) {
       console.warn('No se obtuvo la imagen del usuario');
