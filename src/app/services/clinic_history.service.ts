@@ -74,6 +74,6 @@ export class ClinicHistoryService {
 
   private updatePosition(value?: number) {
     let position = 120;
-    return () => (position += 15);
+    return () => (position += value ?? 15);
   }
 }
