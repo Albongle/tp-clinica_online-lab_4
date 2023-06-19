@@ -218,6 +218,8 @@ export class MyAppoinmentsComponent implements OnDestroy {
         timer: 2000,
       });
     }
+    console.log(JSON.parse(JSON.stringify(clinicHistory)));
+
     console.log(clinicHistory);
   }
 }

@@ -39,13 +39,16 @@ export class CreateClinicHistoryComponent {
         ...this.formClinicHistory.value,
       });
       if (this.aditionalField.length > 0) {
-        const obj: any = {};
+        const additionalData: AdditionalData[] = [];
         this.aditionalField.forEach((field) => {
-          obj[`additional_${field}`] =
-            this.formClinicHistory.controls[`additional_${field}`].value;
+          const data: AdditionalData = new AdditionalData({
+            key: this.formClinicHistory.controls[`key_${field}`].value,
+            value: this.formClinicHistory.controls[`value_${field}`].value,
+          });
+
+          additionalData.push(data);
         });
 
-        const additionalData = new AdditionalData({ ...obj });
         clinicHistory.data = additionalData;
       }
 
@@ -67,7 +70,11 @@ export class CreateClinicHistoryComponent {
       const index = this.aditionalField.length + 1;
       this.aditionalField.push(index);
       this.formClinicHistory.addControl(
-        `additional_${index}`,
+        `key_${index}`,
+        new FormControl('', [Validators.required])
+      );
+      this.formClinicHistory.addControl(
+        `value_${index}`,
         new FormControl('', [Validators.required])
       );
     }
@@ -82,7 +89,8 @@ export class CreateClinicHistoryComponent {
       );
       if (index > -1) {
         this.aditionalField.splice(index, 1);
-        this.formClinicHistory.removeControl(`additional_${valueToFind}`);
+        this.formClinicHistory.removeControl(`key_${valueToFind}`);
+        this.formClinicHistory.removeControl(`value_${valueToFind}`);
       }
     }
   }

@@ -7,7 +7,7 @@ export class ClinicHistory {
   weight: number;
   temperature: number;
   pressure: number;
-  data?: AdditionalData;
+  data?: AdditionalData[];
 
   constructor(clinicHistory: {
     id: string;
@@ -16,7 +16,7 @@ export class ClinicHistory {
     weight: number;
     temperture: number;
     pressure: number;
-    data?: AdditionalData;
+    data?: AdditionalData[];
   }) {
     this.appoinment = clinicHistory.appoinment;
     this.data = clinicHistory.data;
@@ -29,16 +29,10 @@ export class ClinicHistory {
 }
 
 export class AdditionalData {
-  'additional_1'?: string;
-  'additional_2'?: string;
-  'additional_3'?: string;
-  constructor(additional: {
-    additional_1?: string;
-    additional_2?: string;
-    additional_3?: string;
-  }) {
-    this.additional_1 = additional.additional_1;
-    this.additional_2 = additional.additional_2;
-    this.additional_3 = additional.additional_3;
+  key: any;
+  value: any;
+  constructor(additional: { key: any; value: any }) {
+    this.key = additional.key;
+    this.value = additional.value;
   }
 }

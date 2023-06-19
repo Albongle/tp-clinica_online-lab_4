@@ -97,24 +97,44 @@
     *ngFor="let item of aditionalField"
     class="row mt-1 g-3 justify-content-center"
   >
-    <div class="col-12">
-      <label for="experience" class="form-label"
-        >Campo adicional: {{ item }}</label
+    <div class="col-sm-6">
+      <label [for]="'key_' + item" class="form-label"
+        >Clave adicional: {{ item }}</label
       >
       <input
         class="form-control"
         type="text"
-        [formControlName]="'additional_' + item"
-        placeholder="Campo Adicional {{ item }}"
+        [formControlName]="'key_' + item"
+        placeholder="Clave Adicional {{ item }}"
       />
 
       <span
         [hidden]="
-          formClinicHistory.controls['additional_' + item].pristine ||
-          !formClinicHistory.controls['additional_' + item].errors
+          formClinicHistory.controls['key_' + item].pristine ||
+          !formClinicHistory.controls['key_' + item].errors
         "
         class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-        >Valor adicional del paciente es requerido</span
+        >Clave es requerido</span
+      >
+    </div>
+    <div class="col-sm-6">
+      <label [for]="'value_' + item" class="form-label"
+        >Valor adicional: {{ item }}</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        [formControlName]="'value_' + item"
+        placeholder="Valor Adicional {{ item }}"
+      />
+
+      <span
+        [hidden]="
+          formClinicHistory.controls['value_' + item].pristine ||
+          !formClinicHistory.controls['value_' + item].errors
+        "
+        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+        >Valor es requerido</span
       >
     </div>
   </div>
