@@ -30,9 +30,14 @@ export class MyProfileComponent {
     this.showSchedule = true;
   }
 
-  protected showPageClinicalHistory() {}
+  protected showPageClinicalHistory() {
+    this.showClinicalHistory = true;
+  }
 
-  protected handlerUpdateView($event: any) {
-    this.showSchedule = $event as boolean;
+  protected handlerUpdateScheduleView(showSchedule: boolean) {
+    this.showSchedule = showSchedule;
+  }
+  protected handlerUpdateClinicHistoryView(showSchedule: boolean) {
+    this.showClinicalHistory = showSchedule;
   }
 }

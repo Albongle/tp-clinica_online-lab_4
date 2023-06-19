@@ -22,14 +22,23 @@
         placeholder="Altura del paciente"
       />
 
-      <span
+      <div
         [hidden]="
           formClinicHistory.controls['height'].pristine ||
-          !formClinicHistory.controls['height'].errors
+          !formClinicHistory.controls['height'].invalid
         "
-        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-        >Altura es requerido</span
       >
+        <span
+          *ngIf="formClinicHistory.controls['height'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Altura es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['height'].errors?.['min'] || formClinicHistory.controls['height'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para altura invalido</span
+        >
+      </div>
     </div>
   </div>
   <div class="row mt-1 g-3 justify-content-center">
@@ -42,14 +51,23 @@
         placeholder="Peso del paciente"
       />
 
-      <span
+      <div
         [hidden]="
           formClinicHistory.controls['weight'].pristine ||
-          !formClinicHistory.controls['weight'].errors
+          !formClinicHistory.controls['weight'].invalid
         "
-        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-        >Peso del paciente es requerido</span
       >
+        <span
+          *ngIf="formClinicHistory.controls['weight'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Peso es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['weight'].errors?.['min'] || formClinicHistory.controls['weight'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para peso invalido</span
+        >
+      </div>
     </div>
   </div>
   <div class="row mt-1 g-3 justify-content-center">
@@ -62,14 +80,23 @@
         placeholder="Peso del paciente"
       />
 
-      <span
+      <div
         [hidden]="
           formClinicHistory.controls['temperture'].pristine ||
-          !formClinicHistory.controls['temperture'].errors
+          !formClinicHistory.controls['temperture'].invalid
         "
-        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-        >Temperatura del paciente es requerido</span
       >
+        <span
+          *ngIf="formClinicHistory.controls['temperture'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Temperatura es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['temperture'].errors?.['min'] || formClinicHistory.controls['temperture'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para temperatura invalido</span
+        >
+      </div>
     </div>
   </div>
   <div class="row mt-1 g-3 justify-content-center">
@@ -82,14 +109,23 @@
         placeholder="Presion del paciente"
       />
 
-      <span
+      <div
         [hidden]="
           formClinicHistory.controls['pressure'].pristine ||
-          !formClinicHistory.controls['pressure'].errors
+          !formClinicHistory.controls['pressure'].invalid
         "
-        class="mt-2 p-0 shadow text-center form-control alert alert-danger"
-        >Presion del paciente es requerido</span
       >
+        <span
+          *ngIf="formClinicHistory.controls['pressure'].errors?.['required']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Presion es requerido</span
+        >
+        <span
+          *ngIf="formClinicHistory.controls['pressure'].errors?.['min'] || formClinicHistory.controls['pressure'].errors?.['max']"
+          class="mt-2 p-0 shadow text-center form-control alert alert-danger"
+          >Valor para presion invalido</span
+        >
+      </div>
     </div>
   </div>
 

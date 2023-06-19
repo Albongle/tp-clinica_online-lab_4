@@ -200,7 +200,7 @@ export class MyAppoinmentsComponent implements OnDestroy {
   protected async handlerClinicHistory(clinicHistory: ClinicHistory) {
     try {
       clinicHistory.appoinment = this.appoinmentSelected!;
-      await this.clinicHistoryService.saveAppoinmenInStore(clinicHistory);
+      await this.clinicHistoryService.saveClinicHistoryInStore(clinicHistory);
       await this.appointmentService.saveAppoinmentWithIdInStore(
         this.appoinmentSelected?.id!,
         { ...this.appoinmentSelected!, hasClinicHistory: true }
@@ -218,8 +218,5 @@ export class MyAppoinmentsComponent implements OnDestroy {
         timer: 2000,
       });
     }
-    console.log(JSON.parse(JSON.stringify(clinicHistory)));
-
-    console.log(clinicHistory);
   }
 }

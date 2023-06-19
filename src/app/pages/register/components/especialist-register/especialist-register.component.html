@@ -166,20 +166,22 @@
           <div class="col-12">
             <p class="fw-bold">Elija una especialidad:</p>
             <div
-              *ngFor="let speciality of specialities"
+              *ngFor="let speciality of listOfSpecialities"
               class="form-check form-switch"
             >
-              <label class="form-check-label" for="{{ speciality }}">{{
-                speciality
-              }}</label>
+              <label
+                class="form-check-label"
+                for="{{ speciality.description }}"
+                >{{ speciality.description }}</label
+              >
               <input
                 class="form-check-input"
-                id="{{ speciality }}"
+                id="{{ speciality.description }}"
                 type="radio"
                 name="speciality"
                 formControlName="speciality"
-                value="{{ speciality }}"
-                (click)="selectSpeciality(speciality)"
+                value="{{ speciality.description }}"
+                (click)="selectSpeciality(speciality.description)"
               />
             </div>
             <div class="form-check form-switch">

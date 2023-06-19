@@ -27,10 +27,22 @@ export class CreateClinicHistoryComponent {
     this.aditionalField = [];
     this.eventSendClinicHistory = new EventEmitter();
     this.formClinicHistory = this.formBuilder.group({
-      height: ['', Validators.required],
-      weight: ['', Validators.required],
-      temperture: ['', Validators.required],
-      pressure: ['', Validators.required],
+      height: [
+        '',
+        [Validators.required, Validators.min(50), Validators.max(300)],
+      ],
+      weight: [
+        '',
+        [Validators.required, Validators.min(1), Validators.max(400)],
+      ],
+      temperture: [
+        '',
+        [Validators.required, Validators.min(34), Validators.max(41)],
+      ],
+      pressure: [
+        '',
+        [Validators.required, Validators.min(7), Validators.max(21)],
+      ],
     });
   }
   protected async sendClinicHistory() {

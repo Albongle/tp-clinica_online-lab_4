@@ -5,17 +5,7 @@ import { Appoinment } from 'src/app/models/appoinment.model';
   name: 'adminappoinmentlist',
 })
 export class AdminAppoinmentMappedListPipe implements PipeTransform {
-  transform(
-    value: Appoinment[],
-    ...args: unknown[]
-  ): {
-    Objeto: Appoinment;
-    Dia: string;
-    Horario: string;
-    Especialista: string;
-    Especiaidad: string;
-    Estado: string;
-  }[] {
+  transform(value: Appoinment[], ...args: unknown[]) {
     return value.map((appoinment) => {
       const obj: any = {
         Objeto: appoinment,

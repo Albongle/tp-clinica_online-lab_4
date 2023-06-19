@@ -58,9 +58,19 @@ export class CreateAppoinmentsComponent {
 
   private async setSpecialist() {
     const users = await this.userService.getUsersFromStore();
-    this.listOfSpecialist = users.filter(
+
+    const specialists = users.filter(
       (user) => user.userRole === 'specialist'
     ) as Specialist[];
+    this.listOfSpecialist = await Promise.all(
+      specialists.map(async (specialist) => {
+        specialist.speciality.image =
+          await this.specialitiesService.getSpecialityPhoto(
+            specialist.speciality
+          );
+        return specialist;
+      })
+    );
   }
 
   private async setSpecialities() {
@@ -214,6 +224,8 @@ export class CreateAppoinmentsComponent {
       state: 'pending',
     });
     await this.confirmAppoinment(appoinment);
+    this.listOfAvailablesDays = [];
+    this.listOfAvailablesTimes = [];
   }
 
   protected choosePatient(patient: Patient) {

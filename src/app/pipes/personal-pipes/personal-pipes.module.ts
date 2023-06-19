@@ -7,6 +7,7 @@ import { SpecialistAppoinmentMappedListPipe } from './specialist-appoinment-list
 import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mapped.pipe';
 import { AnyPipe } from './any.pipe';
 import { AdminAppoinmentMappedListPipe } from './admin-appoinment-list-mapped.pipe';
+import { ClinicHistoryMappedListPipe } from './clinic-history-mapped.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AdminAppoinmentMappedListPipe } from './admin-appoinment-list-mapped.pi
     PatientAppoinmentMappedListPipe,
     SpecialistAppoinmentMappedListPipe,
     AdminAppoinmentMappedListPipe,
+    ClinicHistoryMappedListPipe,
     AnyPipe,
   ],
   imports: [CommonModule],
@@ -26,6 +28,7 @@ import { AdminAppoinmentMappedListPipe } from './admin-appoinment-list-mapped.pi
     PatientAppoinmentMappedListPipe,
     SpecialistAppoinmentMappedListPipe,
     AdminAppoinmentMappedListPipe,
+    ClinicHistoryMappedListPipe,
     AnyPipe,
   ],
 })
