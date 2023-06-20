@@ -14,7 +14,7 @@ export class MyProfileComponent {
   protected date: string;
   protected showSchedule: boolean;
   protected showClinicalHistory: boolean;
-  constructor(private readonly userService: UserService) {
+  constructor(protected readonly userService: UserService) {
     this.setParamsFromUsserLogged();
     this.imgDefault = '../../../assets/images/user_default.png';
     const date = new Date();

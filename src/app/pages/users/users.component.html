@@ -8,7 +8,7 @@
         [hidden]="!showTable"
       >
         <button
-          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          class="col-xxl-1 col-sm-2 col-6 m-1 p-3 btn btn-outline-primary rounded-circle"
           (click)="chooseListOption('specialist')"
           title="Especialistas"
         >
@@ -19,7 +19,7 @@
           />
         </button>
         <button
-          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          class="col-xxl-1 col-sm-2 col-6 m-1 p-3 btn btn-outline-primary rounded-circle"
           (click)="chooseListOption('patient')"
           title="Pacientes"
         >
@@ -30,7 +30,7 @@
           />
         </button>
         <button
-          class="col-xxl-1 col-sm-3 m-1 p-3 btn btn-outline-primary rounded-circle"
+          class="col-xxl-1 col-sm-2 col-6 m-1 p-3 btn btn-outline-primary rounded-circle"
           (click)="chooseListOption('admin')"
           title="Administradores"
         >
@@ -61,7 +61,7 @@
         class="row justify-content-center align-items-center m-0 p-0 w-100"
         [hidden]="showClinicHistory || showCreateUsers"
       >
-        <div class="col-xxl-1 col-sm-3 m-1 p-3">
+        <div class="col-xxl-2 col-sm-3 col-4 m-1 p-3">
           <button
             class="btn btn-outline-secondary"
             (click)="activateCreateUsers()"
@@ -73,9 +73,9 @@
               alt="..."
             />
           </button>
-          <p class="text-center">Crear usuarios</p>
+          <p class="w-100 text-center">Crear usuarios</p>
         </div>
-        <div class="col-xxl-1 col-sm-3 m-1 p-3">
+        <div class="col-xxl-2 col-sm-3 col-4 m-1 p-3">
           <button
             class="btn btn-outline-secondary"
             (click)="activateClinicHistory()"
@@ -87,7 +87,7 @@
               alt="..."
             />
           </button>
-          <p class="text-center">Historial clinico</p>
+          <p class="w-100 text-center">Historial clinico</p>
         </div>
       </section>
       <div class="mt-4 rounded-3" [hidden]="!showCreateUsers">
