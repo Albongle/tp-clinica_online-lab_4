@@ -67,6 +67,7 @@
             class="nav-link"
             aria-current="page"
             routerLink="welcome"
+            routerLinkActive="badge text-bg-danger"
             data-bs-dismiss="offcanvas"
             >Home</a
           >
@@ -76,19 +77,40 @@
             class="nav-link"
             aria-current="page"
             routerLink="login"
+            routerLinkActive="badge text-bg-danger"
             data-bs-dismiss="offcanvas"
             >Ingresa</a
           >
         </li>
         <li *ngIf="!userService.userLogged" class="nav-item">
-          <a class="nav-link" routerLink="register" data-bs-dismiss="offcanvas"
+          <a
+            class="nav-link"
+            routerLink="register"
+            routerLinkActive="badge text-bg-danger"
+            data-bs-dismiss="offcanvas"
             >Registrate</a
           >
         </li>
-        <!-- <div
+        <li
           *ngIf="
             userService.userLogged &&
             userService.userLogged.userRole === 'admin'
+          "
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            routerLink="users"
+            routerLinkActive="badge text-bg-danger"
+            data-bs-dismiss="offcanvas"
+            >Usuarios</a
+          >
+        </li>
+
+        <div
+          *ngIf="
+            userService.userLogged &&
+            userService.userLogged.userRole !== 'specialist'
           "
           class="d-flex"
         >
@@ -96,71 +118,45 @@
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
-                href="#"
+                routerLinkActive="badge text-bg-danger"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
-                routerLink="users"
+                ><span
+                  [routerLink]="
+                    userService.userLogged.userRole !== 'admin'
+                      ? 'appoinments/myappoinments'
+                      : 'appoinments'
+                  "
+                  >{{
+                    userService.userLogged.userRole !== "admin"
+                      ? "Mis Turnos"
+                      : "Turnos"
+                  }}</span
+                ></a
               >
-                Usuarios
-              </a>
+
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
+                <li
+                  *ngIf="
+                    userService.userLogged &&
+                    (userService.userLogged.userRole === 'patient' ||
+                      userService.userLogged.userRole === 'admin')
+                  "
+                  class="nav-item"
+                >
                   <a
                     class="dropdown-item"
+                    routerLinkActive="badge text-bg-danger"
+                    routerLink="appoinments/createappoinments"
                     data-bs-dismiss="offcanvas"
-                    routerLink="users"
-                    >Historia Clinica</a
+                    >Solicitar Turno</a
                   >
                 </li>
               </ul>
             </li>
           </ul>
-        </div> -->
-        <li
-          *ngIf="
-            userService.userLogged &&
-            userService.userLogged.userRole === 'admin'
-          "
-          class="nav-item"
-        >
-          <a class="nav-link" routerLink="users" data-bs-dismiss="offcanvas"
-            >Usuarios</a
-          >
-        </li>
-        <li *ngIf="userService.userLogged" class="nav-item">
-          <a
-            class="nav-link"
-            [routerLink]="
-              userService.userLogged.userRole !== 'admin'
-                ? 'appoinments/myappoinments'
-                : 'appoinments'
-            "
-            data-bs-dismiss="offcanvas"
-            >{{
-              userService.userLogged.userRole !== "admin"
-                ? "Mis Turnos"
-                : "Turnos"
-            }}</a
-          >
-        </li>
-
-        <li
-          *ngIf="
-            userService.userLogged &&
-            (userService.userLogged.userRole === 'patient' ||
-              userService.userLogged.userRole === 'admin')
-          "
-          class="nav-item"
-        >
-          <a
-            class="nav-link"
-            routerLink="appoinments/createappoinments"
-            data-bs-dismiss="offcanvas"
-            >Solicitar Turno</a
-          >
-        </li>
+        </div>
         <li
           *ngIf="
             userService.userLogged &&
@@ -168,13 +164,37 @@
           "
           class="nav-item"
         >
-          <a class="nav-link" routerLink="patients" data-bs-dismiss="offcanvas"
+          <a
+            class="nav-link"
+            routerLinkActive="badge text-bg-danger"
+            [routerLink]="'appoinments/myappoinments'"
+            data-bs-dismiss="offcanvas"
+            >{{ "Mis Turnos" }}</a
+          >
+        </li>
+
+        <li
+          *ngIf="
+            userService.userLogged &&
+            userService.userLogged.userRole === 'specialist'
+          "
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            routerLink="patients"
+            routerLinkActive="badge text-bg-danger"
+            data-bs-dismiss="offcanvas"
             >Pacientes</a
           >
         </li>
 
         <li *ngIf="userService.userLogged" class="nav-item">
-          <a class="nav-link" routerLink="myprofile" data-bs-dismiss="offcanvas"
+          <a
+            class="nav-link"
+            routerLink="myprofile"
+            routerLinkActive="badge text-bg-danger"
+            data-bs-dismiss="offcanvas"
             >Mi Perfil</a
           >
         </li>
