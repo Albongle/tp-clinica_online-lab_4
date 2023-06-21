@@ -23,7 +23,7 @@ Además, dentro de la clínica, hay un sector encargado de la organización y ad
 
 _Podemos utilizar la barra de navegación para desplazarnos en las distintas rutas._
 
-_Desde el lateral izquierdo podemos ingresar al login, donde podremos iniciar sesión para poder acceder a las distintas rutas o bien ._
+_Desde el lateral izquierdo podemos ingresar al login, donde podremos iniciar sesión para poder acceder a las distintas rutas o bien hacer click en el boton comenzar ._
 
 ![](./images/home.png)
 
