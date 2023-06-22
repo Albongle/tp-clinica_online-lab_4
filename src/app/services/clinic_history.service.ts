@@ -42,7 +42,7 @@ export class ClinicHistoryService {
     const doc = new jsPDF('portrait', 'px', 'a4');
     const image = new Image();
     image.src = '../../assets/images/clinica-online-logo.png';
-    doc.text('HISTORIA CLINICA: ' + userName, 140, 70);
+    doc.text('HISTORIA CLINICA Solicitado por:  ' + userName, 140, 70);
     const date = new Date().toLocaleString();
     doc.addImage(image, 'PNG', 10, 10, 60, 60);
     doc.text('Fecha Emisión: ' + date, 240, 20);
@@ -51,14 +51,19 @@ export class ClinicHistoryService {
 
     clinicHistory.forEach((element) => {
       doc.text(
+        `Paciente: ${element.appoinment.patient.lastName}, ${element.appoinment.patient.name}`,
+        35,
+        position()
+      );
+      doc.text(
         `Fecha:${element.appoinment.day.dayOfWeek} - ${element.appoinment.day.date}`,
         35,
         position()
       );
-      doc.text(`Altura:${element.height} Cm`, 35, position());
-      doc.text(`Peso:${element.weight} Kgs`, 35, position());
-      doc.text(`Presion:${element.height}`, 35, position());
-      doc.text(`Altura:${element.height} Cm`, 35, position());
+      doc.text(`Altura: ${element.height} Cm`, 35, position());
+      doc.text(`Peso: ${element.weight} Kgs`, 35, position());
+      doc.text(`Presion: ${element.height}`, 35, position());
+      doc.text(`Altura: ${element.height} Cm`, 35, position());
 
       if (element.data) {
         element.data.forEach((element) => {

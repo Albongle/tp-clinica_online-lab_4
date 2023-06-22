@@ -9,17 +9,21 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./clinic-history.component.scss'],
 })
 export class ClinicHistoryComponent implements OnInit {
-  protected listOfClinicHistory: ClinicHistory[];
+  @Input() public showDownload: boolean;
+  @Input() public showGetReview: boolean;
+  @Input() public listOfClinicHistory: ClinicHistory[];
   @Output() public eventReturnToHome: EventEmitter<boolean>;
+  @Output() public eventSendReview: EventEmitter<string>;
   @Input() public showClinicHistory: boolean;
   protected loading: boolean;
   constructor(
     protected readonly userService: UserService,
     private readonly clinicHistoryService: ClinicHistoryService
   ) {
-    this.setListClinicalHistory();
+    this.listOfClinicHistory ?? this.setListClinicalHistory();
     this.loading = true;
     this.eventReturnToHome = new EventEmitter();
+    this.eventSendReview = new EventEmitter();
   }
 
   ngOnInit(): void {
@@ -59,5 +63,8 @@ export class ClinicHistoryComponent implements OnInit {
       `${this.userService.userLogged?.lastName}-${this.userService.userLogged?.name}`,
       this.listOfClinicHistory
     );
+  }
+  protected sendReview(review?: string) {
+    this.eventSendReview.emit(review);
   }
 }

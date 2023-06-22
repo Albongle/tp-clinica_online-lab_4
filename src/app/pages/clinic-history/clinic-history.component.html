@@ -6,7 +6,7 @@
   class="w-100 m-0 p-1 h-100 row justify-content-center align-items-center"
   [hidden]="!showClinicHistory || loading"
 >
-  <div class="row justify-content-evenly bg-light w-100 ali shadow p-1 rounded">
+  <div class="row justify-content-evenly bg-light w-100 shadow p-1 rounded">
     <div
       *ngIf="userService.userLogged?.userRole === 'patient'"
       class="w-100 row justify-content-center justify-content-sm-end p-2"
@@ -67,9 +67,25 @@
             </p>
           </div>
         </div>
+        <div
+          *ngIf="showGetReview"
+          class="row m-2 justify-content-center align-items-center"
+        >
+          <div class="col-5 text-center">
+            <button
+              class="btn btn-outline-primary"
+              (click)="sendReview(item.appoinment.review)"
+            >
+              Ver reseña
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row m-2 justify-content-center align-items-center">
+    <div
+      *ngIf="showDownload"
+      class="row m-2 justify-content-center align-items-center"
+    >
       <div class="col-5 text-center">
         <button
           class="btn btn-outline-primary"
