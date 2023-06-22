@@ -8,8 +8,9 @@ import { User, UserRole } from 'src/app/models/users/user.model';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  listUsers: User[];
-  listFiltered: User[];
+  protected listUsers: User[];
+  protected listFiltered: User[];
+  protected userOption: UserRole;
   protected showClinicHistory: boolean;
   protected showCreateUsers: boolean;
   protected showTable: boolean;
@@ -23,6 +24,7 @@ export class UsersComponent {
   }
 
   protected async chooseListOption(option: UserRole) {
+    this.userOption = option;
     this.listUsers = await this.userService.getUsersFromStore();
     this.listFiltered = this.listUsers.filter((u) => u.userRole === option);
     this.showTable = !this.showTable;

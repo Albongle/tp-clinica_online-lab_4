@@ -42,11 +42,19 @@
         </button>
       </section>
       <app-table-users
+        *ngIf="userOption !== 'patient'"
         [list]="listFiltered"
         [showTable]="showTable"
         [roleOption]="listChoseOption"
         (eventShowTable)="handlerUpdateView($event)"
       ></app-table-users>
+      <app-cards-users
+        *ngIf="userOption === 'patient'"
+        [listOfUsers]="listFiltered"
+        [showCards]="showTable"
+        [roleOption]="listChoseOption"
+        (eventShowCards)="handlerUpdateView($event)"
+      ></app-cards-users>
     </div>
   </div>
 </section>
