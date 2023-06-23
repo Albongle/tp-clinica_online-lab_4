@@ -7,7 +7,7 @@
     ></app-pier-chart>
   </article>
 
-  <article class="h-100 col-4">
+  <article class="h-100 col-md-4 col-12">
     <app-line-chart
       [lineData]="appoinmentForDay"
       [title]="'Cantidad de turnos por dia'"
@@ -15,14 +15,14 @@
     ></app-line-chart>
   </article>
 
-  <article class="h-100 col-4">
+  <article class="h-100 col-md-4 col-12">
     <app-line-chart
       [lineData]="appoinmentForLapseTime"
       [title]="'Cantidad de turnos por especialistas por dia'"
       [id]="'cant-line-2'"
     ></app-line-chart>
   </article>
-  <article class="h-100 col-4">
+  <article class="h-100 col-md-4 col-12">
     <app-line-chart
       [lineData]="appoinmentCompleteForLapseTime"
       [title]="'Cantidad de turnos por especialistas finalizados por dia'"
