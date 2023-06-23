@@ -43,14 +43,12 @@ export class PatientsComponent implements OnInit {
     }, 2300);
   }
   protected async setListOfPatients() {
-    this.listOfPatients = [];
-    this.listOfClinicHistory
-      .map((clinicHistory) => clinicHistory.appoinment.patient)
-      .forEach((patient) => {
-        if (!this.listOfPatients.some((l) => l.email === patient.email)) {
-          this.listOfPatients.push(patient);
-        }
-      });
+    this.listOfPatients = this.listOfClinicHistory.reduce((acum, curr) => {
+      if (!acum.some((l) => l.email === curr.appoinment.patient.email)) {
+        acum.push(curr.appoinment.patient);
+      }
+      return acum;
+    }, [] as Patient[]);
   }
 
   protected filterClinicHistory(email: string) {

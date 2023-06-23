@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ClinicHistory } from 'src/app/models/clinic_history.model';
 import { User } from 'src/app/models/users/user.model';
+import { ClinicHistoryService } from 'src/app/services/clinic_history.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,11 +13,16 @@ export class MyProfileComponent {
   protected profilePhoto: string | undefined;
   protected imgDefault;
   protected user: User;
+  protected listOfClinicHistory: ClinicHistory[];
   protected date: string;
   protected showSchedule: boolean;
   protected showClinicalHistory: boolean;
-  constructor(protected readonly userService: UserService) {
+  constructor(
+    protected readonly userService: UserService,
+    private readonly clinicHistoryService: ClinicHistoryService
+  ) {
     this.setParamsFromUsserLogged();
+    this.setListClinicalHistory();
     this.imgDefault = '../../../assets/images/user_default.png';
     const date = new Date();
     this.date = `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
@@ -39,5 +46,17 @@ export class MyProfileComponent {
   }
   protected handlerUpdateClinicHistoryView(showSchedule: boolean) {
     this.showClinicalHistory = showSchedule;
+  }
+
+  private async setListClinicalHistory() {
+    if (this.userService.userLogged?.userRole === 'patient') {
+      this.listOfClinicHistory = (
+        await this.clinicHistoryService.getAllClinicHistory()
+      ).filter(
+        (clinicHistory) =>
+          clinicHistory.appoinment.patient.email ===
+          this.userService.userLogged?.email
+      );
+    }
   }
 }

@@ -51,6 +51,11 @@ export class ClinicHistoryService {
 
     clinicHistory.forEach((element) => {
       doc.text(
+        `Especialidad: ${element.appoinment.specialist.speciality.description}`,
+        35,
+        position()
+      );
+      doc.text(
         `Paciente: ${element.appoinment.patient.lastName}, ${element.appoinment.patient.name}`,
         35,
         position()
