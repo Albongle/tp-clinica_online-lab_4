@@ -1,0 +1,28 @@
+<section
+  class="w-100 m-0 p-1 row justify-content-md-between justify-content-center align-items-center"
+>
+  <div
+    class="h-100 align-self-center col-md-4 col-12 btn-group-vertical"
+    role="group"
+    aria-label="Vertical button group"
+  >
+    <div class="row justify-content-center">
+      <h3 class="text-center">Elija un usuario:</h3>
+      <button
+        *ngFor="let user of listOfUsers"
+        type="button"
+        class="text-center btn btn-outline-danger border borde-1"
+        (click)="filterByUser(user)"
+      >
+        {{ user.email }}
+      </button>
+    </div>
+  </div>
+  <div class="col-md-8 col-12">
+    <app-bar-chart
+      [bartData]="logsForDay"
+      [title]="'Ingreso por dia'"
+      [id]="'logs-bar-1'"
+    ></app-bar-chart>
+  </div>
+</section>

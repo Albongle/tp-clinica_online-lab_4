@@ -155,6 +155,21 @@
                 </li>
               </ul>
             </li>
+            <li
+              *ngIf="
+                userService.userLogged &&
+                userService.userLogged.userRole === 'admin'
+              "
+              class="nav-item"
+            >
+              <a
+                class="nav-link"
+                routerLink="reports"
+                routerLinkActive="badge text-bg-danger"
+                data-bs-dismiss="offcanvas"
+                >Reportes</a
+              >
+            </li>
           </ul>
         </div>
         <li
