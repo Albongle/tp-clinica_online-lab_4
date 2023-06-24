@@ -42,11 +42,19 @@
         </button>
       </section>
       <app-table-users
+        *ngIf="userOption !== 'patient'"
         [list]="listFiltered"
         [showTable]="showTable"
         [roleOption]="listChoseOption"
         (eventShowTable)="handlerUpdateView($event)"
       ></app-table-users>
+      <app-cards-users
+        *ngIf="userOption === 'patient'"
+        [listOfUsers]="listFiltered"
+        [showCards]="showTable"
+        [roleOption]="listChoseOption"
+        (eventShowCards)="handlerUpdateView($event)"
+      ></app-cards-users>
     </div>
   </div>
 </section>
@@ -120,7 +128,10 @@
               <i class="fa-solid fa-circle-arrow-left"></i>
             </button>
           </div>
-          <app-clinic-history [showClinicHistory]="true"></app-clinic-history>
+          <app-clinic-history
+            [showClinicHistory]="true"
+            [listOfClinicHistory]="listOfClinicHistory"
+          ></app-clinic-history>
         </div>
       </div>
     </div>

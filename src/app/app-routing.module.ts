@@ -58,6 +58,12 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard],
   },
   {
+    path: 'reports',
+    loadChildren: () =>
+      import('./pages/reports/reports.module').then((m) => m.ReportsModule),
+    canActivate: [AuthorizationGuard],
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./pages/not-found/not-found.module').then(

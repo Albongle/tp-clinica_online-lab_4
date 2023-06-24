@@ -42,7 +42,8 @@
               aria-expanded="false"
             >
               <img
-                [src]="userService.userLogged.profilePhoto || imgDefault"
+                [src]="userService.userLogged.profilePhoto"
+                notImageUser
                 alt="img-usuario"
                 [ngStyle]="{ width: '32px', 'border-radius': '100%' }"
               />{{ userService.userLogged.lastName }},
@@ -154,6 +155,21 @@
                   >
                 </li>
               </ul>
+            </li>
+            <li
+              *ngIf="
+                userService.userLogged &&
+                userService.userLogged.userRole === 'admin'
+              "
+              class="nav-item"
+            >
+              <a
+                class="nav-link"
+                routerLink="reports"
+                routerLinkActive="badge text-bg-danger"
+                data-bs-dismiss="offcanvas"
+                >Reportes</a
+              >
             </li>
           </ul>
         </div>

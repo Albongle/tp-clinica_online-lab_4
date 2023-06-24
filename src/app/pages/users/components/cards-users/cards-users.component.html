@@ -1,0 +1,57 @@
+<section class="h-100 p-4" [hidden]="showCards">
+  <div class="w-100 row justify-content-center justify-content-sm-end p-2 m-0">
+    <button
+      title="Volver"
+      class="col-sm-1 col-md-2 col-8 btn btn-warning"
+      (click)="return()"
+    >
+      <i class="fa-solid fa-circle-arrow-left"></i>
+    </button>
+  </div>
+  <div
+    class="row W-100 p-2 m-0 justify-content-md-between justify-content-center align-items-start"
+  >
+    <div
+      *ngFor="let user of listOfUsers"
+      class="m-1 col-md-5 col-9 mb-3 mb-sm-0"
+    >
+      <div
+        class="export h-100 btn btn-outline-danger card mb-3"
+        style="max-width: 600px"
+        (click)="exportUserToXls(user)"
+      >
+        <div class="row justify-content-center align-items-center g-0">
+          <div class="col-md-4">
+            <img
+              src="{{ user.profilePhoto }}"
+              class="img-fluid rounded-circle"
+              alt="foto_perfil"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge text-bg-dark"
+                  >{{ user.lastName }}, {{ user.name }}</span
+                >
+              </h5>
+              <ul>
+                <li class="card-text text-sm-start">Email: {{ user.email }}</li>
+                <li class="card-text text-sm-start">Edad: {{ user.age }}</li>
+                <li class="card-text text-sm-start">
+                  Rol: {{ user.userRole }}
+                </li>
+              </ul>
+
+              <p class="card-text">
+                <small class="text-body-secondary"
+                  >Actualizado a {{ date }}</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -13,6 +13,8 @@ import { Specialist } from '../models/users/specialist.model';
 import { Patient } from '../models/users/patient.model';
 import { Admin } from '../models/users/admin.model';
 import { FirebaseStorageProvider } from './firebase_storage.provider';
+import { LogsService } from '../services/logs.service';
+import { Log } from '../models/log.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +26,8 @@ export class FirebaseAuthProvider {
   constructor(
     private readonly fireAuth: Auth,
     private readonly firebaseStoreProvider: FirebaseStoreProvider,
-    private readonly firebaseStorageProvider: FirebaseStorageProvider
+    private readonly firebaseStorageProvider: FirebaseStorageProvider,
+    private readonly logService: LogsService
   ) {
     this.fireAuth.onAuthStateChanged((userFirebase) => {
       this.findUserFromSessionByEmail(userFirebase)
@@ -49,7 +52,8 @@ export class FirebaseAuthProvider {
 
       await this.validateSpecialist(this._userLogged!);
     }
-
+    const log = new Log(this._userLogged!);
+    await this.logService.saveLogInStore(log);
     return this.userLogged;
   }
 

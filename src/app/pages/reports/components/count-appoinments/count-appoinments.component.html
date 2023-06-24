@@ -1,0 +1,32 @@
+<section class="row justify-content-evenly align-items-center">
+  <article class="h-100 col-4">
+    <app-pier-chart
+      [pieData]="appoinmentForSpecilaity"
+      [title]="'Cantidad de turnos por especialistas'"
+      [id]="'cant-pie-1'"
+    ></app-pier-chart>
+  </article>
+
+  <article class="h-100 col-md-4 col-12">
+    <app-line-chart
+      [lineData]="appoinmentForDay"
+      [title]="'Cantidad de turnos por dia'"
+      [id]="'cant-line-1'"
+    ></app-line-chart>
+  </article>
+
+  <article class="h-100 col-md-4 col-12">
+    <app-line-chart
+      [lineData]="appoinmentForLapseTime"
+      [title]="'Cantidad de turnos por especialistas por dia'"
+      [id]="'cant-line-2'"
+    ></app-line-chart>
+  </article>
+  <article class="h-100 col-md-4 col-12">
+    <app-line-chart
+      [lineData]="appoinmentCompleteForLapseTime"
+      [title]="'Cantidad de turnos por especialistas finalizados por dia'"
+      [id]="'cant-line-3'"
+    ></app-line-chart>
+  </article>
+</section>

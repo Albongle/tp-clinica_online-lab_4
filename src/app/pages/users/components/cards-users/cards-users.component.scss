@@ -1,0 +1,9 @@
+.export:hover {
+  cursor: pointer;
+}
+
+.export:active {
+  transform: scale(0.99, 0.99);
+  transition: ease-in 0.05s 0.01s;
+  box-shadow: tomato 0.1rem 0.1rem 1rem;
+}

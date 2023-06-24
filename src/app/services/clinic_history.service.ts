@@ -39,37 +39,47 @@ export class ClinicHistoryService {
   }
 
   public createPdf(userName: string, clinicHistory: ClinicHistory[]) {
-    const doc = new jsPDF('portrait', 'px', 'a4');
+    const pdfFile = new jsPDF('portrait', 'px', 'a4');
     const image = new Image();
     image.src = '../../assets/images/clinica-online-logo.png';
-    doc.text('HISTORIA CLINICA: ' + userName, 140, 70);
+    pdfFile.text('HISTORIA CLINICA Solicitado por:  ' + userName, 140, 70);
     const date = new Date().toLocaleString();
-    doc.addImage(image, 'PNG', 10, 10, 60, 60);
-    doc.text('Fecha Emisión: ' + date, 240, 20);
+    pdfFile.addImage(image, 'PNG', 10, 10, 60, 60);
+    pdfFile.text('Fecha Emisión: ' + date, 240, 20);
 
     const position = this.updatePosition();
 
     clinicHistory.forEach((element) => {
-      doc.text(
+      pdfFile.text(
+        `Especialidad: ${element.appoinment.specialist.speciality.description}`,
+        35,
+        position()
+      );
+      pdfFile.text(
+        `Paciente: ${element.appoinment.patient.lastName}, ${element.appoinment.patient.name}`,
+        35,
+        position()
+      );
+      pdfFile.text(
         `Fecha:${element.appoinment.day.dayOfWeek} - ${element.appoinment.day.date}`,
         35,
         position()
       );
-      doc.text(`Altura:${element.height} Cm`, 35, position());
-      doc.text(`Peso:${element.weight} Kgs`, 35, position());
-      doc.text(`Presion:${element.height}`, 35, position());
-      doc.text(`Altura:${element.height} Cm`, 35, position());
+      pdfFile.text(`Altura: ${element.height} Cm`, 35, position());
+      pdfFile.text(`Peso: ${element.weight} Kgs`, 35, position());
+      pdfFile.text(`Presion: ${element.height}`, 35, position());
+      pdfFile.text(`Altura: ${element.height} Cm`, 35, position());
 
       if (element.data) {
         element.data.forEach((element) => {
-          doc.text(`${[element.key]}: ${element.value}`, 35, position());
+          pdfFile.text(`${[element.key]}: ${element.value}`, 35, position());
         });
       }
       position();
     });
 
     const fileName = `Historia_Clinica_${date}_${userName}.pdf`;
-    doc.save(fileName);
+    pdfFile.save(fileName);
   }
 
   private updatePosition(value?: number) {

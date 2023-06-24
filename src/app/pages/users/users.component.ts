@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User, UserRole } from 'src/app/models/users/user.model';
+import { ClinicHistory } from 'src/app/models/clinic_history.model';
+import { ClinicHistoryService } from 'src/app/services/clinic_history.service';
 
 @Component({
   selector: 'app-users',
@@ -8,13 +10,19 @@ import { User, UserRole } from 'src/app/models/users/user.model';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  listUsers: User[];
-  listFiltered: User[];
+  protected listOfClinicHistory: ClinicHistory[];
+  protected listUsers: User[];
+  protected listFiltered: User[];
+  protected userOption: UserRole;
   protected showClinicHistory: boolean;
   protected showCreateUsers: boolean;
   protected showTable: boolean;
   protected listChoseOption: UserRole;
-  constructor(protected readonly userService: UserService) {
+  constructor(
+    protected readonly userService: UserService,
+    private readonly clinicHistoryService: ClinicHistoryService
+  ) {
+    this.setListClinicalHistory();
     this.showTable = true;
   }
 
@@ -23,6 +31,7 @@ export class UsersComponent {
   }
 
   protected async chooseListOption(option: UserRole) {
+    this.userOption = option;
     this.listUsers = await this.userService.getUsersFromStore();
     this.listFiltered = this.listUsers.filter((u) => u.userRole === option);
     this.showTable = !this.showTable;
@@ -41,5 +50,12 @@ export class UsersComponent {
   return() {
     this.showCreateUsers = false;
     this.showClinicHistory = false;
+  }
+
+  private async setListClinicalHistory() {
+    if (this.userService.userLogged?.userRole === 'admin') {
+      this.listOfClinicHistory =
+        await this.clinicHistoryService.getAllClinicHistory();
+    }
   }
 }

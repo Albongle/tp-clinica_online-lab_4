@@ -10,7 +10,8 @@
       <div class="row g-0 align-items-center">
         <div class="col-md-4">
           <img
-            [src]="profilePhoto ?? imgDefault"
+            [src]="profilePhoto"
+            notImageUser
             class="img-fluid rounded-start"
             alt="foto_perfil"
           />
@@ -91,5 +92,8 @@
     [hidden]="!showClinicalHistory"
     [showClinicHistory]="showClinicalHistory"
     (eventReturnToHome)="handlerUpdateClinicHistoryView($event)"
+    [showDownload]="true"
+    [listOfClinicHistory]="listOfClinicHistory"
+    [showFiltered]="true"
   ></app-clinic-history>
 </section>

@@ -1,1 +1,68 @@
-<app-clinic-history [showClinicHistory]="true"></app-clinic-history>
+<app-loading
+  [loading]="loading"
+  [image]="'../../../assets/images/loading.gif'"
+></app-loading>
+<div [hidden]="loading" class="container-fluid">
+  <div class="row m-0 p-0 mt-3 justify-content-center">
+    <div class="shadow bg-body-tertiary rounded col-sm-2">
+      <h3 class="text-center">Elija un paciente</h3>
+      <section class="d-flex flex-column align-items-center">
+        <div>
+          <p-button
+            styleClass="m-2 rounded-circle p-button-rounded p-button-danger p-button-outlined"
+            (click)="filterClinicHistory('all')"
+          >
+            <div class="rounded-circle">
+              <img
+                class="rounded-circle"
+                src="../../../assets/images/register/paciente.png"
+                alt="profile_photo"
+              />
+              <p class="text-center">
+                <span class="badge rounded-pill text-bg-warning"
+                  >Mostrar todos</span
+                >
+              </p>
+            </div>
+          </p-button>
+        </div>
+        <div *ngFor="let patient of listOfPatients">
+          <p-button
+            styleClass="m-2 rounded-circle p-button-rounded p-button-danger p-button-outlined"
+            (click)="filterClinicHistory(patient.email)"
+          >
+            <div class="rounded-circle">
+              <img
+                class="rounded-circle"
+                [src]="patient.profilePhoto"
+                alt="profile_photo"
+                [title]="patient.userRole"
+              />
+              <p class="text-center">
+                <span class="badge rounded-pill text-bg-dark"
+                  >{{ patient.lastName }}, {{ patient.name }}</span
+                >
+              </p>
+            </div>
+          </p-button>
+        </div>
+      </section>
+    </div>
+    <div class="col-10">
+      <app-clinic-history
+        [showClinicHistory]="showClinicHistory"
+        [listOfClinicHistory]="listOfClinicHistory"
+        [showGetReview]="true"
+        (eventSendReview)="handlerShowReview($event)"
+      ></app-clinic-history>
+    </div>
+  </div>
+  <div *ngIf="review" class="row justify-content-center">
+    <div class="m-md-3 mt-1 col-md-5">
+      <div class="h-100 p-5 text-bg-secondary border rounded-3">
+        <h2>Reseña</h2>
+        <p class="text-light">{{ review }}</p>
+      </div>
+    </div>
+  </div>
+</div>

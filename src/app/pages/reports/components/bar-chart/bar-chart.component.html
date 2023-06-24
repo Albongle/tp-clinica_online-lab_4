@@ -1,0 +1,20 @@
+<section class="w-100">
+  <h2 class="text-center">{{ title }}</h2>
+  <canvas
+    [id]="id"
+    baseChart
+    class="chart"
+    [data]="bartData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [type]="barChartType"
+  >
+  </canvas>
+  <div class="row justify-content-center">
+    <div class="text-center col-6">
+      <button class="btn btn-outline-primary" (click)="downloadChart()">
+        Descargar
+      </button>
+    </div>
+  </div>
+</section>
