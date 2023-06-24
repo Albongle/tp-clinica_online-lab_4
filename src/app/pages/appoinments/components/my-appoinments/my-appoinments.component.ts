@@ -24,6 +24,7 @@ export class MyAppoinmentsComponent implements OnDestroy {
   protected calification: AppoinmentCalification;
   protected listOfAppoinments: Appoinment[];
   private listOfAppoinmentsBackUp: Appoinment[];
+  private listOfClinicHistory: ClinicHistory[];
   private appoinmentsSubcription: Subscription;
   protected acctionOnAppoinment: string | undefined;
 
@@ -35,6 +36,7 @@ export class MyAppoinmentsComponent implements OnDestroy {
   ) {
     this.loading = true;
     this.setAppoinments();
+    this.setClinicHistory();
   }
   ngOnDestroy(): void {
     this.appoinmentsSubcription.unsubscribe();
@@ -66,6 +68,11 @@ export class MyAppoinmentsComponent implements OnDestroy {
       });
   }
 
+  private async setClinicHistory() {
+    this.listOfClinicHistory =
+      await this.clinicHistoryService.getAllClinicHistory();
+  }
+
   protected handlerChooseAppoinment(appoinment: Appoinment) {
     this.appoinmentSelected = appoinment;
   }
@@ -95,6 +102,22 @@ export class MyAppoinmentsComponent implements OnDestroy {
             .toLowerCase()
             .includes(value.toLowerCase())
       );
+    }
+
+    if (this.listOfAppoinments.length === 0) {
+      this.listOfAppoinments = this.listOfClinicHistory
+        .filter((clinicHistory) => {
+          const values = Object.values(clinicHistory);
+          if (clinicHistory.data) {
+            clinicHistory.data.forEach((d) => {
+              values.push(...Object.values(d));
+            });
+          }
+          return values.some(
+            (v) => v.toString().toLowerCase() === value.toLowerCase()
+          );
+        })
+        .map((clinicHistory) => clinicHistory.appoinment);
     }
   }
 
