@@ -11,7 +11,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MyProfileComponent {
   protected profilePhoto: string | undefined;
-  protected imgDefault;
   protected user: User;
   protected listOfClinicHistory: ClinicHistory[];
   protected date: string;
@@ -23,7 +22,6 @@ export class MyProfileComponent {
   ) {
     this.setParamsFromUsserLogged();
     this.setListClinicalHistory();
-    this.imgDefault = '../../../assets/images/user_default.png';
     const date = new Date();
     this.date = `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
   }

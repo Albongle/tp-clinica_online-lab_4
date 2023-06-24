@@ -9,6 +9,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PersonalDirectivesModule } from './directives/personal-directives.module';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -20,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
     BrowserAnimationsModule,
+    PersonalDirectivesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

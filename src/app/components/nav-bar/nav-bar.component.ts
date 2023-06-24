@@ -8,10 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavBarComponent {
   protected name: string;
-  protected imgDefault: string;
-  constructor(protected readonly userService: UserService) {
-    this.imgDefault = '../../../assets/images/user_default.png';
-  }
+  constructor(protected readonly userService: UserService) {}
 
   protected signOut() {
     this.userService.logout();
