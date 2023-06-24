@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClinicHistoryComponent } from './clinic-history.component';
-import { PersonalPipesModule } from 'src/app/pipes/personal-pipes/personal-pipes.module';
+import { PersonalPipesModule } from 'src/app/pipes/personal-pipes.module';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { ButtonModule } from 'primeng/button';
 

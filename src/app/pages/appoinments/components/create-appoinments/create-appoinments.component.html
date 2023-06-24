@@ -204,7 +204,8 @@
                 *ngFor="let availableDay of listOfAvailablesDays"
                 (click)="chooseDay(availableDay)"
               >
-                {{ availableDay.dayOfWeek }} - {{ availableDay.date }}
+                {{ availableDay.dayOfWeek }},
+                {{ availableDay.date! | personalDate }}
               </button>
             </ng-template>
             <ng-template #blockElseSchedule

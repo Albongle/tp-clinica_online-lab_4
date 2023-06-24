@@ -8,6 +8,7 @@ import { PatientAppoinmentMappedListPipe } from './patient-appoinment-list-mappe
 import { AnyPipe } from './any.pipe';
 import { AdminAppoinmentMappedListPipe } from './admin-appoinment-list-mapped.pipe';
 import { ClinicHistoryMappedListPipe } from './clinic-history-mapped.pipe';
+import { PersonalDatePipe } from './personal-date.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ClinicHistoryMappedListPipe } from './clinic-history-mapped.pipe';
     AdminAppoinmentMappedListPipe,
     ClinicHistoryMappedListPipe,
     AnyPipe,
+    PersonalDatePipe,
   ],
   imports: [CommonModule],
   exports: [
@@ -30,6 +32,7 @@ import { ClinicHistoryMappedListPipe } from './clinic-history-mapped.pipe';
     AdminAppoinmentMappedListPipe,
     ClinicHistoryMappedListPipe,
     AnyPipe,
+    PersonalDatePipe,
   ],
 })
 export class PersonalPipesModule {}
