@@ -10,10 +10,12 @@ const routes: Routes = [
   {
     path: 'myappoinments',
     component: MyAppoinmentsComponent,
+    data: [{ animation: 'myAppoinments' }],
   },
   {
     path: 'createappoinments',
     component: CreateAppoinmentsComponent,
+    data: [{ animation: 'createAppoinments' }],
   },
 ];
 

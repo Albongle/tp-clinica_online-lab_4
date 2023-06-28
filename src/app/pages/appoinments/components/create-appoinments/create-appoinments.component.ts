@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChildrenOutletContexts } from '@angular/router';
+import { slideInAnimation } from 'src/app/animations/animations';
 import { Appoinment } from 'src/app/models/appoinment.model';
 import { Day, DaysOfWeek } from 'src/app/models/schedule.model';
 import { Speciality } from 'src/app/models/speciality.model';
@@ -14,6 +16,7 @@ type Time = { timeStart: string; timeEnd: string };
   selector: 'app-create-appoinments',
   templateUrl: './create-appoinments.component.html',
   styleUrls: ['./create-appoinments.component.scss'],
+  animations: [slideInAnimation],
 })
 export class CreateAppoinmentsComponent implements OnInit {
   protected hiddenSpecialities: boolean;
@@ -40,7 +43,8 @@ export class CreateAppoinmentsComponent implements OnInit {
     protected readonly userService: UserService,
     private readonly specialitiesService: SpecialitiesService,
     private readonly alertService: AlertService,
-    private readonly appoinmentService: AppoinmentService
+    private readonly appoinmentService: AppoinmentService,
+    private readonly contexts: ChildrenOutletContexts
   ) {
     this.loading = true;
     this.hiddenPatients = true;
@@ -289,5 +293,11 @@ export class CreateAppoinmentsComponent implements OnInit {
       this.hiddenSpecialities = false;
       this.hiddenTimes = true;
     }
+  }
+
+  protected getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
   }
 }
