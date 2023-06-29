@@ -40,6 +40,17 @@
             alt="..."
           />
         </button>
+
+        <div class="mt-4 row justify-content-center align-items-center">
+          <div class="text-center col-6">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="downloadAllUsers()"
+            >
+              Descargar usuarios
+            </button>
+          </div>
+        </div>
       </section>
       <app-table-users
         *ngIf="userOption !== 'patient'"

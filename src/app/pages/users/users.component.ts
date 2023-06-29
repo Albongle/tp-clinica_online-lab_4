@@ -22,6 +22,7 @@ export class UsersComponent {
     protected readonly userService: UserService,
     private readonly clinicHistoryService: ClinicHistoryService
   ) {
+    this.setListOfUsers();
     this.setListClinicalHistory();
     this.showTable = true;
   }
@@ -32,10 +33,13 @@ export class UsersComponent {
 
   protected async chooseListOption(option: UserRole) {
     this.userOption = option;
-    this.listUsers = await this.userService.getUsersFromStore();
     this.listFiltered = this.listUsers.filter((u) => u.userRole === option);
     this.showTable = !this.showTable;
     this.listChoseOption = option;
+  }
+
+  protected async setListOfUsers() {
+    this.listUsers = await this.userService.getUsersFromStore();
   }
 
   protected activateCreateUsers() {
@@ -57,5 +61,9 @@ export class UsersComponent {
       this.listOfClinicHistory =
         await this.clinicHistoryService.getAllClinicHistory();
     }
+  }
+
+  protected downloadAllUsers() {
+    this.userService.exportUsersToXls(this.listUsers, 'usuarios');
   }
 }
