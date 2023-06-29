@@ -12,6 +12,7 @@ import { ListAppoinmentComponent } from './components/list-appoinment/list-appoi
 import { TableAppoinmentsComponent } from './components/table-appoinments/table-appoinments.component';
 import { SurveyAppoinmentsComponent } from './components/survey-appoinments/survey-appoinments.component';
 import { CreateClinicHistoryComponent } from './components/create-clinic-history/create-clinic-history.component';
+
 @NgModule({
   declarations: [
     AppoinmentsComponent,

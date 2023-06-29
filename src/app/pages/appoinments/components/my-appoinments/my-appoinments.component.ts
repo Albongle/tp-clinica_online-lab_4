@@ -11,11 +11,14 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 import { ClinicHistoryService } from 'src/app/services/clinic_history.service';
 import { UserService } from 'src/app/services/user.service';
+import { slideInAnimation } from 'src/app/animations/animations';
+import { ChildrenOutletContexts } from '@angular/router';
 
 @Component({
   selector: 'app-my-appoinments',
   templateUrl: './my-appoinments.component.html',
   styleUrls: ['./my-appoinments.component.scss'],
+  animations: [slideInAnimation],
 })
 export class MyAppoinmentsComponent implements OnDestroy {
   protected appoinmentSelected: Appoinment | undefined;
@@ -32,7 +35,8 @@ export class MyAppoinmentsComponent implements OnDestroy {
     protected readonly userService: UserService,
     private readonly appointmentService: AppoinmentService,
     private readonly clinicHistoryService: ClinicHistoryService,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly contexts: ChildrenOutletContexts
   ) {
     this.loading = true;
     this.setAppoinments();
@@ -241,5 +245,11 @@ export class MyAppoinmentsComponent implements OnDestroy {
         timer: 2000,
       });
     }
+  }
+
+  protected getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
   }
 }

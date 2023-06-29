@@ -6,6 +6,7 @@ import { User } from '../models/users/user.model';
 import { firstValueFrom } from 'rxjs';
 import { Specialist } from '../models/users/specialist.model';
 import { FirebaseStorageProvider } from '../providers/firebase_storage.provider';
+import * as XLSX from 'xlsx';
 
 @Injectable({
   providedIn: 'root',
@@ -89,5 +90,21 @@ export class UserService {
     }
 
     return undefined;
+  }
+  public exportUsersToXls(users: User[], fileName: string) {
+    const usersMapped = users.map((user) => {
+      return {
+        Email: `${user.email}`,
+        Nombre: `${user.name}`,
+        Apellido: `${user.lastName}`,
+        Edad: `${user.age}`,
+        Rol: `${user.userRole}`,
+      };
+    });
+
+    const workSheet = XLSX.utils.json_to_sheet(usersMapped);
+    const workBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'usuarios');
+    XLSX.writeFile(workBook, `${fileName}.xlsx`);
   }
 }

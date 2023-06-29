@@ -1,4 +1,7 @@
-<section class="row justify-content-center w-100 m-0 p-0">
+<section
+  class="row justify-content-center w-100 m-0 p-0"
+  [@routeAnimations]="getRouteAnimationData()"
+>
   <div class="p-5 mb-4 bg-body-tertiary rounded-3">
     <app-loading [loading]="loading"></app-loading>
     <div [hidden]="loading" class="container-fluid py-5">
@@ -25,8 +28,8 @@
       *ngIf="
         (appoinmentSelected &&
           userService.userLogged?.userRole! !== 'specialist' &&
-            appoinmentSelected.state !== 'complete' &&
-            appoinmentSelected.state !== 'cancel') ||
+          appoinmentSelected.state !== 'complete' &&
+          appoinmentSelected.state !== 'cancel') ||
         (userService.userLogged?.userRole! === 'specialist' &&
           appoinmentSelected &&
           appoinmentSelected.state === 'pending')
