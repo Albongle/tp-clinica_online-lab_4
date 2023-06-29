@@ -16,6 +16,7 @@ export class CountAppoinmentsComponent {
     number[],
     string | string[]
   >;
+  protected appoinmentCountForSpecialist: ChartData<'bar'>;
   protected appoinmentForDay: ChartData<'line'>;
   protected appoinmentForLapseTime: ChartData<'line'>;
   protected appoinmentCompleteForLapseTime: ChartData<'line'>;
@@ -28,6 +29,8 @@ export class CountAppoinmentsComponent {
         this.mappedAppoinmentForSpecialistLapseTime();
       this.appoinmentCompleteForLapseTime =
         this.mappedAppoinmentCompleteForSpecialistLapseTime();
+      this.appoinmentCountForSpecialist =
+        this.setAppoinmentCountForSpecialist();
     });
   }
 
@@ -150,6 +153,30 @@ export class CountAppoinmentsComponent {
     });
 
     const chartData = { labels, datasets };
+    return chartData;
+  }
+
+  private setAppoinmentCountForSpecialist() {
+    const datasets: { data: any[]; label: string } = {
+      data: [],
+      label: 'Cantida de turnos por especialista',
+    };
+    const labels: string[] = [];
+
+    this.listOfAppoinments.forEach((appoinment) => {
+      if (!labels.some((label) => label === appoinment.specialist.email)) {
+        labels.push(appoinment.specialist.email);
+      }
+    });
+
+    labels.forEach((label) => {
+      const countAppoinments = this.listOfAppoinments.filter(
+        (appoinment) => appoinment.specialist.email === label
+      );
+      datasets.data.push(countAppoinments.length);
+    });
+
+    const chartData = { labels, datasets: [datasets] };
     return chartData;
   }
 }
